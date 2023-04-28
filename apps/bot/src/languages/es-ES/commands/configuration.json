@@ -1,0 +1,4 @@
+{
+  "languageIsEqual": "{{error}} Este lenguaje ya está preparado para este servidor",
+  "languageSuccess": "{{ok}} Cambié el lenguaje para este servidor a {{language}}"
+}

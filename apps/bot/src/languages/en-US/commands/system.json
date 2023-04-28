@@ -1,0 +1,4 @@
+{
+  "pingWait": "Measuring...",
+  "pingDone": "Websocket latency: {{ws}}ms\nInteraction latency: {{latency}}ms"
+}

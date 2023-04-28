@@ -1,0 +1,53 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id  String @id
+  bio String @default("I like cats with boots")
+
+  Member Member[]
+
+  @@map("users")
+}
+
+model Member {
+  id      String @id
+  guildId String
+  userId  String
+
+  user User  @relation(fields: [userId], references: [id])
+  tags Tag[]
+
+  @@map("members")
+}
+
+model Guild {
+  id       String @unique
+  language String @default("en-US")
+
+  tags Tag[]
+
+  @@map("guilds")
+}
+
+model Tag {
+  id       Int     @id @default(autoincrement())
+  guildId  String?
+  name     String
+  content  String
+  memberId String
+  uses     Int
+
+  guild  Guild? @relation(fields: [guildId], references: [id])
+  author Member @relation(fields: [memberId], references: [id])
+
+  @@index([guildId])
+  @@index([memberId])
+  @@map("tags")
+}

@@ -1,0 +1,37 @@
+{
+	"$schema": "https://docs.renovatebot.com/renovate-schema.json",
+	"extends": ["config:base", "group:allNonMajor"],
+	"labels": ["Meta: Dependencies"],
+	"schedule": ["before 12 pm on Sunday"],
+	"cloneSubmodules": true,
+	"github-actions": {
+		"enabled": true
+	},
+	"npm": {
+		"rangeStrategy": "bump",
+		"packageRules": [
+			{
+				"matchUpdateTypes": ["patch"],
+				"matchCurrentVersion": "/^0\\./",
+				"automerge": true,
+				"platformAutomerge": true
+			},
+			{
+				"matchUpdateTypes": ["minor", "patch"],
+				"matchCurrentVersion": ">=1.0.0",
+				"automerge": true,
+				"platformAutomerge": true
+			},
+			{
+				"matchPackagePatterns": ["ansi-regex"],
+				"allowedVersions": "^5",
+				"automerge": true,
+				"platformAutomerge": true
+			},
+			{
+				"matchDepTypes": ["engines"],
+				"enabled": false
+			}
+		]
+	}
+}
