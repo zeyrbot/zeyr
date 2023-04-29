@@ -1,40 +1,40 @@
 {
-  "name": "turborepo-template",
-  "version": "0.0.0",
-  "private": true,
-  "workspaces": [
-    "apps/*",
-    "packages/*"
-  ],
-  "scripts": {
-    "build": "turbo run build",
-    "dev": "turbo run dev",
-    "lint": "turbo run lint",
-    "postinstall": "husky install .github/husky",
-    "bot": "pnpm --filter ./apps/bot"
-  },
-  "devDependencies": {
-    "@commitlint/cli": "^17.4.4",
-    "@commitlint/config-conventional": "^17.4.4",
-    "@types/node": "^18.14.6",
-    "husky": "^8.0.3",
-    "lint-staged": "^13.1.2",
-    "prettier": "latest",
-    "pretty-quick": "^3.1.3",
-    "prisma": "^4.13.0",
-    "rome": "12.0.0",
-    "tsc-watch": "^6.0.0",
-    "turbo": "latest"
-  },
-  "engines": {
-    "node": ">=16.0.0"
-  },
-  "resolutions": {
-    "ansi-regex": "^5.0.1",
-    "minimist": "^1.2.8"
-  },
-  "lint-staged": {
-    "*.{mjs,js,ts}": "eslint --fix --ext mjs,js,ts"
-  },
-  "packageManager": "pnpm@7.28.0"
+	"name": "turborepo-template",
+	"version": "0.0.0",
+	"private": true,
+	"workspaces": ["apps/*", "packages/*"],
+	"scripts": {
+		"build": "turbo run build",
+		"dev": "turbo run dev",
+		"postinstall": "husky install .github/husky && pnpm bot prisma:generate",
+		"bot": "pnpm --filter zeyr",
+		"lint": "pnpm rome check .",
+		"format": "pnpm rome format . --write",
+		"update:i": "pnpm --recursive update -i"
+	},
+	"devDependencies": {
+		"@commitlint/cli": "^17.4.4",
+		"@commitlint/config-conventional": "^17.4.4",
+		"@sapphire/ts-config": "^4.0.0",
+		"@types/node": "^18.16.2",
+		"@types/ws": "^8.5.4",
+		"colorette": "^2.0.20",
+		"husky": "^8.0.3",
+		"prisma": "^4.13.0",
+		"rome": "12.0.0",
+		"tsc-watch": "^6.0.0",
+		"turbo": "latest",
+		"typescript": "^5.0.4"
+	},
+	"engines": {
+		"node": ">=16.0.0"
+	},
+	"resolutions": {
+		"ansi-regex": "^5.0.1",
+		"minimist": "^1.2.8"
+	},
+	"packageManager": "pnpm@7.28.0",
+	"dependencies": {
+		"@prisma/client": "^4.13.0"
+	}
 }

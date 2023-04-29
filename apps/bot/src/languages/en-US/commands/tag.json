@@ -1,0 +1,6 @@
+{
+	"tagAlreadyExists": "{{error}} This tag already exists in this guild",
+	"tagAddedSuccessfully": "{{ok}} Tag added successfully",
+	"tagNotFound": "{{error}} That tag does not exist in this guild",
+	"tagUnexpectedError": "Tag returned no content"
+}
