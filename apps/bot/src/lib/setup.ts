@@ -8,15 +8,15 @@ import "@kaname-png/plugin-subcommands-advanced/register";
 import "@kbotdev/plugin-modules/register";
 
 import {
-  ApplicationCommandRegistries,
-  RegisterBehavior,
+	ApplicationCommandRegistries,
+	RegisterBehavior,
 } from "@sapphire/framework";
 import { setup } from "@skyra/env-utilities";
 import * as colorette from "colorette";
 
 // Set default behavior to bulk overwrite
 ApplicationCommandRegistries.setDefaultBehaviorWhenNotIdentical(
-  RegisterBehavior.BulkOverwrite
+	RegisterBehavior.BulkOverwrite,
 );
 
 // Read env var

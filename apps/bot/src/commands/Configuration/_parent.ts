@@ -6,14 +6,14 @@ import { ApplicationCommandRegistry } from "@sapphire/framework";
   name: "configuration",
 })
 export class ParentCommand extends Subcommand {
-  public override registerApplicationCommands(
-    registry: ApplicationCommandRegistry
-  ) {
-    registry.registerChatInputCommand((ctx) => {
-      this.hooks.subcommands(this, ctx);
-      // this.hooks.group(this, ctx);
+	public override registerApplicationCommands(
+		registry: ApplicationCommandRegistry,
+	) {
+		registry.registerChatInputCommand((ctx) => {
+			this.hooks.subcommands(this, ctx);
+			// this.hooks.group(this, ctx);
 
-      return ctx.setName(this.name).setDescription("configuration commands");
-    });
-  }
+			return ctx.setName(this.name).setDescription("configuration commands");
+		});
+	}
 }

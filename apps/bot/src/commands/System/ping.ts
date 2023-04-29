@@ -10,35 +10,35 @@ import { resolveKey } from "@sapphire/plugin-i18next";
   },
 })
 export class UserCommand extends Command {
-  public override async chatInputRun(
-    interaction: Command.ChatInputInteraction
-  ) {
-    return await this.ping(interaction);
-  }
+	public override async chatInputRun(
+		interaction: Command.ChatInputInteraction,
+	) {
+		return await this.ping(interaction);
+	}
 
-  private async ping(interaction: Command.ChatInputInteraction) {
-    const pingMessage = await interaction.reply({
-      content: (await resolveKey(
-        interaction.guild!,
-        "commands/system:pingWait"
-      )) as string,
-      fetchReply: true,
-    });
+	private async ping(interaction: Command.ChatInputInteraction) {
+		const pingMessage = await interaction.reply({
+			content: (await resolveKey(
+				interaction.guild!,
+				"commands/system:pingWait",
+			)) as string,
+			fetchReply: true,
+		});
 
-    const ws = Math.round(this.container.client.ws.ping);
-    const latency = pingMessage.createdTimestamp - interaction.createdTimestamp;
+		const ws = Math.round(this.container.client.ws.ping);
+		const latency = pingMessage.createdTimestamp - interaction.createdTimestamp;
 
-    const content = await resolveKey(
-      interaction.guild!,
-      "commands/system:pingDone",
-      {
-        ws,
-        latency,
-      }
-    );
+		const content = await resolveKey(
+			interaction.guild!,
+			"commands/system:pingDone",
+			{
+				ws,
+				latency,
+			},
+		);
 
-    return interaction.editReply({
-      content,
-    });
-  }
+		return interaction.editReply({
+			content,
+		});
+	}
 }

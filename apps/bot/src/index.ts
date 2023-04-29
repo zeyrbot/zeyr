@@ -6,11 +6,11 @@ import { ZeyrClient } from "./lib/structures/ZeyrClient";
 const client = new ZeyrClient(CLIENT_OPTIONS);
 
 async function init() {
-  try {
-    await client.start();
-  } catch (error) {
-    client.panic(error);
-  }
+	try {
+		await client.start();
+	} catch (error) {
+		client.panic(error);
+	}
 }
 
 init();

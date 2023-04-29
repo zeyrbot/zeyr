@@ -8,46 +8,41 @@ datasource db {
 }
 
 model User {
-  id  String @id
-  bio String @default("I like cats with boots")
-
-  Member Member[]
+  id     String  @id
+  bio    String  @default("I like cats with boots")
+  member Member?
 
   @@map("users")
 }
 
 model Member {
   id      String @id
-  guildId String
-  userId  String
-
-  user User  @relation(fields: [userId], references: [id])
-  tags Tag[]
+  guildId String @map("guild_id")
+  guild   Guild  @relation(fields: [guildId], references: [id])
+  user    User   @relation(fields: [id], references: [id])
+  tags    Tag[]
 
   @@map("members")
 }
 
 model Guild {
-  id       String @unique
-  language String @default("en-US")
-
-  tags Tag[]
+  id       String   @unique
+  language String   @default("en-US")
+  members  Member[]
+  tags     Tag[]
 
   @@map("guilds")
 }
 
 model Tag {
-  id       Int     @id @default(autoincrement())
-  guildId  String?
+  id       Int    @id @default(autoincrement())
   name     String
   content  String
-  memberId String
-  uses     Int
+  uses     Int    @default(0)
+  guildId  String @map("guild_id")
+  memberId String @map("member_id")
+  guild    Guild  @relation(fields: [guildId], references: [id])
+  author   Member @relation(fields: [memberId], references: [id])
 
-  guild  Guild? @relation(fields: [guildId], references: [id])
-  author Member @relation(fields: [memberId], references: [id])
-
-  @@index([guildId])
-  @@index([memberId])
   @@map("tags")
 }

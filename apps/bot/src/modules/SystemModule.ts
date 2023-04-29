@@ -6,7 +6,7 @@ import { ApplyOptions } from "@sapphire/decorators";
   description: "Module to manage system category",
 })
 export class SystemModule extends Module {
-  public isEnabled(): boolean {
-    return true;
-  }
+	public isEnabled(): boolean {
+		return true;
+	}
 }

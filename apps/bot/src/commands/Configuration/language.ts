@@ -1,7 +1,7 @@
 import { Command } from "@kaname-png/plugin-subcommands-advanced";
 import { ApplyOptions } from "@sapphire/decorators";
 import { languages } from "../../lib/util";
-import { getOrCreate, update } from "../../lib/database/guilds";
+import { getOrCreateGuild, updateGuild } from "../../lib/database/guilds";
 import { resolveKey } from "@sapphire/plugin-i18next";
 
 @ApplyOptions<Command.Options>({
@@ -27,43 +27,43 @@ import { resolveKey } from "@sapphire/plugin-i18next";
   requiredUserPermissions: ["ManageGuild"],
 })
 export class UserCommand extends Command {
-  public override async chatInputRun(
-    interaction: Command.ChatInputInteraction
-  ) {
-    const language = interaction.options.getString("lang", true);
+	public override async chatInputRun(
+		interaction: Command.ChatInputInteraction,
+	) {
+		const language = interaction.options.getString("lang", true);
 
-    const guild = await getOrCreate(interaction.guildId!);
+		const guild = await getOrCreateGuild(interaction.guildId!);
 
-    if (!guild)
-      return interaction.reply(
-        await resolveKey(interaction.guild!, "generic:databaseGuildNotFound")
-      );
+		if (!guild)
+			return interaction.reply(
+				await resolveKey(interaction.guild!, "generic:databaseGuildNotFound"),
+			);
 
-    if (guild.language === language)
-      return interaction.reply(
-        await resolveKey(
-          interaction.guild!,
-          "commands/configuration:databaseGuildNotFound"
-        )
-      );
+		if (guild.language === language)
+			return interaction.reply(
+				await resolveKey(
+					interaction.guild!,
+					"commands/configuration:databaseGuildNotFound",
+				),
+			);
 
-    await update(
-      {
-        id: interaction.guildId!,
-      },
-      {
-        language,
-      }
-    );
+		await updateGuild(
+			{
+				id: interaction.guildId!,
+			},
+			{
+				language,
+			},
+		);
 
-    return interaction.reply(
-      await resolveKey(
-        interaction.guild!,
-        "commands/configuration:languageSuccess",
-        {
-          language,
-        }
-      )
-    );
-  }
+		return interaction.reply(
+			await resolveKey(
+				interaction.guild!,
+				"commands/configuration:languageSuccess",
+				{
+					language,
+				},
+			),
+		);
+	}
 }

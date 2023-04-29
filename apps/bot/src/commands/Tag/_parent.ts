@@ -3,7 +3,7 @@ import { ApplyOptions } from "@sapphire/decorators";
 import { ApplicationCommandRegistry } from "@sapphire/framework";
 
 @ApplyOptions<Subcommand.Options>({
-  name: "system",
+  name: "tag",
 })
 export class ParentCommand extends Subcommand {
 	public override registerApplicationCommands(
@@ -13,7 +13,7 @@ export class ParentCommand extends Subcommand {
 			this.hooks.subcommands(this, ctx);
 			// this.hooks.group(this, ctx);
 
-			return ctx.setName(this.name).setDescription("System commands");
+			return ctx.setName(this.name).setDescription("Tag commands");
 		});
 	}
 }
