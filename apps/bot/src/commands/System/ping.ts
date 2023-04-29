@@ -16,6 +16,12 @@ export class UserCommand extends Command {
 		return await this.ping(interaction);
 	}
 
+	private async db() {
+		const start = Date.now();
+		await this.container.prisma.$queryRaw`SELECT 1`;
+		return Date.now() - start;
+	}
+
 	private async ping(interaction: Command.ChatInputInteraction) {
 		const pingMessage = await interaction.reply({
 			content: (await resolveKey(
@@ -27,6 +33,7 @@ export class UserCommand extends Command {
 
 		const ws = Math.round(this.container.client.ws.ping);
 		const latency = pingMessage.createdTimestamp - interaction.createdTimestamp;
+		const db = await this.db();
 
 		const content = await resolveKey(
 			interaction.guild!,
@@ -34,6 +41,7 @@ export class UserCommand extends Command {
 			{
 				ws,
 				latency,
+				db,
 			},
 		);
 

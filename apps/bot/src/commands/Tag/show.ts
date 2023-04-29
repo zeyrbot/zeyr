@@ -9,7 +9,7 @@ import {
 	UserTransformer,
 } from "tagscript-plugin-discord";
 import { AttachmentBuilder, EmbedBuilder, GuildMember } from "discord.js";
-import { getTag } from "lib/database/tags";
+import { getTag } from "../../lib/database/tags";
 
 @ApplyOptions<Command.Options>({
   registerSubCommand: {

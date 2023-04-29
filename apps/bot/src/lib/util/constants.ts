@@ -18,6 +18,7 @@ import {
 	SliceParser,
 	StrictVarsParser,
 } from "tagscript";
+import { EmbedParser, FilesParser } from "tagscript-plugin-discord";
 
 export const rootDir = join(__dirname, "..", "..");
 export const srcDir = join(rootDir, "src");
@@ -36,6 +37,10 @@ export const tagParsers = [
 	new ReplaceParser(),
 	new SliceParser(),
 	new StrictVarsParser(),
+
+	// Discord parsers
+	new EmbedParser(),
+	new FilesParser(),
 ];
 
 export const languages = [
