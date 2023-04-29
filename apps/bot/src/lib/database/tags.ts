@@ -26,6 +26,16 @@ export async function addTag(
 					},
 					create: {
 						id: guildId,
+						members: {
+							connectOrCreate: {
+								where: {
+									id: memberId,
+								},
+								create: {
+									id: memberId,
+								},
+							},
+						},
 					},
 				},
 			},

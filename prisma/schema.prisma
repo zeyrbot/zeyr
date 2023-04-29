@@ -39,8 +39,10 @@ model Tag {
     uses     Int    @default(0)
     guildId  String @map("guild_id")
     memberId String @map("member_id")
-    guild    Guild  @relation(fields: [guildId], references: [id])
-    author   Member @relation(fields: [memberId], references: [id])
 
+    guild  Guild  @relation(fields: [guildId], references: [id])
+    author Member @relation(fields: [memberId], references: [id])
+
+    @@unique([name, guildId])
     @@map("tags")
 }

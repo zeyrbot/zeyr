@@ -37,7 +37,7 @@ export class UserCommand extends Command {
 			(err) => {
 				console.log(err);
 				throw new UserError({
-					identifier: "TagNotFound",
+					identifier: "TagAlreadyExists",
 					message: "commands/tag:tagAlreadyExists",
 					context: {
 						isLocalized: true,
