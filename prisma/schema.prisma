@@ -1,48 +1,46 @@
 generator client {
-  provider = "prisma-client-js"
+    provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+    provider = "postgresql"
+    url      = env("DATABASE_URL")
 }
 
 model User {
-  id     String  @id
-  bio    String  @default("I like cats with boots")
-  member Member?
+    id  String @id
+    bio String @default("I like cats with boots")
 
-  @@map("users")
+    @@map("users")
 }
 
 model Member {
-  id      String @id
-  guildId String @map("guild_id")
-  guild   Guild  @relation(fields: [guildId], references: [id])
-  user    User   @relation(fields: [id], references: [id])
-  tags    Tag[]
+    id      String @id
+    guildId String @map("guild_id")
+    guild   Guild  @relation(fields: [guildId], references: [id])
+    tags    Tag[]
 
-  @@map("members")
+    @@map("members")
 }
 
 model Guild {
-  id       String   @unique
-  language String   @default("en-US")
-  members  Member[]
-  tags     Tag[]
+    id       String   @unique
+    language String   @default("en-US")
+    members  Member[]
+    tags     Tag[]
 
-  @@map("guilds")
+    @@map("guilds")
 }
 
 model Tag {
-  id       Int    @id @default(autoincrement())
-  name     String
-  content  String
-  uses     Int    @default(0)
-  guildId  String @map("guild_id")
-  memberId String @map("member_id")
-  guild    Guild  @relation(fields: [guildId], references: [id])
-  author   Member @relation(fields: [memberId], references: [id])
+    id       Int    @id @default(autoincrement())
+    name     String
+    content  String
+    uses     Int    @default(0)
+    guildId  String @map("guild_id")
+    memberId String @map("member_id")
+    guild    Guild  @relation(fields: [guildId], references: [id])
+    author   Member @relation(fields: [memberId], references: [id])
 
-  @@map("tags")
+    @@map("tags")
 }

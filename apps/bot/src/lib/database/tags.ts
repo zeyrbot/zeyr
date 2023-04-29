@@ -22,10 +22,10 @@ export async function addTag(
 			guild: {
 				connectOrCreate: {
 					where: {
-						id: guildId!,
+						id: guildId,
 					},
 					create: {
-						id: guildId!,
+						id: guildId,
 					},
 				},
 			},
@@ -36,7 +36,7 @@ export async function addTag(
 					},
 					create: {
 						id: memberId,
-						guildId: guildId!,
+						guildId,
 					},
 				},
 			},

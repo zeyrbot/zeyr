@@ -1,5 +1,5 @@
 import { LogLevel } from "@sapphire/framework";
-import { InternationalizationContext } from "@sapphire/plugin-i18next";
+import { type InternationalizationContext } from "@sapphire/plugin-i18next";
 import { GatewayIntentBits, type ClientOptions } from "discord.js";
 import { join } from "path";
 import { getOrCreateGuild } from "../database/guilds";
