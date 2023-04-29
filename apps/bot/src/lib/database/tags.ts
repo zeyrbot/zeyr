@@ -15,38 +15,40 @@ export async function addTag(
 	guildId: string,
 	memberId: string,
 ) {
-	return container.prisma.tag.create({
-		data: {
-			name,
-			content,
-			guild: {
+	return container.prisma.guild.upsert({
+		where: {
+			id: guildId,
+		},
+		update: {
+			members: {
 				connectOrCreate: {
 					where: {
-						id: guildId,
+						id: memberId,
 					},
 					create: {
-						id: guildId,
-						members: {
-							connectOrCreate: {
-								where: {
-									id: memberId,
-								},
-								create: {
-									id: memberId,
-								},
+						id: memberId,
+						tags: {
+							create: {
+								name,
+								content,
+								guildId,
 							},
 						},
 					},
 				},
 			},
-			author: {
-				connectOrCreate: {
-					where: {
-						id: memberId,
-					},
-					create: {
-						id: memberId,
-						guildId,
+		},
+		create: {
+			id: guildId,
+			members: {
+				create: {
+					id: memberId,
+					tags: {
+						create: {
+							name,
+							content,
+							guildId,
+						},
 					},
 				},
 			},
