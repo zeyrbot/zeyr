@@ -1,7 +1,7 @@
 import { container } from "@sapphire/framework";
 
 export async function getTag(name: string, guildId: string) {
-	return container.prisma.tag.findFirstOrThrow({
+	return container.prisma.tag.findFirst({
 		where: {
 			name,
 			guildId,

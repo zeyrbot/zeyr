@@ -33,8 +33,6 @@ export class UserCommand extends Command {
 		const name = interaction.options.getString("name", true);
 		const content = interaction.options.getString("content", true);
 
-		//getTag(name, interaction.guildId);
-
 		await addTag(name, content, interaction.guildId, interaction.user.id).catch(
 			(err) => {
 				console.log(err);
