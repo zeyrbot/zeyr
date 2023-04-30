@@ -6,12 +6,12 @@ import { resolveKey } from "@sapphire/plugin-i18next";
   registerSubCommand: {
     parentCommandName: "system",
     slashSubcommand: (builder) =>
-      builder.setName("ping").setDescription("Display Zeyr latency"),
+      builder.setName("ping").setDescription("Display Zeyr's latency"),
   },
 })
 export class UserCommand extends Command {
 	public override async chatInputRun(
-		interaction: Command.ChatInputInteraction,
+		interaction: Command.ChatInputInteraction<"cached">,
 	) {
 		return await this.ping(interaction);
 	}
@@ -22,10 +22,10 @@ export class UserCommand extends Command {
 		return Date.now() - start;
 	}
 
-	private async ping(interaction: Command.ChatInputInteraction) {
+	private async ping(interaction: Command.ChatInputInteraction<"cached">) {
 		const pingMessage = await interaction.reply({
 			content: (await resolveKey(
-				interaction.guild!,
+				interaction.guild,
 				"commands/system:pingWait",
 			)) as string,
 			fetchReply: true,
@@ -36,7 +36,7 @@ export class UserCommand extends Command {
 		const db = await this.db();
 
 		const content = await resolveKey(
-			interaction.guild!,
+			interaction.guild,
 			"commands/system:pingDone",
 			{
 				ws,

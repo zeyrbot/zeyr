@@ -28,28 +28,28 @@ import { resolveKey } from "@sapphire/plugin-i18next";
 })
 export class UserCommand extends Command {
 	public override async chatInputRun(
-		interaction: Command.ChatInputInteraction,
+		interaction: Command.ChatInputInteraction<"cached">,
 	) {
 		const language = interaction.options.getString("lang", true);
 
-		const guild = await getOrCreateGuild(interaction.guildId!);
+		const guild = await getOrCreateGuild(interaction.guildId);
 
 		if (!guild)
 			return interaction.reply(
-				await resolveKey(interaction.guild!, "generic:databaseGuildNotFound"),
+				await resolveKey(interaction.guild, "generic:databaseGuildNotFound"),
 			);
 
 		if (guild.language === language)
 			return interaction.reply(
 				await resolveKey(
-					interaction.guild!,
+					interaction.guild,
 					"commands/configuration:databaseGuildNotFound",
 				),
 			);
 
 		await updateGuild(
 			{
-				id: interaction.guildId!,
+				id: interaction.guildId,
 			},
 			{
 				language,
@@ -58,7 +58,7 @@ export class UserCommand extends Command {
 
 		return interaction.reply(
 			await resolveKey(
-				interaction.guild!,
+				interaction.guild,
 				"commands/configuration:languageSuccess",
 				{
 					language,

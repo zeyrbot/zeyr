@@ -8,8 +8,10 @@ datasource db {
 }
 
 model User {
-    id  String @id
-    bio String @default("I like cats with boots")
+    id        String    @id
+    bio       String    @default("I like cats with boots")
+    createdAt DateTime  @default(now()) @map("created_at")
+    updatedAt DateTime? @updatedAt @map("updated_at")
 
     @@map("users")
 }
@@ -17,28 +19,34 @@ model User {
 model Member {
     id      String @id
     guildId String @map("guild_id")
-    guild   Guild  @relation(fields: [guildId], references: [id])
-    tags    Tag[]
+
+    guild Guild @relation(fields: [guildId], references: [id])
+    tags  Tag[]
 
     @@map("members")
 }
 
 model Guild {
-    id       String   @unique
-    language String   @default("en-US")
-    members  Member[]
-    tags     Tag[]
+    id        String    @unique
+    language  String    @default("en-US")
+    createdAt DateTime  @default(now()) @map("created_at")
+    updatedAt DateTime? @updatedAt @map("updated_at")
+
+    members Member[]
+    tags    Tag[]
 
     @@map("guilds")
 }
 
 model Tag {
-    id       Int    @id @default(autoincrement())
-    name     String
-    content  String
-    uses     Int    @default(0)
-    guildId  String @map("guild_id")
-    memberId String @map("member_id")
+    id        Int       @id @default(autoincrement())
+    name      String
+    content   String
+    uses      Int       @default(0)
+    guildId   String    @map("guild_id")
+    memberId  String    @map("member_id")
+    createdAt DateTime  @default(now()) @map("created_at")
+    updatedAt DateTime? @updatedAt @map("updated_at")
 
     guild  Guild  @relation(fields: [guildId], references: [id])
     author Member @relation(fields: [memberId], references: [id])

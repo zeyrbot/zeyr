@@ -5,7 +5,6 @@ process.env.NODE_ENV ??= "development";
 import "@sapphire/plugin-logger/register";
 import "@sapphire/plugin-i18next/register";
 import "@kaname-png/plugin-subcommands-advanced/register";
-import "@kbotdev/plugin-modules/register";
 
 import {
 	ApplicationCommandRegistries,

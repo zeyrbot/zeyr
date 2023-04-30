@@ -2,7 +2,6 @@ import { Command } from "@kaname-png/plugin-subcommands-advanced";
 import { ApplyOptions } from "@sapphire/decorators";
 import { resolveKey } from "@sapphire/plugin-i18next";
 import { addTag } from "../../lib/database/tags";
-import { UserError } from "@sapphire/framework";
 
 @ApplyOptions<Command.Options>({
     registerSubCommand: {
@@ -34,20 +33,16 @@ export class UserCommand extends Command {
 		const content = interaction.options.getString("content", true);
 
 		await addTag(name, content, interaction.guildId, interaction.user.id).catch(
-			(err) => {
+			async (err) => {
 				console.log(err);
-				throw new UserError({
-					identifier: "TagAlreadyExists",
-					message: "commands/tag:tagAlreadyExists",
-					context: {
-						isLocalized: true,
-					},
-				});
+				return interaction.editReply(
+					await resolveKey(interaction.guild!, "commands/tag:tagAlreadyExists"),
+				);
 			},
 		);
 
 		return interaction.editReply(
-			await resolveKey(interaction.guild!, "commands/tag:tagAddedSuccessfully"),
+			await resolveKey(interaction.guild!, "commands/tag:tagAddOk"),
 		);
 	}
 }

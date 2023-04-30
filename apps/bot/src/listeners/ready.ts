@@ -1,14 +1,7 @@
 import { ApplyOptions } from "@sapphire/decorators";
 import { Listener, Piece, type PieceOptions, Store } from "@sapphire/framework";
-import {
-	blue,
-	gray,
-	green,
-	magenta,
-	magentaBright,
-	white,
-	yellow,
-} from "colorette";
+import { blue, blueBright, gray, yellow } from "colorette";
+import { Dlist } from "../lib/api/dlist";
 
 const dev = process.env.NODE_ENV !== "production";
 
@@ -16,35 +9,25 @@ const dev = process.env.NODE_ENV !== "production";
 export class UserEvent extends Listener {
 	private readonly style = dev ? yellow : blue;
 
-	public run() {
-		this.printBanner();
+	public async run() {
 		this.printStoreDebugInformation();
+
+		if (!dev) {
+			await this.postGuildCount();
+		}
 	}
 
-	private printBanner() {
-		const success = green("+");
+	private dlist = new Dlist({
+		id: "1095425642159407165",
+		token: process.env.DLIST_KEY as string,
+	});
 
-		const llc = dev ? magentaBright : white;
-		const blc = dev ? magenta : blue;
-
-		const line01 = llc("");
-		const line02 = llc("");
-		const line03 = llc("");
-
-		// Offset Pad
-		const pad = " ".repeat(7);
-
-		console.log(
-			String.raw`
-${line01} ${pad}${blc("1.0.0")}
-${line02} ${pad}[${success}] Gateway
-${line03}${
-	dev
-		? ` ${pad}${blc("<")}${llc("/")}${blc(">")} ${llc("DEVELOPMENT MODE")}`
-		: ""
-}
-		`.trim(),
-		);
+	private async postGuildCount() {
+		this.dlist
+			.postGuildCount(this.container.client.guilds.cache.size)
+			.then(() =>
+				this.container.logger.info(`${blueBright("")} Posted guild count`),
+			);
 	}
 
 	private printStoreDebugInformation() {

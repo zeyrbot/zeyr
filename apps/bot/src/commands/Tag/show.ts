@@ -9,7 +9,7 @@ import {
 	UserTransformer,
 } from "tagscript-plugin-discord";
 import { AttachmentBuilder, EmbedBuilder, GuildMember } from "discord.js";
-import { getTag } from "../../lib/database/tags";
+import { getTag, incrementTagUsage } from "../../lib/database/tags";
 
 @ApplyOptions<Command.Options>({
   registerSubCommand: {
@@ -28,7 +28,7 @@ import { getTag } from "../../lib/database/tags";
 })
 export class UserCommand extends Command {
 	public override async chatInputRun(
-		interaction: Command.ChatInputInteraction,
+		interaction: Command.ChatInputInteraction<"cached">,
 	) {
 		await interaction.deferReply({
 			fetchReply: true,
@@ -65,6 +65,8 @@ export class UserCommand extends Command {
 		if (content.actions.embed) {
 			embeds.push(new EmbedBuilder(content.actions.embed));
 		}
+
+		await incrementTagUsage(tag.id);
 
 		return interaction.editReply({
 			content: content.body!,
