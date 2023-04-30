@@ -5,7 +5,7 @@
 	},
 	"linter": {
 		"enabled": true,
-		"ignore": ["node_modules", "dist"],
+		"ignore": ["node_modules", "dist", ".svelte-kit"],
 		"rules": {
 			"recommended": true,
 			"style": {
@@ -15,6 +15,6 @@
 	},
 	"formatter": {
 		"enabled": true,
-		"ignore": ["node_modules", "dist"]
+		"ignore": ["node_modules", "dist", ".svelte-kit"]
 	}
 }
