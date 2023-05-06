@@ -1,4 +1,6 @@
 import type { PrismaClient } from "@prisma/client";
+import type { Kazagumo } from "kazagumo";
+import type { Shoukaku } from "shoukaku";
 
 declare module "@sapphire/framework" {
 	interface Preconditions {
@@ -9,6 +11,7 @@ declare module "@sapphire/framework" {
 declare module "@sapphire/pieces" {
 	interface Container {
 		prisma: PrismaClient;
+		kazagumo: Kazagumo;
 	}
 }
 

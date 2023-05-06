@@ -24,10 +24,19 @@ import {
 	StrictVarsParser,
 } from "tagscript";
 import { EmbedParser, FilesParser } from "tagscript-plugin-discord";
-import { OCRParser } from "./";
+import { type NodeOption } from "shoukaku";
 
 export const rootDir = join(__dirname, "..", "..");
 export const srcDir = join(rootDir, "src");
+
+export const nodes: NodeOption[] /** Lavalink nodes */ = [
+	{
+		name: "europe",
+		url: "eu-lavalink.lexnet.cc",
+		auth: "lexn3tl@val!nk",
+		secure: true,
+	},
+];
 
 export const accentColor = "#56c4fb";
 
@@ -49,9 +58,6 @@ export const tagParsers = [
 	// Discord parsers
 	new EmbedParser(),
 	new FilesParser(),
-
-	// Custom parsers
-	new OCRParser(),
 ];
 
 export const languages = [
@@ -75,6 +81,7 @@ export const CLIENT_OPTIONS: ClientOptions = {
 		GatewayIntentBits.GuildMessages,
 		GatewayIntentBits.Guilds,
 		GatewayIntentBits.MessageContent,
+		GatewayIntentBits.GuildVoiceStates,
 	],
 	loadMessageCommandListeners: false,
 	loadDefaultErrorListeners: true,
