@@ -6,7 +6,19 @@ import { resolveKey } from "@sapphire/plugin-i18next";
     registerSubCommand: {
         parentCommandName: 'music',
         slashSubcommand: (builder) => builder.setName('play').setDescription('Play a song')
-        .addStringOption((s) => s.setName("name").setDescription("Name of the song to play").setRequired(true))
+        .addStringOption((s) => s.setName("query").setDescription("Query to search for").setRequired(true))
+        .addStringOption((s) => s.setName("provider").setDescription("Music provider, defaults to \"spotify\"").setRequired(false)
+		.addChoices(
+			{
+				name: "Spotify",
+				value: "spotify"
+			},
+			{
+				name: "Deezer",
+				value: "deezer"
+			}
+		)
+		)
     }
 })
 export class UserCommand extends Command {
@@ -17,7 +29,8 @@ export class UserCommand extends Command {
 			fetchReply: true,
 		});
 
-		const name = interaction.options.getString("name", true);
+		const query = interaction.options.getString("query", true);
+		const provider = interaction.options.getString("provider") ?? "spotify";
 
 		if (!interaction.member.voice.channel)
 			return interaction.editReply(
@@ -35,9 +48,10 @@ export class UserCommand extends Command {
 			shardId: 0,
 		});
 
-		const result = await this.container.kazagumo.search(name, {
+		const result = await this.container.kazagumo.search(query, {
 			requester: interaction.user,
 			nodeName: "europe",
+			engine: provider,
 		});
 
 		if (!result.tracks.length)

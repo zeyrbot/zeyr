@@ -78,6 +78,9 @@ importers:
       '@sapphire/plugin-subcommands':
         specifier: ^4.0.1
         version: 4.0.1
+      '@sapphire/result':
+        specifier: ^2.6.3
+        version: 2.6.3
       '@sapphire/utilities':
         specifier: ^3.11.1
         version: 3.11.1
@@ -90,12 +93,18 @@ importers:
       kazagumo:
         specifier: ^2.3.2
         version: 2.3.2
+      kazagumo-spotify:
+        specifier: ^1.2.0
+        version: 1.2.0
       sharp:
         specifier: ^0.32.1
         version: 0.32.1
       shoukaku:
         specifier: ^3.4.0
         version: 3.4.0
+      stone-deezer:
+        specifier: ^1.2.3
+        version: 1.2.3
       tagscript:
         specifier: ^1.3.0
         version: 1.3.0
@@ -773,7 +782,7 @@ packages:
     hasBin: true
     dependencies:
       '@favware/colorette-spinner': 1.0.1
-      '@sapphire/result': 2.6.2
+      '@sapphire/result': 2.6.3
       colorette: 2.0.20
       commander: 10.0.1
       execa: 7.1.1
@@ -831,7 +840,7 @@ packages:
       '@sapphire/lexure': 1.1.3
       '@sapphire/pieces': 3.6.2
       '@sapphire/ratelimits': 2.4.6
-      '@sapphire/result': 2.6.2
+      '@sapphire/result': 2.6.3
       '@sapphire/stopwatch': 1.5.0
       '@sapphire/utilities': 3.11.1
     dev: false
@@ -840,7 +849,7 @@ packages:
     resolution: {integrity: sha512-Z9/zLs6MN2M0fk1U+PVCTkelgUd+nUYvs+PLEExgoYgW0HBmbiQX0BAqp6twayBeL1XPtLTMJ/E1Ti8ROX684A==}
     engines: {node: '>=v14.0.0', npm: '>=7.0.0'}
     dependencies:
-      '@sapphire/result': 2.6.2
+      '@sapphire/result': 2.6.3
     dev: false
 
   /@sapphire/pieces@3.6.2:
@@ -885,8 +894,8 @@ packages:
     engines: {node: '>=v14.0.0', npm: '>=7.0.0'}
     dev: false
 
-  /@sapphire/result@2.6.2:
-    resolution: {integrity: sha512-O3iUogjYTI+BBNNYlr4Eyl29hRh0ywL7Tvm8sHOHsrnAAIhkxO2W96MyuSNbQOy8225k3S3ZcDWuyoCKMoD7yw==}
+  /@sapphire/result@2.6.3:
+    resolution: {integrity: sha512-CQpcCgU+GlCvJeu+YLr8pGgB68r1ITj5s99LI1oIe4wu+n+ZFk9VPa8fIJI3Wl9ar5Xkkp8NoNOuH7o8Y4F9Xg==}
     engines: {node: '>=v14.0.0', npm: '>=7.0.0'}
     dependencies:
       tslib: 2.5.0
@@ -1130,6 +1139,10 @@ packages:
     engines: {node: '>=0.10.0'}
     dev: true
 
+  /asynckit@0.4.0:
+    resolution: {integrity: sha512-Oei9OH4tRh0YqU3GxhX79dM/mwVgvbZJaSNaRk+bshkj0S5cfHcgYakreBjrHwatXKbz+IoIdYLxrKim2MjW0Q==}
+    dev: false
+
   /autoprefixer@10.4.14(postcss@8.4.23):
     resolution: {integrity: sha512-FQzyfOsTlwVzjHxKEqRIAdJx9niO6VCBCoEwax/VLSoQF29ggECcPuBqUMZ+u8jCZOPSy8b8/8KnuFbp0SaFZQ==}
     engines: {node: ^10 || ^12 || >=14}
@@ -1145,6 +1158,16 @@ packages:
       postcss: 8.4.23
       postcss-value-parser: 4.2.0
     dev: true
+
+  /axios@1.4.0:
+    resolution: {integrity: sha512-S4XCWMEmzvo64T9GfvQDOXgYRDJ/wsSZc7Jvdgx5u1sd0JwsuPLqb3SYmusag+edF6ziyMensPVqLTSc1PiSEA==}
+    dependencies:
+      follow-redirects: 1.15.2
+      form-data: 4.0.0
+      proxy-from-env: 1.1.0
+    transitivePeerDependencies:
+      - debug
+    dev: false
 
   /balanced-match@1.0.2:
     resolution: {integrity: sha512-3oSeUO0TMV67hN1AmbXsK4yaqU7tjiHlbxRDZOpH0KW9+CeX4bRAaX0Anxt0tx2MrpRpWwQaPwIlISEJhYU5Pw==}
@@ -1310,6 +1333,13 @@ packages:
   /colorette@2.0.20:
     resolution: {integrity: sha512-IfEDxwoWIjkeXL1eXcDiow4UbKjhLdq6/EuSVR9GMN7KVH3r9gQ83e73hsz1Nd1T3ijd5xv1wcWRYO+D6kCI2w==}
 
+  /combined-stream@1.0.8:
+    resolution: {integrity: sha512-FQN4MRfuJeHf7cBbBMJFXhKSDq+2kAArBlmRBvcvFE5BB1HZKXtSFASDhdlz9zOYwxh8lDdnvmMOe/+5cdoEdg==}
+    engines: {node: '>= 0.8'}
+    dependencies:
+      delayed-stream: 1.0.0
+    dev: false
+
   /commander@10.0.1:
     resolution: {integrity: sha512-y4Mg2tXshplEbSGzx7amzPwKKOCGuoSRP/CjEdwwk0FOGlUbq6lKuoyDZTNZkmxHdJtp54hdfY/JUrdL7Xfdug==}
     engines: {node: '>=14'}
@@ -1462,6 +1492,11 @@ packages:
     resolution: {integrity: sha512-3sUqbMEc77XqpdNO7FRyRog+eW3ph+GYCbj+rK+uYyRMuwsVy0rMiVtPn+QJlKFvWP/1PYpapqYn0Me2knFn+A==}
     engines: {node: '>=0.10.0'}
     dev: true
+
+  /delayed-stream@1.0.0:
+    resolution: {integrity: sha512-ZySD7Nf91aLB0RxL4KGrKHBXl7Eds1DAmEdcoVawXnLD7SDhpNgtuII2aAkg7a7QS41jxPSZ17p4VdGnMHk3MQ==}
+    engines: {node: '>=0.4.0'}
+    dev: false
 
   /detect-indent@6.1.0:
     resolution: {integrity: sha512-reYkTUJAZb9gUuZ2RvVCNhVHdg62RHnJ7WJl8ftMi4diZ6NWlciOzQN88pUhSELEwflJht4oQDv0F0BMlwaYtA==}
@@ -1704,6 +1739,25 @@ packages:
       locate-path: 6.0.0
       path-exists: 4.0.0
     dev: true
+
+  /follow-redirects@1.15.2:
+    resolution: {integrity: sha512-VQLG33o04KaQ8uYi2tVNbdrWp1QWxNNea+nmIB4EVM28v0hmP17z7aG1+wAkNzVq4KeXTq3221ye5qTJP91JwA==}
+    engines: {node: '>=4.0'}
+    peerDependencies:
+      debug: '*'
+    peerDependenciesMeta:
+      debug:
+        optional: true
+    dev: false
+
+  /form-data@4.0.0:
+    resolution: {integrity: sha512-ETEklSGi5t0QMZuiXoA/Q6vcnxcLQP5vdugSpuAyi6SVGi2clPPp+xgEhuMaHC+zGgn31Kd235W35f7Hykkaww==}
+    engines: {node: '>= 6'}
+    dependencies:
+      asynckit: 0.4.0
+      combined-stream: 1.0.8
+      mime-types: 2.1.35
+    dev: false
 
   /fraction.js@4.2.0:
     resolution: {integrity: sha512-MhLuK+2gUcnZe8ZHlaaINnQLl0xRIGRfcGk2yl8xoQAfHrSsL3rYu6FCmBdkdbhc9EPlwyGHewaRsvwRMJtAlA==}
@@ -2013,6 +2067,17 @@ packages:
     engines: {'0': node >= 0.2.0}
     dev: true
 
+  /kazagumo-spotify@1.2.0:
+    resolution: {integrity: sha512-+PBqh3nIhtGpx8/nLoM/Jw944CwSIhnqKm3JlYwKXxrJKCltoj7kS+DVloO2HfBaQwo3TSjjS/o9vqMB8NaOzA==}
+    dependencies:
+      kazagumo: 2.3.2
+      undici: 5.22.0
+    transitivePeerDependencies:
+      - bufferutil
+      - encoding
+      - utf-8-validate
+    dev: false
+
   /kazagumo@2.3.2:
     resolution: {integrity: sha512-yC+k+yuwj9jb9/c1Wc57wvrAKe8wvnlyLYzUWC5tYeWAt5xap4JKxjJugrG2Q/2xKCq3UoIzTQw7AdKaxWbOHw==}
     engines: {node: '>=16.5.0'}
@@ -2176,6 +2241,18 @@ packages:
       braces: 3.0.2
       picomatch: 2.3.1
     dev: true
+
+  /mime-db@1.52.0:
+    resolution: {integrity: sha512-sPU4uV7dYlvtWJxwwxHD0PuihVNiE7TyAbQ5SWxDCB9mUYvOgroQOwYQQOKPJ8CIbE+1ETVlOoK1UC2nU3gYvg==}
+    engines: {node: '>= 0.6'}
+    dev: false
+
+  /mime-types@2.1.35:
+    resolution: {integrity: sha512-ZDY+bPm5zTTF+YpCrAU9nK0UgICYPT0QtT1NZWFv4s++TNkcgVaT0g6+4R2uI4MjQjzysHB1zxuWL50hzaeXiw==}
+    engines: {node: '>= 0.6'}
+    dependencies:
+      mime-db: 1.52.0
+    dev: false
 
   /mime@3.0.0:
     resolution: {integrity: sha512-jSCU7/VB1loIWBZe14aEYHU/+1UMEHoaO7qxCOVJOw9GgH72VAWppxNcjU+x9a2k3GSIBXNKxXQFqRvvZ7vr3A==}
@@ -2585,6 +2662,10 @@ packages:
       sisteransi: 1.0.5
     dev: true
 
+  /proxy-from-env@1.1.0:
+    resolution: {integrity: sha512-D+zkORCbA9f1tdWRK0RaCR3GPv50cMxcrz4X8k5LTSUD1Dkw47mKJEZQNunItRTkWwgtaUSo1RVFRIG9ZXiFYg==}
+    dev: false
+
   /ps-tree@1.2.0:
     resolution: {integrity: sha512-0VnamPPYHl4uaU/nSFeZZpR21QAWRz+sRv4iW9+v/GS/J5U5iZB5BNN6J0RMoOvdx2gWM2+ZFMIm58q24e4UYA==}
     engines: {node: '>= 0.10'}
@@ -2922,6 +3003,19 @@ packages:
     dependencies:
       through: 2.3.8
     dev: true
+
+  /stone-deezer@1.2.3:
+    resolution: {integrity: sha512-BAYutBinD/NKvZzvoCHGr71pU2lw6wGDVsZxYyEehGPwUNZfOO7+ceWNzrJRn+rm8nCse+sVA4MPSJFfUSvkeA==}
+    dependencies:
+      axios: 1.4.0
+      discord.js: 14.9.0
+      kazagumo: 2.3.2
+    transitivePeerDependencies:
+      - bufferutil
+      - debug
+      - encoding
+      - utf-8-validate
+    dev: false
 
   /stream-combiner@0.0.4:
     resolution: {integrity: sha512-rT00SPnTVyRsaSz5zgSPma/aHSOic5U1prhYdRy5HS2kTZviFpmDgzilbtsJsxiroqACmayynDN/9VzIbX5DOw==}

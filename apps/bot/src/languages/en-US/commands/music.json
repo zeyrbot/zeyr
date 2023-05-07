@@ -7,5 +7,8 @@
 	"skipNoQueue": "{{error}} There is no queue for this guild",
 	"skipSkipped": "{{ok}} Successfully skipped current song",
 	"leaveNoPlayer": "{{error}} There is no active player for this guild (aka: im not in a voice channel breh)",
-	"leaveLeft": "{{ok}} Leaving"
+	"leaveLeft": "{{ok}} Leaving",
+	"currentCurrent": "{{info}} The current song is {{track}}",
+	"noQueue": "{{error}} There is no active queue or player for this guild",
+	"ended": "{{info}} Queue ended, no more songs to play"
 }

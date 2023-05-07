@@ -31,8 +31,20 @@ export const srcDir = join(rootDir, "src");
 
 export const nodes: NodeOption[] /** Lavalink nodes */ = [
 	{
-		name: "europe",
+		name: "Europe",
 		url: "eu-lavalink.lexnet.cc",
+		auth: "lexn3tl@val!nk",
+		secure: true,
+	},
+	{
+		name: "North America",
+		url: "lavalink.lexnet.cc",
+		auth: "lexn3tl@val!nk",
+		secure: true,
+	},
+	{
+		name: "Australia",
+		url: "oce-lavalink.lexnet.cc",
 		auth: "lexn3tl@val!nk",
 		secure: true,
 	},
@@ -115,6 +127,7 @@ export const CLIENT_OPTIONS: ClientOptions = {
 				defaultVariables: {
 					error: "❎",
 					ok: "✅",
+					info: ":information_source:",
 				},
 			},
 		},

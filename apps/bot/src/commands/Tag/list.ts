@@ -6,6 +6,7 @@ import { getTagsList } from "../../lib/database/tags";
 import { accentColor } from "../../lib/util";
 import { EmbedBuilder } from "discord.js";
 import type { Tag } from "@prisma/client";
+import { chunk } from "@sapphire/utilities";
 
 // TODO: List per server or user (currently per server)
 
@@ -38,15 +39,7 @@ export class UserCommand extends Command {
 				.setFooter({ text: ` Total tags: ${tags.length}` }),
 		});
 
-		const pages = [];
-		const pageSize = 10;
-		const pageCount = Math.ceil(tags.length / pageSize);
-
-		for (let i = 0; i < pageCount; i++) {
-			const start = i * pageSize;
-			const page = tags.slice(start, start + pageSize);
-			pages.push(page);
-		}
+		const pages = chunk(tags, 10);
 
 		for (const pageTags of pages) {
 			pagination.addPageEmbed((embed) =>
