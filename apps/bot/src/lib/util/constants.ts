@@ -25,6 +25,13 @@ import {
 } from "tagscript";
 import { EmbedParser, FilesParser } from "tagscript-plugin-discord";
 import { type NodeOption } from "shoukaku";
+import {
+	DeleteParser,
+	EmbedParser,
+	FilesParser,
+} from "tagscript-plugin-discord";
+import { OCRParser } from "./parsers/ocr";
+import { FetchParser } from "./parsers/fetch";
 
 export const rootDir = join(__dirname, "..", "..");
 export const srcDir = join(rootDir, "src");
@@ -70,6 +77,11 @@ export const tagParsers = [
 	// Discord parsers
 	new EmbedParser(),
 	new FilesParser(),
+	new DeleteParser(),
+
+	// Custom parsers
+	new OCRParser(),
+	new FetchParser(),
 ];
 
 export const languages = [
