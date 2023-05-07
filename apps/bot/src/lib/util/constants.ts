@@ -23,16 +23,38 @@ import {
 	SliceParser,
 	StrictVarsParser,
 } from "tagscript";
-import {
-	DeleteParser,
-	EmbedParser,
-	FilesParser,
-} from "tagscript-plugin-discord";
+import { type NodeOption } from "shoukaku";
 import { OCRParser } from "./parsers/ocr";
 import { FetchParser } from "./parsers/fetch";
+import {
+	EmbedParser,
+	FilesParser,
+	DeleteParser,
+} from "tagscript-plugin-discord";
 
 export const rootDir = join(__dirname, "..", "..");
 export const srcDir = join(rootDir, "src");
+
+export const nodes: NodeOption[] /** Lavalink nodes */ = [
+	{
+		name: "Europe",
+		url: "eu-lavalink.lexnet.cc",
+		auth: "lexn3tl@val!nk",
+		secure: true,
+	},
+	{
+		name: "North America",
+		url: "lavalink.lexnet.cc",
+		auth: "lexn3tl@val!nk",
+		secure: true,
+	},
+	{
+		name: "Australia",
+		url: "oce-lavalink.lexnet.cc",
+		auth: "lexn3tl@val!nk",
+		secure: true,
+	},
+];
 
 export const accentColor = "#56c4fb";
 
@@ -82,6 +104,7 @@ export const CLIENT_OPTIONS: ClientOptions = {
 		GatewayIntentBits.GuildMessages,
 		GatewayIntentBits.Guilds,
 		GatewayIntentBits.MessageContent,
+		GatewayIntentBits.GuildVoiceStates,
 	],
 	loadMessageCommandListeners: false,
 	loadDefaultErrorListeners: true,
@@ -115,6 +138,7 @@ export const CLIENT_OPTIONS: ClientOptions = {
 				defaultVariables: {
 					error: "❎",
 					ok: "✅",
+					info: ":information_source:",
 				},
 			},
 		},

@@ -13,6 +13,6 @@ import { ApplyOptions } from '@sapphire/decorators';
 })
 export class UserCommand extends Command {
 	public override async chatInputRun(
-		interaction: Command.ChatInputInteraction
+		interaction: Command.ChatInputInteraction<"cached">,
 	) {}
 }
