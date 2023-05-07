@@ -23,15 +23,14 @@ import {
 	SliceParser,
 	StrictVarsParser,
 } from "tagscript";
-import { EmbedParser, FilesParser } from "tagscript-plugin-discord";
 import { type NodeOption } from "shoukaku";
-import {
-	DeleteParser,
-	EmbedParser,
-	FilesParser,
-} from "tagscript-plugin-discord";
 import { OCRParser } from "./parsers/ocr";
 import { FetchParser } from "./parsers/fetch";
+import {
+	EmbedParser,
+	FilesParser,
+	DeleteParser,
+} from "tagscript-plugin-discord";
 
 export const rootDir = join(__dirname, "..", "..");
 export const srcDir = join(rootDir, "src");
