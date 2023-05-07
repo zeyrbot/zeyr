@@ -4,7 +4,7 @@ import type { Shoukaku } from "shoukaku";
 
 declare module "@sapphire/framework" {
 	interface Preconditions {
-		DevOnly: never;
+		VoiceOnly: never;
 	}
 }
 

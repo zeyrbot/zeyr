@@ -3,7 +3,7 @@
 	"playQueuePlaylistUpdated": "{{ok}} Añadí {{tracks}} canciones de {{playlist}} a la cola",
 	"playQueueUpdated": "{{ok}} Añadí `{{track}}` a la cola",
 	"playUserNotInVoice": "{{error}} Debe unirse a un canal de voz antes de ejecutar este comando",
-	"playNowPlaying": "{{ok}} Ahora estoy jugando `{{title}}` para este servidor",
+	"playNowPlaying": "{{ok}} Ahora estoy reproduciendo `{{title}}` para este servidor",
 	"skipNoQueue": "{{error}} No hay cola para este servidor",
 	"skipSkipped": "{{ok}} Se omitió con éxito la canción actual",
 	"leaveNoPlayer": "{{error}} No hay ningún reproductor activo para este servidor (aka: no estoy en un canal de voz bruh)",

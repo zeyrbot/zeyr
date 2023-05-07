@@ -14,6 +14,14 @@ export class UserCommand extends Command {
 	) {
 		const player = this.container.kazagumo.getPlayer(interaction.guildId);
 
+		if (!interaction.member.voice.channel)
+			return interaction.editReply(
+				await resolveKey(
+					interaction.guild,
+					"commands/music:playUserNotInVoice",
+				),
+			);
+
 		if (!player)
 			return interaction.reply(
 				await resolveKey(interaction.guild, "commands/music:leaveNoPlayer"),
