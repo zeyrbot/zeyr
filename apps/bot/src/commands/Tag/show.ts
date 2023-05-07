@@ -66,6 +66,17 @@ export class UserCommand extends Command {
 			embeds.push(new EmbedBuilder(content.actions.embed));
 		}
 
+		if (content.actions.deleteMessage) {
+			interaction.editReply("sike");
+			await interaction.deleteReply();
+
+			return interaction.channel?.send({
+				content: content.body!,
+				embeds,
+				files,
+			});
+		}
+
 		await incrementTagUsage(tag.id);
 
 		return interaction.editReply({
