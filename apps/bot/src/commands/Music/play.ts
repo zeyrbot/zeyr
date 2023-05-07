@@ -50,7 +50,7 @@ export class UserCommand extends Command {
 
 		const result = await this.container.kazagumo.search(query, {
 			requester: interaction.user,
-			nodeName: "europe",
+			nodeName: "North America",
 			engine: provider,
 		});
 
