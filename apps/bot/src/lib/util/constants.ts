@@ -23,40 +23,19 @@ import {
 	SliceParser,
 	StrictVarsParser,
 } from "tagscript";
-import { type NodeOption } from "shoukaku";
-import { OCRParser } from "./parsers/ocr";
-import { FetchParser } from "./parsers/fetch";
 import {
 	EmbedParser,
 	FilesParser,
 	DeleteParser,
 } from "tagscript-plugin-discord";
-
+import {
+	FetchParser,
+	ImagescriptParser,
+	NSFWParser,
+	OCRParser,
+} from "./parsers";
 export const rootDir = join(__dirname, "..", "..");
 export const srcDir = join(rootDir, "src");
-
-export const nodes: NodeOption[] /** Lavalink nodes */ = [
-	{
-		name: "Europe",
-		url: "eu-lavalink.lexnet.cc",
-		auth: "lexn3tl@val!nk",
-		secure: true,
-	},
-	{
-		name: "North America",
-		url: "lavalink.lexnet.cc",
-		auth: "lexn3tl@val!nk",
-		secure: true,
-	},
-	{
-		name: "Australia",
-		url: "oce-lavalink.lexnet.cc",
-		auth: "lexn3tl@val!nk",
-		secure: true,
-	},
-];
-
-export const accentColor = "#56c4fb";
 
 export const tagParsers = [
 	new BreakParser(),
@@ -77,10 +56,12 @@ export const tagParsers = [
 	new EmbedParser(),
 	new FilesParser(),
 	new DeleteParser(),
+	new NSFWParser(),
 
 	// Custom parsers
 	new OCRParser(),
 	new FetchParser(),
+	new ImagescriptParser(),
 ];
 
 export const languages = [

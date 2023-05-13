@@ -3,17 +3,21 @@ import { ApplyOptions } from "@sapphire/decorators";
 import { ApplicationCommandRegistry } from "@sapphire/framework";
 
 @ApplyOptions<Subcommand.Options>({
-    name: "music"
+    name: "game"
 })
 export class ParentCommand extends Subcommand {
 	public override registerApplicationCommands(
 		registry: ApplicationCommandRegistry,
 	) {
 		registry.registerChatInputCommand((ctx) => {
-			this.hooks.subcommands(this, ctx);
-			// this.hooks.group(this, ctx);
+			ctx.addSubcommandGroup((sc) =>
+				sc.setName("valorant").setDescription("Valorant commands"),
+			);
 
-			return ctx.setName(this.name).setDescription("Music commands");
+			// this.hooks.subcommands(this, ctx);
+			this.hooks.groups(this, ctx);
+
+			return ctx.setName(this.name).setDescription("Game commands");
 		});
 	}
 }

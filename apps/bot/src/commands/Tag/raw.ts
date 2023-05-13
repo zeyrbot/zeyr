@@ -1,23 +1,21 @@
-import { Command } from "@kaname-png/plugin-subcommands-advanced";
-import { ApplyOptions } from "@sapphire/decorators";
+import {
+	Command,
+	RegisterSubCommand,
+} from "@kaname-png/plugin-subcommands-advanced";
 import { resolveKey } from "@sapphire/plugin-i18next";
 import { codeBlock } from "@sapphire/utilities";
 import { EmbedBuilder } from "discord.js";
 import { getTag } from "../../lib/database/tags";
-import { accentColor } from "../../lib/util";
+import { Colors } from "@discord-factory/colorize";
 
-@ApplyOptions<Command.Options>({
-    registerSubCommand: {
-        parentCommandName: "tag",
-        slashSubcommand: (builder) =>
-          builder
-            .setName("raw")
-            .setDescription("Display a tag without any parsing")
-            .addStringOption((s) =>
-              s.setName("name").setDescription("Name of the tag").setRequired(true)
-            )
-      },
-})
+@RegisterSubCommand('tag', (builder) =>
+	builder
+		.setName("raw")
+		.setDescription("Show a tag's info")
+		.addStringOption((s) =>
+			s.setName("name").setDescription("Name of the tag").setRequired(true)
+		)
+)
 export class UserCommand extends Command {
 	public override async chatInputRun(
 		interaction: Command.ChatInputInteraction<"cached">,
@@ -39,7 +37,7 @@ export class UserCommand extends Command {
 		const author = await this.container.client.users.fetch(tag.author.id);
 
 		const embed = new EmbedBuilder()
-			.setColor(accentColor)
+			.setColor(Colors.SKY_500)
 			.setTitle(tag.name)
 			.setAuthor({
 				iconURL:

@@ -1,26 +1,25 @@
-import { Command } from "@kaname-png/plugin-subcommands-advanced";
-import { ApplyOptions } from "@sapphire/decorators";
+import {
+	Command,
+	RegisterSubCommand,
+} from "@kaname-png/plugin-subcommands-advanced";
 import { resolveKey } from "@sapphire/plugin-i18next";
 import { addTag } from "../../lib/database/tags";
+import { Result } from "@sapphire/result";
 
-@ApplyOptions<Command.Options>({
-    registerSubCommand: {
-        parentCommandName: "tag",
-        slashSubcommand: (builder) =>
-            builder
-                .setName("add")
-                .setDescription("Subcommand description")
-                .addStringOption((s) =>
-                    s.setName("name").setDescription("Name for the tag").setRequired(true)
-                )
-                .addStringOption((s) =>
-                    s
-                        .setName("content")
-                        .setDescription("Content for the tag")
-                        .setRequired(true)
-                ),
-    },
-})
+@RegisterSubCommand('tag', (builder) =>
+	builder
+		.setName("add")
+		.setDescription("Add a tag for this guild")
+		.addStringOption((s) =>
+			s.setName("name").setDescription("Name for the tag").setRequired(true)
+		)
+		.addStringOption((s) =>
+			s
+				.setName("content")
+				.setDescription("Content for the tag")
+				.setRequired(true)
+		),
+)
 export class UserCommand extends Command {
 	public override async chatInputRun(
 		interaction: Command.ChatInputInteraction<"cached">,
@@ -32,14 +31,17 @@ export class UserCommand extends Command {
 		const name = interaction.options.getString("name", true);
 		const content = interaction.options.getString("content", true);
 
-		await addTag(name, content, interaction.guildId, interaction.user.id).catch(
-			async (err) => {
-				console.log(err);
-				return interaction.editReply(
-					await resolveKey(interaction.guild!, "commands/tag:tagAlreadyExists"),
-				);
-			},
+		const tag = await Result.fromAsync(
+			async () =>
+				await addTag(name, content, interaction.guildId, interaction.user.id),
 		);
+
+		tag.unwrapOrElse(async (error) => {
+			console.log(error);
+			return interaction.editReply(
+				await resolveKey(interaction.guild!, "commands/tag:tagAlreadyExists"),
+			);
+		});
 
 		return interaction.editReply(
 			await resolveKey(interaction.guild!, "commands/tag:tagAddOk"),

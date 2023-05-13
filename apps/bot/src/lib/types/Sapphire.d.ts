@@ -21,4 +21,14 @@ declare module "@kbotdev/plugin-modules" {
 	}
 }
 
+import "tagscript";
+declare module "tagscript" {
+	interface IActions {
+		nsfw?: {
+			nsfw: boolean;
+			message: string;
+		};
+	}
+}
+
 export default undefined;

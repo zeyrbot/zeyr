@@ -1,21 +1,22 @@
-import { Command } from "@kaname-png/plugin-subcommands-advanced";
-import { ApplyOptions } from "@sapphire/decorators";
+import {
+	Command,
+	RegisterSubCommand,
+} from "@kaname-png/plugin-subcommands-advanced";
 import { PaginatedMessage } from "@sapphire/discord.js-utilities";
 import { resolveKey } from "@sapphire/plugin-i18next";
 import { getTagsList } from "../../lib/database/tags";
-import { accentColor } from "../../lib/util";
 import { EmbedBuilder } from "discord.js";
 import type { Tag } from "@prisma/client";
 import { chunk } from "@sapphire/utilities";
+import { Colors } from "@discord-factory/colorize";
 
 // TODO: List per server or user (currently per server)
 
-@ApplyOptions<Command.Options>({
-    registerSubCommand: {
-        parentCommandName: 'tag',
-        slashSubcommand: (builder) => builder.setName('list').setDescription('Display tags on this server')
-    }
-})
+@RegisterSubCommand('tag', (builder) =>
+	builder
+		.setName("list")
+		.setDescription("Show guild tags")
+)
 export class UserCommand extends Command {
 	public override async chatInputRun(
 		interaction: Command.ChatInputInteraction<"cached">,
@@ -28,13 +29,13 @@ export class UserCommand extends Command {
 			);
 		}
 
-		return await this.tagList(tags).run(interaction);
+		return await this.pagination(tags).run(interaction);
 	}
 
-	private tagList(tags: Tag[]) {
+	private pagination(tags: Tag[]) {
 		const pagination = new PaginatedMessage({
 			template: new EmbedBuilder()
-				.setColor(accentColor)
+				.setColor(Colors.SKY_500)
 				.setTitle("Tags list")
 				.setFooter({ text: ` Total tags: ${tags.length}` }),
 		});

@@ -1,14 +1,13 @@
 # Zeyr Turborepo
-> Zeyr is a descentralised Discord assistant made for every community who needs a limitless bot
+> Zeyr is a descentralised Discord assistant made for developer communities.
 
 # Translations
-When a new command is added i usally make it's respective translations, if I don't I'll just make them later, but if you want to contribute you are welcome to do so!
+When a new command is made, I *usually* make it's respective translations in the same commit, if not, maybe im just lazy.
 
 The fallback language when no translation found is `en-US`
 
-# KNOWN bugs/errors
-1. Error messages may be ephemeral or not
-2. Error messages are not readable for "non-dev" users
+# It's not a bug, it's a feature
+- Some errors can be ephemeral or not
 
 # Self-hosting
 Zeyr team does not support the idea of people self-hosting their own instance of Zeyr, we kindly ask you to use our self-hosted version.
