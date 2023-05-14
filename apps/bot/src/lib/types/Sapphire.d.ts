@@ -11,17 +11,12 @@ declare module "@sapphire/framework" {
 declare module "@sapphire/pieces" {
 	interface Container {
 		prisma: PrismaClient;
-		kazagumo: Kazagumo;
-	}
-}
-
-declare module "@kbotdev/plugin-modules" {
-	interface Modules {
-		SystemModule: never;
+		image: ImageManipulation;
 	}
 }
 
 import "tagscript";
+import type { ImageManipulation } from "../util";
 declare module "tagscript" {
 	interface IActions {
 		nsfw?: {

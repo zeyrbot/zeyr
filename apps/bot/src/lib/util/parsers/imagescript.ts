@@ -1,5 +1,5 @@
+import { container } from "@sapphire/pieces";
 import { BaseParser, type IParser, Context } from "tagscript";
-import { PXLAPI } from "../../util/apis";
 
 /**
  * Runs imagescript code (Javascript only)
@@ -17,12 +17,12 @@ export class ImagescriptParser extends BaseParser implements IParser {
 	}
 
 	public async parse(ctx: Context) {
-		const buffer = await this.pxlapi.imagescript(ctx.tag.payload!);
+		const { image } = await container.image.imagescript(ctx.tag.payload!);
 
-		ctx.response.actions.files = [Buffer.from(buffer)];
+		if (!image) throw new Error("image returned nothing");
+
+		ctx.response.actions.files = [image];
 
 		return "";
 	}
-
-	private pxlapi = new PXLAPI(process.env.PXLAPI_KEY!);
 }

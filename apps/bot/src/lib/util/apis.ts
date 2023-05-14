@@ -7,7 +7,87 @@ import {
 	type ValorantResult,
 	type ValorantRegions,
 	type ValorantMMR,
+	type ImagescriptOutput,
+	ImagescriptFormat,
 } from "../types/apis";
+import { decodeWEBP } from "./performance";
+import Imagescript, { Frame, GIF, Image } from "imagescript";
+import { runInNewContext } from "vm";
+import SimplexNoise from "simplex-noise";
+import { inspect } from "util";
+import { isThenable } from "@sapphire/utilities";
+
+export class ImageManipulation {
+	constructor() {}
+
+	public async decode(url: string): Promise<Image> {
+		const buffer = await fetch(url, FetchResultTypes.Buffer);
+		const result = (await decodeWEBP(buffer)) as Image;
+
+		return result;
+	}
+
+	public async font(url: string): Promise<Uint8Array> {
+		const buffer = await fetch(url, FetchResultTypes.Buffer);
+		const result = new Uint8Array(buffer);
+
+		return result;
+	}
+
+	public async imagescript(
+		code: string,
+		inject?: Record<string, unknown>,
+	): Promise<ImagescriptOutput> {
+		const script = `(async() => {
+			${code}
+			const __typeofImage = typeof(image);
+			if(__typeofImage === 'undefined') {
+				return undefined;
+			} else {
+				return image;
+			}
+		})()`;
+		const _console = {
+			log: (arg: string) => `${arg}\n`,
+		};
+
+		const result: Image | GIF | undefined = await runInNewContext(
+			script,
+			{
+				Imagescript,
+				Image,
+				Frame,
+				GIF,
+				SimplexNoise,
+				_inspect: inspect,
+				console: _console,
+				...inject,
+			},
+			{ timeout: 60000 },
+		);
+
+		if (isThenable(result)) await result;
+		if (!(result instanceof Image) && result !== undefined)
+			throw new Error("`image` is not a valid Image");
+
+		const output: ImagescriptOutput = {
+			image: undefined,
+			format: result
+				? result instanceof Image
+					? ImagescriptFormat.PNG
+					: ImagescriptFormat.GIF
+				: undefined,
+		};
+
+		if (result) {
+			const buffer = await result.encode();
+
+			output.image = Buffer.from(buffer);
+		}
+
+		return output;
+	}
+}
 
 export class Valorant {
 	baseUrl: string;
@@ -47,33 +127,6 @@ export class Urbandictionary {
 		return fetch<List>(
 			`${this.baseUrl}/define?term=${term}`,
 			FetchResultTypes.JSON,
-		);
-	}
-}
-
-export class PXLAPI {
-	key: string;
-	baseUrl: string;
-	constructor(key: string) {
-		this.key = key;
-		this.baseUrl = APIS.PXLAPI;
-	}
-
-	public async imagescript(code: string, inject?: Record<string, unknown>) {
-		return fetch(
-			`${this.baseUrl}/imagescript/latest`,
-			{
-				method: FetchMethods.Post,
-				headers: {
-					"Content-Type": "application/json",
-					Authorization: `Application ${this.key}`,
-				},
-				body: JSON.stringify({
-					code: String.raw`${code}`,
-					inject,
-				}),
-			},
-			FetchResultTypes.Buffer,
 		);
 	}
 }

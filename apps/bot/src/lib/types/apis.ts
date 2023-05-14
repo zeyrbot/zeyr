@@ -1,5 +1,15 @@
 import type { Nullable } from "./generic";
 
+export interface ImagescriptOutput {
+	image?: Buffer;
+	format?: ImagescriptFormat;
+}
+
+export enum ImagescriptFormat {
+	PNG = "png",
+	GIF = "gif",
+}
+
 export type ValorantRegions = "ap" | "br" | "eu" | "kr" | "latam" | "na";
 
 export interface ValorantResult<T> {
