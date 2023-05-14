@@ -111,8 +111,8 @@ export const CLIENT_OPTIONS: ClientOptions = {
 			fallbackLng: "en-US",
 			interpolation: {
 				defaultVariables: {
-					error: "🙁",
-					ok: "😀",
+					error: "🤕",
+					ok: "😊",
 					info: "🧐",
 				},
 			},

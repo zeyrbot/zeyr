@@ -7,6 +7,7 @@ import { AttachmentBuilder } from "discord.js";
 import { Stopwatch } from "@sapphire/stopwatch";
 import { resolveKey } from "@sapphire/plugin-i18next";
 import { FetchResultTypes, fetch } from "@sapphire/fetch";
+import { cast } from "@sapphire/utilities";
 
 @RegisterSubCommand('util', (builder) =>
 	builder
@@ -62,13 +63,11 @@ export class UserCommand extends Command {
 		);
 
 		return interaction.editReply({
-			content: (await resolveKey(
-				interaction.guild,
-				"general:stopwatchFinished",
-				{
+			content: cast<string>(
+				await resolveKey(interaction.guild, "general:stopwatchFinished", {
 					time: stopwatch.stop().toString(),
-				},
-			)) as string,
+				}),
+			),
 			files: [file],
 		});
 	}

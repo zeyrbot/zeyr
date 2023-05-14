@@ -10,12 +10,12 @@ import {
 	type ImagescriptOutput,
 	ImagescriptFormat,
 } from "../types/apis";
-import { decodeWEBP } from "./performance";
-import Imagescript, { Frame, GIF, Image } from "imagescript";
+import { decodeWEBP, secureFetch } from "./performance";
+import Imagescript, { decode, Frame, GIF, Image } from "imagescript";
 import { runInNewContext } from "vm";
 import SimplexNoise from "simplex-noise";
 import { inspect } from "util";
-import { isThenable } from "@sapphire/utilities";
+import { cast } from "@sapphire/utilities";
 
 /**
  * A wrapper for easier image manipulation
@@ -26,7 +26,7 @@ export class ImageManipulation {
 
 	public async decode(url: string): Promise<Image> {
 		const buffer = await fetch(url, FetchResultTypes.Buffer);
-		const result = (await decodeWEBP(buffer)) as Image;
+		const result = cast<Image>(await decodeWEBP(buffer));
 
 		return result;
 	}
@@ -55,24 +55,27 @@ export class ImageManipulation {
 			log: (arg: string) => `${arg}\n`,
 		};
 
-		const result: Image | GIF | undefined = await runInNewContext(
+		let result: Uint8Array | undefined = await runInNewContext(
 			script,
 			{
 				Imagescript,
 				Image,
 				Frame,
 				GIF,
+				decode,
 				SimplexNoise,
 				_inspect: inspect,
 				console: _console,
+				fetch: secureFetch,
 				...inject,
 			},
 			{ timeout: 60000 },
 		);
 
-		if (isThenable(result)) await result;
-		if (!(result instanceof Image) && result !== undefined)
-			throw new Error("`image` is not a valid Image");
+		if (result === undefined) throw new Error("no output");
+		if (result instanceof ArrayBuffer) result = new Uint8Array(result);
+		if (!(result instanceof Uint8Array))
+			throw "Invalid data returned (did you forget to encode the image?)";
 
 		const output: ImagescriptOutput = {
 			image: undefined,
@@ -84,9 +87,7 @@ export class ImageManipulation {
 		};
 
 		if (result) {
-			const buffer = await result.encode();
-
-			output.image = Buffer.from(buffer);
+			output.image = Buffer.from(result);
 		}
 
 		return output;

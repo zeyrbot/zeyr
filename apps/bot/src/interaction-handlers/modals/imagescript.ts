@@ -7,6 +7,7 @@ import { resolveKey } from "@sapphire/plugin-i18next";
 import { AttachmentBuilder, type ModalSubmitInteraction } from "discord.js";
 import { generateOptimisedName } from "../../lib/util";
 import { Stopwatch } from "@sapphire/stopwatch";
+import { cast } from "@sapphire/utilities";
 
 export class ModalHandler extends InteractionHandler {
 	public constructor(ctx: PieceContext, options: InteractionHandler.Options) {
@@ -44,13 +45,11 @@ export class ModalHandler extends InteractionHandler {
 		});
 
 		return await interaction.editReply({
-			content: (await resolveKey(
-				interaction.guild,
-				"general:stopwatchFinished",
-				{
+			content: cast<string>(
+				await resolveKey(interaction.guild, "general:stopwatchFinished", {
 					time: stopwatch.stop().toString(),
-				},
-			)) as string,
+				}),
+			),
 			files: [file],
 		});
 	}

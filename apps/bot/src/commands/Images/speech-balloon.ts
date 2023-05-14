@@ -10,6 +10,7 @@ import {
 } from "../../lib/util";
 import { resolveKey } from "@sapphire/plugin-i18next";
 import { AttachmentBuilder } from "discord.js";
+import { cast } from "@sapphire/utilities";
 
 @RegisterSubCommand("image", (builder) =>
 	builder
@@ -50,13 +51,11 @@ export class UserCommand extends Command {
 		});
 
 		return interaction.editReply({
-			content: (await resolveKey(
-				interaction.guild,
-				"general:stopwatchFinished",
-				{
+			content: cast<string>(
+				await resolveKey(interaction.guild, "general:stopwatchFinished", {
 					time: stopwatch.stop().toString(),
-				},
-			)) as string,
+				}),
+			),
 			files: [file],
 		});
 	}

@@ -1,6 +1,6 @@
 import sharp from "sharp";
 import { decode } from "imagescript";
-import type { Message, Attachment, GuildTextBasedChannel } from "discord.js";
+import type { Message, GuildTextBasedChannel } from "discord.js";
 
 export function optimiseGithubCDN(url: string) {
 	const optimisedUrl = new URL(
@@ -15,6 +15,21 @@ export function generateOptimisedName(format: string) {
 	return `${(Math.random() + 1).toString(36).substring(2)}.${format}`;
 }
 
+export async function secureFetch(url: string, init?: RequestInit) {
+	const controller = new AbortController();
+	const id = setTimeout(() => {
+		controller.abort();
+	}, 10000);
+
+	const response = await fetch(url, {
+		...init,
+		signal: controller.signal,
+	});
+
+	clearTimeout(id);
+	return response;
+}
+
 export async function decodeWEBP(input: Buffer) {
 	return decode(await sharp(input).png().toBuffer());
 }
@@ -24,14 +39,13 @@ export async function lastMedia(channel: GuildTextBasedChannel, limit = 30) {
 
 	const lastMessage = messages.find(
 		(message: Message) =>
-			message.attachments.size > 0 || message.embeds[0]?.data.url,
+			message.attachments.size > 0 || message.embeds[0].image,
 	);
 
 	if (!lastMessage) return undefined;
 
 	const attachment =
-		lastMessage.attachments.first() ||
-		(lastMessage.embeds[0].data as Attachment);
+		lastMessage.attachments.first() || lastMessage.embeds[0].image;
 
 	return attachment;
 }

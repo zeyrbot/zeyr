@@ -6,6 +6,7 @@ import { resolveKey } from "@sapphire/plugin-i18next";
 import { Stopwatch } from "@sapphire/stopwatch";
 import { AttachmentBuilder } from "discord.js";
 import { generateOptimisedName, lastMedia } from "../../lib/util";
+import { cast } from "@sapphire/utilities";
 
 @RegisterSubCommand("image", (builder) =>
 	builder
@@ -46,13 +47,11 @@ import { generateOptimisedName, lastMedia } from "../../lib/util";
 		});
 
 		return interaction.editReply({
-			content: (await resolveKey(
-				interaction.guild,
-				"general:stopwatchFinished",
-				{
+			content: cast<string>(
+				await resolveKey(interaction.guild, "general:stopwatchFinished", {
 					time: stopwatch.stop().toString(),
-				},
-			)) as string,
+				}),
+			),
 			files: [file],
 		});
 	}
