@@ -33,7 +33,7 @@ export class ModalHandler extends InteractionHandler {
 
 		const stopwatch = new Stopwatch();
 
-		const data = await this.container.image.imagescript(
+		const data = await this.container.image.eval(
 			code,
 			inject ? JSON.parse(inject) : undefined,
 		);

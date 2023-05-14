@@ -29,7 +29,6 @@ export class AutocompleteHandler extends InteractionHandler {
 
 		switch (focusedOption.name) {
 			case "name": {
-				console.log(3);
 				const tags = await getTagsList(interaction.guildId!);
 
 				const fuse = new Fuse(tags, {

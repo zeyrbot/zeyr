@@ -38,7 +38,7 @@ export class ImageManipulation {
 		return result;
 	}
 
-	public async imagescript(
+	public async eval(
 		code: string,
 		inject?: Record<string, unknown>,
 	): Promise<ImagescriptOutput> {
