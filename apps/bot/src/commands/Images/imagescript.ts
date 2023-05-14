@@ -2,44 +2,46 @@ import {
 	Command,
 	RegisterSubCommand,
 } from "@kaname-png/plugin-subcommands-advanced";
-import { resolveKey } from "@sapphire/plugin-i18next";
-import { Stopwatch } from "@sapphire/stopwatch";
-import { AttachmentBuilder } from "discord.js";
-import { generateOptimisedName } from "../../lib/util";
+import {
+	ActionRowBuilder,
+	ModalBuilder,
+	TextInputBuilder,
+	TextInputStyle,
+} from "discord.js";
 
 @RegisterSubCommand("image", (builder) =>
 	builder
 	  .setName("imagescript")
 	  .setDescription("Runs imagescript code in a separate container")
-	  .addStringOption((s) =>
-		s.setName("code").setDescription("Code to run (JS)").setRequired(true)
-	  )
   )
 export class UserCommand extends Command {
 	public override async chatInputRun(
 		interaction: Command.ChatInputInteraction<"cached">,
 	) {
-		await interaction.deferReply({ fetchReply: true });
-		const stopwatch = new Stopwatch();
+		const modal = new ModalBuilder()
+			.setCustomId("@util/imagescript")
+			.setTitle("Run Imagescript code")
+			.setComponents(
+				new ActionRowBuilder<TextInputBuilder>().addComponents(
+					new TextInputBuilder()
+						.setCustomId("code")
+						.setLabel("Code")
+						.setPlaceholder("Imagescript code to run")
+						.setRequired(true)
+						.setStyle(TextInputStyle.Paragraph),
+				),
+				new ActionRowBuilder<TextInputBuilder>().addComponents(
+					new TextInputBuilder()
+						.setCustomId("inject")
+						.setLabel("Inject")
+						.setPlaceholder(
+							"Extra variables to pass in the execution, use JSON format.",
+						)
+						.setRequired(false)
+						.setStyle(TextInputStyle.Paragraph),
+				),
+			);
 
-		const code = interaction.options.getString("code", true);
-
-		const data = await this.container.image.imagescript(code);
-
-		const buffer = data.image;
-		const file = new AttachmentBuilder(buffer!, {
-			name: generateOptimisedName(data.format ?? "png"),
-		});
-
-		return interaction.editReply({
-			content: (await resolveKey(
-				interaction.guild,
-				"general:stopwatchFinished",
-				{
-					time: stopwatch.stop().toString(),
-				},
-			)) as string,
-			files: [file],
-		});
+		return await interaction.showModal(modal);
 	}
 }

@@ -8,7 +8,7 @@ import { BaseParser, type IParser, Context } from "tagscript";
  *
  * @example
  * ```yaml
- * no.
+ *  {imagescript:code}
  * ```
  */
 export class ImagescriptParser extends BaseParser implements IParser {

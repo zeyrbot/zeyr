@@ -76,24 +76,18 @@ export const languages = [
 ];
 
 export const CLIENT_OPTIONS: ClientOptions = {
-	defaultPrefix: "!",
 	caseInsensitiveCommands: true,
 	logger: {
 		level: LogLevel.Debug,
 	},
-	intents: [
-		GatewayIntentBits.GuildMessages,
-		GatewayIntentBits.Guilds,
-		GatewayIntentBits.MessageContent,
-		GatewayIntentBits.GuildVoiceStates,
-	],
-	loadMessageCommandListeners: false,
+	intents: [GatewayIntentBits.GuildMessages, GatewayIntentBits.Guilds],
+	loadMessageCommandListeners: false, // Zeyr won't listen to any 'message' events, stay safe.
 	loadDefaultErrorListeners: true,
 	loadSubcommandErrorListeners: true,
 	presence: {
 		activities: [
 			{
-				name: "for tags 🏷",
+				name: "my repo",
 				type: ActivityType.Watching,
 			},
 		],
@@ -117,9 +111,9 @@ export const CLIENT_OPTIONS: ClientOptions = {
 			fallbackLng: "en-US",
 			interpolation: {
 				defaultVariables: {
-					error: "❎",
-					ok: "✅",
-					info: ":information_source:",
+					error: "🙁",
+					ok: "😀",
+					info: "🧐",
 				},
 			},
 		},

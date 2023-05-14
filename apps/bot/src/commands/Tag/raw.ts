@@ -13,7 +13,7 @@ import { Colors } from "@discord-factory/colorize";
 		.setName("raw")
 		.setDescription("Show a tag's info")
 		.addStringOption((s) =>
-			s.setName("name").setDescription("Name of the tag").setRequired(true)
+			s.setName("name").setDescription("Name of the tag").setRequired(true).setAutocomplete(true)
 		)
 )
 export class UserCommand extends Command {

@@ -18,7 +18,7 @@ import { getTag, incrementTagUsage } from "../../lib/database/tags";
 		.setName("show")
 		.setDescription("Run and display a tag content")
 		.addStringOption((s) =>
-			s.setName("name").setDescription("Name of the tag").setRequired(true)
+			s.setName("name").setDescription("Name of the tag").setRequired(true).setAutocomplete(true)
 		)
 		.addStringOption((s) =>
 			s

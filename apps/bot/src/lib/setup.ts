@@ -1,5 +1,5 @@
 // Unless explicitly defined, set NODE_ENV as development:
-process.env.NODE_ENV ??= "production";
+process.env.NODE_ENV ??= "development";
 
 // Registering plugins
 import "@sapphire/plugin-logger/register";

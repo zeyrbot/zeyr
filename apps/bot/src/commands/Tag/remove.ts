@@ -5,6 +5,7 @@ import {
 import { resolveKey } from "@sapphire/plugin-i18next";
 import { deleteTag } from "../../lib/database/tags";
 import { Result } from "@sapphire/result";
+import { RequiresUserPermissions } from "@sapphire/decorators";
 
 // TODO: Check if user is admin or tag owner
 
@@ -13,10 +14,11 @@ import { Result } from "@sapphire/result";
 		.setName("remove")
 		.setDescription("Remove a tag from this guild")
 		.addStringOption((s) =>
-			s.setName("name").setDescription("Name of the tag").setRequired(true)
+			s.setName("name").setDescription("Name of the tag").setRequired(true).setAutocomplete(true)
 		)
 )
 export class UserCommand extends Command {
+	@RequiresUserPermissions("ManageGuild")
 	public override async chatInputRun(
 		interaction: Command.ChatInputInteraction<"cached">,
 	) {
