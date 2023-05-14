@@ -3,7 +3,7 @@ import {
 	RegisterSubCommand,
 } from "@kaname-png/plugin-subcommands-advanced";
 import { Image, TextLayout } from "imagescript";
-import { optimiseGithubCDN } from "../../lib/util";
+import { generateOptimisedName, optimiseGithubCDN } from "../../lib/util";
 import { resolveKey } from "@sapphire/plugin-i18next";
 import { Stopwatch } from "@sapphire/stopwatch";
 import { AttachmentBuilder } from "discord.js";
@@ -46,7 +46,7 @@ export class UserCommand extends Command {
 
 		const { buffer } = await sonic.encode();
 		const file = new AttachmentBuilder(Buffer.from(buffer), {
-			name: "sonic.gif",
+			name: generateOptimisedName("gif"),
 		});
 
 		return interaction.editReply({

@@ -5,6 +5,7 @@ import {
 import { resolveKey } from "@sapphire/plugin-i18next";
 import { Stopwatch } from "@sapphire/stopwatch";
 import { AttachmentBuilder } from "discord.js";
+import { generateOptimisedName } from "../../lib/util";
 
 @RegisterSubCommand("image", (builder) =>
 	builder
@@ -27,7 +28,7 @@ export class UserCommand extends Command {
 
 		const buffer = data.image;
 		const file = new AttachmentBuilder(buffer!, {
-			name: `imagescript.${data.format ?? "png"}`,
+			name: generateOptimisedName(data.format ?? "png"),
 		});
 
 		return interaction.editReply({

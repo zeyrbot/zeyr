@@ -17,6 +17,10 @@ import SimplexNoise from "simplex-noise";
 import { inspect } from "util";
 import { isThenable } from "@sapphire/utilities";
 
+/**
+ * A wrapper for easier image manipulation
+ * @author ruunao
+ */
 export class ImageManipulation {
 	constructor() {}
 
@@ -89,6 +93,10 @@ export class ImageManipulation {
 	}
 }
 
+/**
+ * A wrapper for the Unofficial valorant api
+ * @author ruunao
+ */
 export class Valorant {
 	baseUrl: string;
 	constructor() {
@@ -110,6 +118,10 @@ export class Valorant {
 	}
 }
 
+/**
+ * A wrapper for the urbandictionary api
+ * @author ruunao
+ */
 export class Urbandictionary {
 	baseUrl: string;
 	constructor() {
@@ -133,7 +145,7 @@ export class Urbandictionary {
 
 /**
  * A wrapper for the discordlist.gg api
- * @author brxem
+ * @author ruunao
  */
 export class Dlist {
 	options: DlistOptions;

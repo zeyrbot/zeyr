@@ -1,25 +1,20 @@
 # Zeyr Turborepo
 > Zeyr is a descentralised Discord assistant made for developer communities.
 
-# Translations
-When a new command is made, I *usually* make it's respective translations in the same commit, if not, maybe im just lazy.
+# Features
+- 🖼 Image manipulation
+- 😂 Fun image manipulation
+- 🔧 Dev tools (code execution, custom imagescript eval...)
+- 🎮 Game stats (Only Valorant ATM)
+- ⚡ Fast responses
+- 📙 Localization (en-US, es-ES)
+- 🏷 Tag scripting system
+- 🤗 More to come...
 
-The fallback language when no translation found is `en-US`
+# Read before self-hosting
+If you want to self-host Zeyr, you are on your own. We do not support the idea of Zeyr being self-hosted, though you still can do it.
 
-# It's not a bug, it's a feature
-- Some errors can be ephemeral or not
-
-# Self-hosting
-Zeyr team does not support the idea of people self-hosting their own instance of Zeyr, we kindly ask you to use our self-hosted version.
-
-# Older version
-If you want Zeyr's old code (not that old, still used) please refer to [brxem/zeyr](https://github.com/brxem/zeyr), eventually that repo wont be updated anymore, please stay up-to-date 🙏
-
-# Contributing
-1. Fork it!
-2. Create your feature branch: `git checkout -b feat/<feature>`
-3. Commit your changes: `git commit -am 'feat(<app>): my feature'`
-4. Push to the branch: `git push origin feat/<feature>`
-5. Submit your pull request
+# Stats
+![Stats](https://repobeats.axiom.co/api/embed/f3c29277abeffec2f7e64ba3a230fafba493513f.svg "Repo stats")
 
 > I will upgrade this readme, maybe later, stay tuned.
