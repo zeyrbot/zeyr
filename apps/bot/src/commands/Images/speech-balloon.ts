@@ -35,8 +35,8 @@ export class UserCommand extends Command {
 				await resolveKey(interaction.guild, "commands/images:invalidImage"),
 			);
 
-		const speech = await this.container.image.decode(this.SPEECH_BALLOON_URL);
-		const balloon = await this.container.image.decode(
+		const balloon = await this.container.image.decode(this.SPEECH_BALLOON_URL);
+		const speech = await this.container.image.decode(
 			image.proxyURL ?? image.url,
 		);
 
