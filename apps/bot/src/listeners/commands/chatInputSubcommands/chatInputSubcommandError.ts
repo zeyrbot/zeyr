@@ -1,7 +1,7 @@
 import { Listener, type UserError } from "@sapphire/framework";
 import {
-	SubcommandPluginEvents,
 	type ChatInputSubcommandErrorPayload,
+	SubcommandPluginEvents,
 } from "@sapphire/plugin-subcommands";
 
 export class UserEvent extends Listener<

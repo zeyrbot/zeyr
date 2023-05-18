@@ -1,13 +1,13 @@
+import { generateOptimisedName, optimiseGithubCDN } from "../../lib/util";
 import {
 	Command,
 	RegisterSubCommand,
 } from "@kaname-png/plugin-subcommands-advanced";
-import { Image, TextLayout } from "imagescript";
-import { generateOptimisedName, optimiseGithubCDN } from "../../lib/util";
 import { resolveKey } from "@sapphire/plugin-i18next";
 import { Stopwatch } from "@sapphire/stopwatch";
-import { AttachmentBuilder } from "discord.js";
 import { cast } from "@sapphire/utilities";
+import { AttachmentBuilder } from "discord.js";
+import { Image, TextLayout } from "imagescript";
 
 @RegisterSubCommand("image", (builder) =>
 	builder

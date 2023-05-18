@@ -1,4 +1,4 @@
-import { BaseParser, type IParser, Context } from "tagscript";
+import { BaseParser, Context, type IParser } from "tagscript";
 
 /**
  * Scans an image for text (TODO)

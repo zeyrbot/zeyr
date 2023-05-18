@@ -1,17 +1,17 @@
+import { getTag, incrementTagUsage } from "../../lib/database/tags";
+import { tagParsers } from "../../lib/util";
 import {
 	Command,
 	RegisterSubCommand,
 } from "@kaname-png/plugin-subcommands-advanced";
 import { resolveKey } from "@sapphire/plugin-i18next";
+import { AttachmentBuilder, EmbedBuilder, GuildMember } from "discord.js";
 import { Interpreter, StringTransformer } from "tagscript";
-import { tagParsers } from "../../lib/util";
 import {
 	GuildTransformer,
 	MemberTransformer,
 	UserTransformer,
 } from "tagscript-plugin-discord";
-import { AttachmentBuilder, EmbedBuilder, GuildMember } from "discord.js";
-import { getTag, incrementTagUsage } from "../../lib/database/tags";
 
 @RegisterSubCommand('tag', (builder) =>
 	builder

@@ -1,10 +1,10 @@
 // Unless explicitly defined, set NODE_ENV as development:
 process.env.NODE_ENV ??= "development";
 
+import "@kaname-png/plugin-subcommands-advanced/register";
+import "@sapphire/plugin-i18next/register";
 // Registering plugins
 import "@sapphire/plugin-logger/register";
-import "@sapphire/plugin-i18next/register";
-import "@kaname-png/plugin-subcommands-advanced/register";
 
 import {
 	ApplicationCommandRegistries,

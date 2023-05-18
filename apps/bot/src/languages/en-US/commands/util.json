@@ -1,0 +1,4 @@
+{
+	"screenshotBadUrl": "{{error}} The provided URL is blacklisted\n\nSee the full list [here]({{list}})",
+	"exifOk": "```md\nMimetype: {{mimetype}}\nSize: {{size}}\nDimensions: {{dimensions}}```"
+}

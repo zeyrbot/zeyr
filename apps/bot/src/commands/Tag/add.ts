@@ -1,9 +1,9 @@
+import { addTag } from "../../lib/database/tags";
 import {
 	Command,
 	RegisterSubCommand,
 } from "@kaname-png/plugin-subcommands-advanced";
 import { resolveKey } from "@sapphire/plugin-i18next";
-import { addTag } from "../../lib/database/tags";
 import { Result } from "@sapphire/result";
 
 @RegisterSubCommand('tag', (builder) =>

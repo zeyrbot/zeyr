@@ -1,13 +1,13 @@
+import { APIS, optimiseGithubCDN } from "../../lib/util";
 import {
 	Command,
 	RegisterSubCommand,
 } from "@kaname-png/plugin-subcommands-advanced";
-import { APIS } from "../../lib/util";
-import { AttachmentBuilder } from "discord.js";
-import { Stopwatch } from "@sapphire/stopwatch";
-import { resolveKey } from "@sapphire/plugin-i18next";
 import { FetchResultTypes, fetch } from "@sapphire/fetch";
+import { resolveKey } from "@sapphire/plugin-i18next";
+import { Stopwatch } from "@sapphire/stopwatch";
 import { cast } from "@sapphire/utilities";
+import { AttachmentBuilder } from "discord.js";
 
 @RegisterSubCommand('util', (builder) =>
 	builder
@@ -44,6 +44,17 @@ export class UserCommand extends Command {
 		const height = interaction.options.getNumber("height") ?? 900;
 		const format = interaction.options.getString("format") ?? "png";
 
+		const badUrls = await fetch<string[]>(this.bad, FetchResultTypes.JSON);
+
+		if (badUrls.includes(url))
+			return interaction.editReply(
+				await resolveKey(interaction.guild, "commands/util:screenshotBadUrl", {
+					list: optimiseGithubCDN(
+						"https://raw.githubusercontent.com/zeyrbot/assets/main/json/websites.json",
+					),
+				}),
+			);
+
 		const requestUrl = new URL(APIS.SCREENSHOT);
 
 		requestUrl.searchParams.append("resX", width.toString());
@@ -71,4 +82,8 @@ export class UserCommand extends Command {
 			files: [file],
 		});
 	}
+
+	private bad = optimiseGithubCDN(
+		"https://raw.githubusercontent.com/zeyrbot/assets/main/json/websites.json",
+	);
 }

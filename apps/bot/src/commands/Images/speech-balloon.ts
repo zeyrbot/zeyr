@@ -1,16 +1,16 @@
 import {
-	Command,
-	RegisterSubCommand,
-} from "@kaname-png/plugin-subcommands-advanced";
-import { Stopwatch } from "@sapphire/stopwatch";
-import {
 	generateOptimisedName,
 	lastMedia,
 	optimiseGithubCDN,
 } from "../../lib/util";
+import {
+	Command,
+	RegisterSubCommand,
+} from "@kaname-png/plugin-subcommands-advanced";
 import { resolveKey } from "@sapphire/plugin-i18next";
-import { AttachmentBuilder } from "discord.js";
+import { Stopwatch } from "@sapphire/stopwatch";
 import { cast } from "@sapphire/utilities";
+import { AttachmentBuilder } from "discord.js";
 
 @RegisterSubCommand("image", (builder) =>
 	builder

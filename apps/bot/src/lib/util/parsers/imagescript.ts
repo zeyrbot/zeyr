@@ -1,5 +1,5 @@
 import { container } from "@sapphire/pieces";
-import { BaseParser, type IParser, Context } from "tagscript";
+import { BaseParser, Context, type IParser } from "tagscript";
 
 /**
  * Runs imagescript code (Javascript only)

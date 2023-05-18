@@ -1,10 +1,10 @@
+import { getTagsList } from "../../lib/database/tags";
 import { ApplyOptions } from "@sapphire/decorators";
 import {
 	InteractionHandler,
 	InteractionHandlerTypes,
 } from "@sapphire/framework";
 import type { AutocompleteInteraction } from "discord.js";
-import { getTagsList } from "../../lib/database/tags";
 import Fuse from "fuse.js";
 
 @ApplyOptions<InteractionHandler.Options>({

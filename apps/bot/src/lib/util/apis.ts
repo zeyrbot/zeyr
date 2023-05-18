@@ -1,21 +1,40 @@
-import { fetch, FetchMethods, FetchResultTypes } from "@sapphire/fetch";
+import { ImagescriptFormat, type ImagescriptOutput } from "../types/apis/extra";
+import type { ApexPlatforms } from "../types/apis/tracker";
+import type { UrbanList } from "../types/apis/urban";
+import type {
+	ValorantAccount,
+	ValorantMMR,
+	ValorantRegions,
+	ValorantResult,
+} from "../types/apis/valorant";
 import { APIS } from "./enums";
-import {
-	type List,
-	type DlistOptions,
-	type ValorantAccount,
-	type ValorantResult,
-	type ValorantRegions,
-	type ValorantMMR,
-	type ImagescriptOutput,
-	ImagescriptFormat,
-} from "../types/apis";
 import { decodeWEBP, secureFetch } from "./performance";
-import Imagescript, { decode, Frame, GIF, Image } from "imagescript";
-import { runInNewContext } from "vm";
+import { FetchMethods, FetchResultTypes, fetch } from "@sapphire/fetch";
+import { UserError } from "@sapphire/framework";
+import { cast } from "@sapphire/utilities";
+import Imagescript, { Frame, GIF, Image, decode } from "imagescript";
 import SimplexNoise from "simplex-noise";
 import { inspect } from "util";
-import { cast } from "@sapphire/utilities";
+import { runInNewContext } from "vm";
+
+/**
+ * A wrapper for tracker.gg public api
+ * @author ruunao
+ */
+export class TrackerGG {
+	baseUrl: string;
+	key?: string;
+	constructor(key: string) {
+		this.baseUrl = APIS.TRACKERGG;
+		this.key = key;
+	}
+
+	public async apexProfile(platform: ApexPlatforms, id: string) {}
+
+	private headers = {
+		"TRN-Api-Key": this.key,
+	};
+}
 
 /**
  * A wrapper for easier image manipulation
@@ -23,6 +42,12 @@ import { cast } from "@sapphire/utilities";
  */
 export class ImageManipulation {
 	constructor() {}
+
+	public async sharp(url: string): Promise<Buffer> {
+		const buffer = await fetch(url, FetchResultTypes.Buffer);
+
+		return buffer;
+	}
 
 	public async decode(url: string): Promise<Image> {
 		const buffer = await fetch(url, FetchResultTypes.Buffer);
@@ -55,27 +80,45 @@ export class ImageManipulation {
 			log: (arg: string) => `${arg}\n`,
 		};
 
-		let result: Uint8Array | undefined = await runInNewContext(
-			script,
-			{
-				Imagescript,
-				Image,
-				Frame,
-				GIF,
-				decode,
-				SimplexNoise,
-				_inspect: inspect,
-				console: _console,
-				fetch: secureFetch,
-				...inject,
-			},
-			{ timeout: 60000 },
-		);
+		let result: Uint8Array | undefined;
 
-		if (result === undefined) throw new Error("no output");
-		if (result instanceof ArrayBuffer) result = new Uint8Array(result);
+		try {
+			result = await runInNewContext(
+				script,
+				{
+					Imagescript,
+					Image,
+					Frame,
+					GIF,
+					decode,
+					SimplexNoise,
+					_inspect: inspect,
+					console: _console,
+					fetch: secureFetch,
+					process: "no",
+					...inject,
+				},
+				{ timeout: 60000 },
+			);
+		} catch {
+			throw new UserError({
+				message: "An error occurred",
+				identifier: "ImagescriptError",
+			});
+		}
+
+		if (result === undefined)
+			throw new UserError({
+				message: "Code returned no response",
+				identifier: "ImagescriptNoResponse",
+			});
 		if (!(result instanceof Uint8Array))
-			throw "Invalid data returned (did you forget to encode the image?)";
+			throw new UserError({
+				message: "Code returned invalid response",
+				identifier: "ImagescriptInvalidResponse",
+			});
+
+		if (result instanceof ArrayBuffer) result = new Uint8Array(result);
 
 		const output: ImagescriptOutput = {
 			image: undefined,
@@ -100,13 +143,16 @@ export class ImageManipulation {
  */
 export class Valorant {
 	baseUrl: string;
-	constructor() {
+	key?: string;
+	constructor(key?: string) {
 		this.baseUrl = APIS.VALORANT;
+		this.key = key;
 	}
 
 	public async account(name: string, tag: string) {
 		return fetch<ValorantResult<ValorantAccount>>(
 			`${this.baseUrl}/v1/account/${name}/${tag}`,
+			this.headers,
 			FetchResultTypes.JSON,
 		);
 	}
@@ -114,9 +160,16 @@ export class Valorant {
 	public async mmr(region: ValorantRegions, name: string, tag: string) {
 		return fetch<ValorantResult<ValorantMMR>>(
 			`${this.baseUrl}/v2/mmr/${region}/${name}/${tag}`,
+			this.headers,
 			FetchResultTypes.JSON,
 		);
 	}
+
+	private headers = {
+		headers: {
+			Authorization: this.key ?? "",
+		},
+	};
 }
 
 /**
@@ -137,7 +190,7 @@ export class Urbandictionary {
 	}
 
 	public async define(term: string) {
-		return fetch<List>(
+		return fetch<UrbanList>(
 			`${this.baseUrl}/define?term=${term}`,
 			FetchResultTypes.JSON,
 		);
@@ -149,22 +202,21 @@ export class Urbandictionary {
  * @author ruunao
  */
 export class Dlist {
-	options: DlistOptions;
-	url: string;
-	constructor(options: DlistOptions) {
-		this.options = options;
-		this.url = APIS.DLIST;
+	id: string;
+	key?: string;
+	baseUrl: string;
+	constructor(id: string, key: string) {
+		this.id = id;
+		this.key = key;
+		this.baseUrl = APIS.DLIST;
 	}
 
 	public async postGuildCount(count: number) {
 		return await fetch<boolean>(
-			`${this.url}/bots/${this.options.id}/stats`,
+			`${this.baseUrl}/bots/${this.id}/stats`,
 			{
 				method: FetchMethods.Post,
-				headers: {
-					Authorization: this.parseBodyToken(),
-					"Content-Type": "application/json; charset=utf-8",
-				},
+				headers: this.headers,
 				body: JSON.stringify({
 					server_count: count,
 				}),
@@ -173,7 +225,8 @@ export class Dlist {
 		);
 	}
 
-	private parseBodyToken() {
-		return `Bearer ${this.options.token}`;
-	}
+	private headers = {
+		Authorization: `Bearer ${this.key}`,
+		"Content-Type": "application/json; charset=utf-8",
+	};
 }

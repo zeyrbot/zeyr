@@ -1,11 +1,11 @@
+import { deleteTag } from "../../lib/database/tags";
 import {
 	Command,
 	RegisterSubCommand,
 } from "@kaname-png/plugin-subcommands-advanced";
-import { resolveKey } from "@sapphire/plugin-i18next";
-import { deleteTag } from "../../lib/database/tags";
-import { Result } from "@sapphire/result";
 import { RequiresUserPermissions } from "@sapphire/decorators";
+import { resolveKey } from "@sapphire/plugin-i18next";
+import { Result } from "@sapphire/result";
 
 // TODO: Check if user is admin or tag owner
 

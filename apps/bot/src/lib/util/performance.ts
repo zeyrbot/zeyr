@@ -1,6 +1,6 @@
-import sharp from "sharp";
+import type { Attachment, GuildTextBasedChannel, Message } from "discord.js";
 import { decode } from "imagescript";
-import type { Message, GuildTextBasedChannel } from "discord.js";
+import sharp from "sharp";
 
 export function optimiseGithubCDN(url: string) {
 	const optimisedUrl = new URL(
@@ -39,13 +39,14 @@ export async function lastMedia(channel: GuildTextBasedChannel, limit = 30) {
 
 	const lastMessage = messages.find(
 		(message: Message) =>
-			message.attachments.size > 0 || message.embeds[0].image,
+			message.attachments.size > 0 || message.embeds[0]?.data.url,
 	);
 
 	if (!lastMessage) return undefined;
 
 	const attachment =
-		lastMessage.attachments.first() || lastMessage.embeds[0].image;
+		lastMessage.attachments.first() ||
+		(lastMessage.embeds[0].data as Attachment);
 
 	return attachment;
 }

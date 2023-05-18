@@ -1,13 +1,19 @@
+import { getOrCreateGuild } from "../database/guilds";
+import {
+	FetchParser,
+	ImagescriptParser,
+	NSFWParser,
+	OCRParser,
+} from "./parsers";
 import { LogLevel } from "@sapphire/framework";
 import { type InternationalizationContext } from "@sapphire/plugin-i18next";
 import {
-	GatewayIntentBits,
-	type ClientOptions,
 	ActivityType,
+	type ClientOptions,
+	GatewayIntentBits,
 	PresenceUpdateStatus,
 } from "discord.js";
 import { join } from "path";
-import { getOrCreateGuild } from "../database/guilds";
 import {
 	BreakParser,
 	DefineParser,
@@ -24,16 +30,10 @@ import {
 	StrictVarsParser,
 } from "tagscript";
 import {
+	DeleteParser,
 	EmbedParser,
 	FilesParser,
-	DeleteParser,
 } from "tagscript-plugin-discord";
-import {
-	FetchParser,
-	ImagescriptParser,
-	NSFWParser,
-	OCRParser,
-} from "./parsers";
 export const rootDir = join(__dirname, "..", "..");
 export const srcDir = join(rootDir, "src");
 

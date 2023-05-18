@@ -1,14 +1,14 @@
+import { getTagsList } from "../../lib/database/tags";
+import { Colors } from "@discord-factory/colorize";
 import {
 	Command,
 	RegisterSubCommand,
 } from "@kaname-png/plugin-subcommands-advanced";
+import type { Tag } from "@prisma/client";
 import { PaginatedMessage } from "@sapphire/discord.js-utilities";
 import { resolveKey } from "@sapphire/plugin-i18next";
-import { getTagsList } from "../../lib/database/tags";
-import { EmbedBuilder } from "discord.js";
-import type { Tag } from "@prisma/client";
 import { chunk } from "@sapphire/utilities";
-import { Colors } from "@discord-factory/colorize";
+import { EmbedBuilder } from "discord.js";
 
 // TODO: List per server or user (currently per server)
 

@@ -1,14 +1,14 @@
+import type { Term } from "../../lib/types/apis";
+import { optimiseGithubCDN } from "../../lib/util";
+import { Urbandictionary } from "../../lib/util/apis";
+import { Colors } from "@discord-factory/colorize";
 import {
 	Command,
 	RegisterSubCommand,
 } from "@kaname-png/plugin-subcommands-advanced";
-import { Urbandictionary } from "../../lib/util/apis";
 import { PaginatedMessage } from "@sapphire/discord.js-utilities";
-import { EmbedBuilder } from "discord.js";
 import { UserError } from "@sapphire/framework";
-import { Colors } from "@discord-factory/colorize";
-import type { Term } from "../../lib/types/apis";
-import { optimiseGithubCDN } from "../../lib/util";
+import { EmbedBuilder } from "discord.js";
 
 @RegisterSubCommand('util', (builder) =>
 	builder

@@ -1,10 +1,10 @@
+import { getOrCreateGuild, updateGuild } from "../../lib/database/guilds";
+import { languages } from "../../lib/util";
 import {
 	Command,
 	RegisterSubCommand,
 } from "@kaname-png/plugin-subcommands-advanced";
 import { ApplyOptions } from "@sapphire/decorators";
-import { languages } from "../../lib/util";
-import { getOrCreateGuild, updateGuild } from "../../lib/database/guilds";
 import { resolveKey } from "@sapphire/plugin-i18next";
 
 @ApplyOptions<Command.Options>({

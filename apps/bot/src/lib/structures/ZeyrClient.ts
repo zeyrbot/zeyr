@@ -1,8 +1,8 @@
+import { ImageManipulation } from "../util";
+import { PrismaClient } from "@prisma/client";
 import { SapphireClient, container } from "@sapphire/framework";
 import { greenBright, redBright } from "colorette";
 import type { ClientOptions } from "discord.js";
-import { PrismaClient } from "@prisma/client";
-import { ImageManipulation } from "../util";
 
 export class ZeyrClient extends SapphireClient {
 	constructor(opts: ClientOptions) {

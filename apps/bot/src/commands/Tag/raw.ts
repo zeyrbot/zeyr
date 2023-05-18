@@ -1,3 +1,5 @@
+import { getTag } from "../../lib/database/tags";
+import { Colors } from "@discord-factory/colorize";
 import {
 	Command,
 	RegisterSubCommand,
@@ -5,8 +7,6 @@ import {
 import { resolveKey } from "@sapphire/plugin-i18next";
 import { codeBlock } from "@sapphire/utilities";
 import { EmbedBuilder } from "discord.js";
-import { getTag } from "../../lib/database/tags";
-import { Colors } from "@discord-factory/colorize";
 
 @RegisterSubCommand('tag', (builder) =>
 	builder

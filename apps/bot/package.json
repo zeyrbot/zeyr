@@ -44,6 +44,7 @@
 		"init": "npm run build && npm run start",
 		"dev": "tsc-watch -b src --onSuccess \"pnpm start\"",
 		"format": "rome format src --write",
+		"check": "rome check src --apply-unsafe",
 		"prisma:generate": "prisma generate --schema=../../prisma/schema.prisma"
 	}
 }

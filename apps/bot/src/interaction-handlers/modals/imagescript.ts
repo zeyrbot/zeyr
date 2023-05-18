@@ -1,13 +1,13 @@
+import { generateOptimisedName } from "../../lib/util";
 import {
 	InteractionHandler,
 	InteractionHandlerTypes,
 	type PieceContext,
 } from "@sapphire/framework";
 import { resolveKey } from "@sapphire/plugin-i18next";
-import { AttachmentBuilder, type ModalSubmitInteraction } from "discord.js";
-import { generateOptimisedName } from "../../lib/util";
 import { Stopwatch } from "@sapphire/stopwatch";
 import { cast } from "@sapphire/utilities";
+import { AttachmentBuilder, type ModalSubmitInteraction } from "discord.js";
 
 export class ModalHandler extends InteractionHandler {
 	public constructor(ctx: PieceContext, options: InteractionHandler.Options) {

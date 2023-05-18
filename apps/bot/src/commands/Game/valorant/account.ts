@@ -1,9 +1,9 @@
+import { Valorant } from "../../../lib/util/apis";
+import { Colors } from "@discord-factory/colorize";
 import { Command } from "@kaname-png/plugin-subcommands-advanced";
 import { RegisterSubCommandGroup } from "@kaname-png/plugin-subcommands-advanced";
-import { Valorant } from "../../../lib/util/apis";
 import { resolveKey } from "@sapphire/plugin-i18next";
 import { EmbedBuilder } from "discord.js";
-import { Colors } from "@discord-factory/colorize";
 
 @RegisterSubCommandGroup("game", "valorant", (builder) => 
 	builder

@@ -1,7 +1,7 @@
 import {
 	BaseParser,
-	type IParser,
 	Context,
+	type IParser,
 	SafeObjectTransformer,
 } from "tagscript";
 
