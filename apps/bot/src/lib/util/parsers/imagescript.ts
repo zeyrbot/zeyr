@@ -21,7 +21,7 @@ export class ImagescriptParser extends BaseParser implements IParser {
 
 		if (!image) throw new Error("image returned nothing");
 
-		ctx.response.actions.files = [image];
+		ctx.response.actions.files = [image as unknown as string];
 
 		return "";
 	}
