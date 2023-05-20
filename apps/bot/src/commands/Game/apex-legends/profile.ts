@@ -1,9 +1,9 @@
+import type { ApexPlatforms } from "../../../lib/types/apis/tracker";
+import { TrackerGG } from "../../../lib/util";
+import { Colors } from "@discord-factory/colorize";
 import { Command } from "@kaname-png/plugin-subcommands-advanced";
 import { RegisterSubCommandGroup } from "@kaname-png/plugin-subcommands-advanced";
-import { TrackerGG } from "../../../lib/util";
-import type { ApexPlatforms } from "../../../lib/types/apis/tracker";
 import { resolveKey } from "@sapphire/plugin-i18next";
-import { Colors } from "@discord-factory/colorize";
 import { EmbedBuilder } from "discord.js";
 
 @RegisterSubCommandGroup("game", "apex-legends", (builder) => 

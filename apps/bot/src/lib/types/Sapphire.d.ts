@@ -1,5 +1,5 @@
-import type { PrismaClient } from "@prisma/client";
 import type { ImageManipulation } from "../util";
+import type { PrismaClient } from "@prisma/client";
 
 declare module "@sapphire/pieces" {
 	interface Container {

@@ -2,8 +2,8 @@ import { ImagescriptFormat, type ImagescriptOutput } from "../types/apis/extra";
 import type {
 	ApexPlatforms,
 	ApexProfile,
-	TrackerRoot,
 	CSGOPlatforms,
+	TrackerRoot,
 } from "../types/apis/tracker";
 import type { UrbanList } from "../types/apis/urban";
 import type {

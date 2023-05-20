@@ -1,3 +1,4 @@
+import type { UrbanTerm } from "../../lib/types/apis/urban";
 import { optimiseGithubCDN } from "../../lib/util";
 import { Urbandictionary } from "../../lib/util/apis";
 import { Colors } from "@discord-factory/colorize";
@@ -8,7 +9,6 @@ import {
 import { PaginatedMessage } from "@sapphire/discord.js-utilities";
 import { UserError } from "@sapphire/framework";
 import { EmbedBuilder } from "discord.js";
-import type { UrbanTerm } from "../../lib/types/apis/urban";
 
 @RegisterSubCommand('util', (builder) =>
 	builder
