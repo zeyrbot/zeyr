@@ -1,4 +1,5 @@
 import type { PrismaClient } from "@prisma/client";
+import type { ImageManipulation } from "../util";
 
 declare module "@sapphire/pieces" {
 	interface Container {
@@ -7,8 +8,6 @@ declare module "@sapphire/pieces" {
 	}
 }
 
-import type { ImageManipulation } from "../util";
-import "tagscript";
 declare module "tagscript" {
 	interface IActions {
 		nsfw?: {

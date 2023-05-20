@@ -1,0 +1,4 @@
+{
+	"languageIsEqual": "{{error}} Diese Sprache ist für diese Gilde bereits eingestellt",
+	"languageSuccess": "{{ok}} Ich habe die Sprache für diese Gilde geändert {{language}}"
+}

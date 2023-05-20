@@ -6,7 +6,7 @@ export type ValorantRegions =
 	| "latam"
 	| "na"; /** note: for querying the api, BR and LATAM should be named as NA */
 
-export interface ValorantResult<T> {
+export interface ValorantRoot<T> {
 	status: number;
 	data: T;
 }

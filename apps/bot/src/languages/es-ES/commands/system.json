@@ -1,4 +1,0 @@
-{
-	"pingWait": "Midiendo...",
-	"pingDone": "Latencia del Websocket: {{ws}}ms\nLatencia de la interacción: {{latency}}ms\nLatencia de la base de datos: {{db}}ms"
-}

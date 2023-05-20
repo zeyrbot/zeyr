@@ -1,0 +1,4 @@
+{
+	"noDatabaseRecord": "{{error}} Je n'ai pas pu trouver cette guilde dans ma base de données, exécutez à nouveau la commande en toute sécurité!",
+	"unexpected": "{{error}} Une erreur inattendue s'est produite, réessayez"
+}

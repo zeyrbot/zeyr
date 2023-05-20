@@ -17,10 +17,10 @@ export class UserEvent extends Listener {
 		}
 	}
 
-	private dlist = new Dlist({
-		id: "1095425642159407165",
-		token: process.env.DLIST_KEY as string,
-	});
+	private dlist = new Dlist(
+		"1095425642159407165",
+		process.env.DLIST_KEY as string,
+	);
 
 	private async postGuildCount() {
 		this.dlist

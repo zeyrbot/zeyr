@@ -13,6 +13,9 @@ export class ParentCommand extends Subcommand {
 			ctx.addSubcommandGroup((sc) =>
 				sc.setName("valorant").setDescription("Valorant commands"),
 			);
+			ctx.addSubcommandGroup((sc) =>
+				sc.setName("apex-legends").setDescription("Apex commands"),
+			);
 
 			// this.hooks.subcommands(this, ctx);
 			this.hooks.groups(this, ctx);

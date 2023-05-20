@@ -70,8 +70,12 @@ export const languages = [
 		value: "en-US",
 	},
 	{
-		name: "Spanish",
-		value: "es-ES",
+		name: "Deutsch",
+		value: "de-DE",
+	},
+	{
+		name: "Français",
+		value: "fr-FR",
 	},
 ];
 

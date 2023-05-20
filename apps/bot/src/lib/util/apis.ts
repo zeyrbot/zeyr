@@ -1,11 +1,16 @@
 import { ImagescriptFormat, type ImagescriptOutput } from "../types/apis/extra";
-import type { ApexPlatforms } from "../types/apis/tracker";
+import type {
+	ApexPlatforms,
+	ApexProfile,
+	TrackerRoot,
+	CSGOPlatforms,
+} from "../types/apis/tracker";
 import type { UrbanList } from "../types/apis/urban";
 import type {
 	ValorantAccount,
 	ValorantMMR,
 	ValorantRegions,
-	ValorantResult,
+	ValorantRoot,
 } from "../types/apis/valorant";
 import { APIS } from "./enums";
 import { decodeWEBP, secureFetch } from "./performance";
@@ -23,17 +28,38 @@ import { runInNewContext } from "vm";
  */
 export class TrackerGG {
 	baseUrl: string;
-	key?: string;
+	private readonly key: string;
 	constructor(key: string) {
 		this.baseUrl = APIS.TRACKERGG;
 		this.key = key;
 	}
 
-	public async apexProfile(platform: ApexPlatforms, id: string) {}
+	public async apexProfile(platform: ApexPlatforms, id: string) {
+		return fetch<TrackerRoot<ApexProfile>>(
+			`${this.baseUrl}/apex/standard/profile/${platform}/${id}`,
+			{
+				headers: {
+					"TRN-Api-Key": this.key!,
+					"Content-Type": "application/json",
+				},
+			},
+			FetchResultTypes.JSON,
+		);
+	}
 
-	private headers = {
-		"TRN-Api-Key": this.key,
-	};
+	public async csgoProfile(platform: CSGOPlatforms, id: string) {
+		return fetch<TrackerRoot<ApexProfile>>(
+			//WIPPPPPPPPPPPPPppp
+			`${this.baseUrl}/csgo/standard/profile/${platform}/${id}`,
+			{
+				headers: {
+					"TRN-Api-Key": this.key!,
+					"Content-Type": "application/json",
+				},
+			},
+			FetchResultTypes.JSON,
+		);
+	}
 }
 
 /**
@@ -150,25 +176,37 @@ export class Valorant {
 	}
 
 	public async account(name: string, tag: string) {
-		return fetch<ValorantResult<ValorantAccount>>(
+		return fetch<ValorantRoot<ValorantAccount>>(
 			`${this.baseUrl}/v1/account/${name}/${tag}`,
-			this.headers,
+			{
+				headers: this.headers,
+			},
 			FetchResultTypes.JSON,
 		);
 	}
 
 	public async mmr(region: ValorantRegions, name: string, tag: string) {
-		return fetch<ValorantResult<ValorantMMR>>(
+		return fetch<ValorantRoot<ValorantMMR>>(
 			`${this.baseUrl}/v2/mmr/${region}/${name}/${tag}`,
-			this.headers,
+			{
+				headers: this.headers,
+			},
 			FetchResultTypes.JSON,
 		);
 	}
 
+	public async crosshair(code: string) {
+		return fetch(
+			`${this.baseUrl}/v1/crosshair/generate?id=${code}`,
+			{
+				headers: this.headers,
+			},
+			FetchResultTypes.Buffer,
+		);
+	}
+
 	private headers = {
-		headers: {
-			Authorization: this.key ?? "",
-		},
+		Authorization: this.key ?? "",
 	};
 }
 

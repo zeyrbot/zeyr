@@ -1,4 +1,3 @@
-import type { Term } from "../../lib/types/apis";
 import { optimiseGithubCDN } from "../../lib/util";
 import { Urbandictionary } from "../../lib/util/apis";
 import { Colors } from "@discord-factory/colorize";
@@ -9,6 +8,7 @@ import {
 import { PaginatedMessage } from "@sapphire/discord.js-utilities";
 import { UserError } from "@sapphire/framework";
 import { EmbedBuilder } from "discord.js";
+import type { UrbanTerm } from "../../lib/types/apis/urban";
 
 @RegisterSubCommand('util', (builder) =>
 	builder
@@ -36,7 +36,7 @@ export class UserCommand extends Command {
 		return await this.pagination(list).run(interaction);
 	}
 
-	public pagination(list: Term[]) {
+	public pagination(list: UrbanTerm[]) {
 		const definition = new PaginatedMessage({
 			template: new EmbedBuilder()
 				.setColor(Colors.SKY_500)

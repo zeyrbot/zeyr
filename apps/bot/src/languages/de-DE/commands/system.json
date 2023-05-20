@@ -1,0 +1,4 @@
+{
+	"pingWait": "Messung...",
+	"pingDone": "Websocket-Latenz: {{ws}}MS\n {{latency}}MS\n {{db}}MS"
+}
