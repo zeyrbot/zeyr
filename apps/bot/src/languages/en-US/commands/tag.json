@@ -8,5 +8,7 @@
 	"tagRawDate": "Date of creation",
 	"tagDeleteOk": "{{ok}} Just deleted {{tag}} tag",
 	"tagDeleteMissingPermissions": "{{error}} You are not allowed to delete this tag",
-	"tagListNoTags": "{{error}} This guild has no tags to show"
+	"tagListNoTags": "{{error}} This guild has no tags to show",
+	"tagListTitle": "Seeing tags from {{target}}",
+	"tagListFooter": " Total tags: {{total}}"
 }

@@ -1,0 +1,5 @@
+{
+    "i18n-ally.localesPaths": [
+        "apps/bot/src/languages"
+    ]
+}

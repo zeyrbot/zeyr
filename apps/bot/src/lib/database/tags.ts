@@ -12,10 +12,11 @@ export async function getTag(name: string, guildId: string) {
 	});
 }
 
-export async function getTagsList(guildId: string) {
+export async function getTagsList(guildId: string, memberId?: string) {
 	return container.prisma.tag.findMany({
 		where: {
 			guildId,
+			memberId,
 		},
 	});
 }

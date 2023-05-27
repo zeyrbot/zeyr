@@ -9,7 +9,7 @@ import {
 	TextInputStyle,
 } from "discord.js";
 
-@RegisterSubCommand("image", (builder) =>
+@RegisterSubCommand("util", (builder) =>
 	builder
 	  .setName("imagescript")
 	  .setDescription("Runs imagescript code in a separate container")

@@ -8,3 +8,6 @@ export function formatBytes(bytes: number, decimals = 2): string {
 
 	return [parseFloat((bytes / Math.pow(k, i)).toFixed(dm)), sizes[i]].join("");
 }
+
+export const customId = (separator: string, ...args: readonly string[]) =>
+	args.join(separator);

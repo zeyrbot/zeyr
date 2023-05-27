@@ -67,7 +67,16 @@ import { EmbedBuilder } from "discord.js";
 			.setColor(Colors.SKY_500)
 			.setTitle(profile.platformInfo.platformUserId)
 			.setThumbnail(profile.platformInfo.avatarUrl)
-			.setDescription("hallo");
+			.setDescription(
+				await resolveKey(
+					interaction.guild,
+					"commands/game:apexProfileDescription",
+					{
+						user: profile.platformInfo.platformUserId,
+						views: profile.userInfo.pageviews,
+					},
+				),
+			);
 
 		return interaction.editReply({
 			embeds: [embed],

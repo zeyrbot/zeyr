@@ -6,9 +6,9 @@ import {
 } from "@kaname-png/plugin-subcommands-advanced";
 import type { Tag } from "@prisma/client";
 import { PaginatedMessage } from "@sapphire/discord.js-utilities";
-import { resolveKey } from "@sapphire/plugin-i18next";
+import { fetchT, resolveKey, type TFunction } from "@sapphire/plugin-i18next";
 import { chunk } from "@sapphire/utilities";
-import { EmbedBuilder } from "discord.js";
+import { EmbedBuilder, Guild, User, inlineCode } from "discord.js";
 
 // TODO: List per server or user (currently per server)
 
@@ -16,12 +16,14 @@ import { EmbedBuilder } from "discord.js";
 	builder
 		.setName("list")
 		.setDescription("Show guild tags")
+		.addUserOption((u) => u.setName("user").setDescription("User to see tags from").setRequired(false))
 )
 export class UserCommand extends Command {
 	public override async chatInputRun(
 		interaction: Command.ChatInputInteraction<"cached">,
 	) {
-		const tags = await getTagsList(interaction.guildId);
+		const user = interaction.options.getUser("user", false);
+		const tags = await getTagsList(interaction.guildId, user?.id);
 
 		if (tags.length <= 0) {
 			return interaction.reply(
@@ -29,15 +31,27 @@ export class UserCommand extends Command {
 			);
 		}
 
-		return await this.pagination(tags).run(interaction);
+		return await this.pagination(
+			await fetchT(interaction.guild),
+			user ?? interaction.guild,
+			tags,
+		).run(interaction);
 	}
 
-	private pagination(tags: Tag[]) {
+	private pagination(t: TFunction, target: User | Guild, tags: Tag[]) {
 		const pagination = new PaginatedMessage({
 			template: new EmbedBuilder()
 				.setColor(Colors.SKY_500)
-				.setTitle("Tags list")
-				.setFooter({ text: ` Total tags: ${tags.length}` }),
+				.setTitle(
+					t("commands/tag:tagListTitle", {
+						target: target instanceof Guild ? target.name : target.username,
+					}),
+				)
+				.setFooter({
+					text: t("commands/tag:tagListFooter", {
+						total: tags.length,
+					}),
+				}),
 		});
 
 		const pages = chunk(tags, 10);
@@ -46,7 +60,9 @@ export class UserCommand extends Command {
 			pagination.addPageEmbed((embed) =>
 				embed //
 					.setDescription(
-						pageTags.map((tag) => `**~** ${tag.name}`).join("\n"),
+						pageTags
+							.map((tag, index) => `${inlineCode(String(++index))} ${tag.name}`)
+							.join("\n"),
 					),
 			);
 		}

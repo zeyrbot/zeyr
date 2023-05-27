@@ -39,6 +39,7 @@ import { AttachmentBuilder } from "discord.js";
 			image.proxyURL ?? image.url,
 		);
 
+		output.cropCircle();
 		output.fisheye(radius);
 
 		const { buffer } = await output.encode();

@@ -9,10 +9,10 @@ import { Result } from "@sapphire/result";
 
 // TODO: Check if user is admin or tag owner
 
-@RegisterSubCommand('tag', (builder) =>
+@RegisterSubCommand("tag", (builder) =>
 	builder
-		.setName("remove")
-		.setDescription("Remove a tag from this guild")
+		.setName("delete")
+		.setDescription("Delete a tag")
 		.addStringOption((s) =>
 			s.setName("name").setDescription("Name of the tag").setRequired(true).setAutocomplete(true)
 		)

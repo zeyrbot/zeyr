@@ -62,7 +62,10 @@ export class UserCommand extends Command {
 		requestUrl.searchParams.append("outFormat", format);
 		requestUrl.searchParams.append("waitTime", wait.toString());
 		requestUrl.searchParams.append("isFullPage", fullpage.toString());
-		requestUrl.searchParams.append("url", url);
+		requestUrl.searchParams.append(
+			"url",
+			!url.startsWith("https:") ? `https://${url}` : url,
+		);
 
 		const imageResult = await fetch(requestUrl, FetchResultTypes.Buffer);
 
