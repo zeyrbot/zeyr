@@ -1,12 +1,12 @@
+import { addTag } from "../../lib/database/tags";
 import {
 	InteractionHandler,
 	InteractionHandlerTypes,
-	Result,
 	type PieceContext,
+	Result,
 } from "@sapphire/framework";
 import { resolveKey } from "@sapphire/plugin-i18next";
 import { type ModalSubmitInteraction } from "discord.js";
-import { addTag } from "../../lib/database/tags";
 
 export class ModalHandler extends InteractionHandler {
 	public constructor(ctx: PieceContext, options: InteractionHandler.Options) {

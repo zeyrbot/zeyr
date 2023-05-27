@@ -1,17 +1,17 @@
+import { customId, optimiseGithubCDN } from "../../lib/util";
+import { Colors } from "@discord-factory/colorize";
 import {
 	Command,
 	RegisterSubCommand,
 } from "@kaname-png/plugin-subcommands-advanced";
-import { customId, optimiseGithubCDN } from "../../lib/util";
 import { FetchResultTypes, fetch } from "@sapphire/fetch";
+import { pickRandom } from "@sapphire/utilities";
 import {
 	ActionRowBuilder,
 	ButtonBuilder,
 	ButtonStyle,
 	EmbedBuilder,
 } from "discord.js";
-import { pickRandom } from "@sapphire/utilities";
-import { Colors } from "@discord-factory/colorize";
 
 @RegisterSubCommand('util', (builder) =>
 	builder

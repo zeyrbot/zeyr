@@ -6,7 +6,7 @@ import {
 } from "@kaname-png/plugin-subcommands-advanced";
 import type { Tag } from "@prisma/client";
 import { PaginatedMessage } from "@sapphire/discord.js-utilities";
-import { fetchT, resolveKey, type TFunction } from "@sapphire/plugin-i18next";
+import { type TFunction, fetchT, resolveKey } from "@sapphire/plugin-i18next";
 import { chunk } from "@sapphire/utilities";
 import { EmbedBuilder, Guild, User, inlineCode } from "discord.js";
 
