@@ -1,4 +1,3 @@
-import { getTagsList } from "../../lib/database/tags";
 import { Colors } from "@discord-factory/colorize";
 import {
 	Command,
@@ -8,22 +7,30 @@ import type { Tag } from "@prisma/client";
 import { PaginatedMessage } from "@sapphire/discord.js-utilities";
 import { type TFunction, fetchT, resolveKey } from "@sapphire/plugin-i18next";
 import { chunk } from "@sapphire/utilities";
-import { EmbedBuilder, Guild, User, inlineCode } from "discord.js";
+import { EmbedBuilder, Guild, User } from "discord.js";
 
 // TODO: List per server or user (currently per server)
 
-@RegisterSubCommand('tag', (builder) =>
+@RegisterSubCommand("tag", (builder) =>
 	builder
 		.setName("list")
 		.setDescription("Show guild tags")
-		.addUserOption((u) => u.setName("user").setDescription("User to see tags from").setRequired(false))
+		.addUserOption((u) =>
+			u
+				.setName("user")
+				.setDescription("User to see tags from")
+				.setRequired(false),
+		),
 )
 export class UserCommand extends Command {
 	public override async chatInputRun(
 		interaction: Command.ChatInputInteraction<"cached">,
 	) {
 		const user = interaction.options.getUser("user", false);
-		const tags = await getTagsList(interaction.guildId, user?.id);
+		const tags = await this.container.utilities.database.tagsGet(
+			interaction.guildId,
+			user?.id,
+		);
 
 		if (tags.length <= 0) {
 			return interaction.reply(
@@ -59,11 +66,7 @@ export class UserCommand extends Command {
 		for (const pageTags of pages) {
 			pagination.addPageEmbed((embed) =>
 				embed //
-					.setDescription(
-						pageTags
-							.map((tag, index) => `${inlineCode(String(++index))} ${tag.name}`)
-							.join("\n"),
-					),
+					.setDescription(pageTags.map((tag) => `- ${tag.name}`).join("\n")),
 			);
 		}
 

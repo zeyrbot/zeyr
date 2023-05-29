@@ -1,4 +1,3 @@
-import { getOrCreateGuild, updateGuild } from "../../lib/database/guilds";
 import { languages } from "../../lib/util";
 import {
 	Command,
@@ -8,9 +7,9 @@ import { ApplyOptions } from "@sapphire/decorators";
 import { resolveKey } from "@sapphire/plugin-i18next";
 
 @ApplyOptions<Command.Options>({
-  requiredUserPermissions: ["ManageGuild"],
+	requiredUserPermissions: ["ManageGuild"],
 })
-@RegisterSubCommand('configuration', (builder) =>
+@RegisterSubCommand("configuration", (builder) =>
 	builder
 		.setName("language")
 		.setDescription("Manage guild's language")
@@ -23,8 +22,8 @@ import { resolveKey } from "@sapphire/plugin-i18next";
 					...languages.map((l) => ({
 						name: l.name,
 						value: l.value,
-					}))
-				)
+					})),
+				),
 		),
 )
 export class UserCommand extends Command {
@@ -33,7 +32,9 @@ export class UserCommand extends Command {
 	) {
 		const language = interaction.options.getString("lang", true);
 
-		const guild = await getOrCreateGuild(interaction.guildId);
+		const guild = await this.container.utilities.database.guildGetOrCreate(
+			interaction.guildId,
+		);
 
 		if (!guild)
 			return interaction.reply(
@@ -48,7 +49,7 @@ export class UserCommand extends Command {
 				),
 			);
 
-		await updateGuild(
+		await this.container.utilities.database.guildUpdate(
 			{
 				id: interaction.guildId,
 			},

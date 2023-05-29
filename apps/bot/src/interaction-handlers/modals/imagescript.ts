@@ -1,4 +1,4 @@
-import { generateOptimisedName } from "../../lib/util";
+import { optimalFileName } from "../../lib/util";
 import {
 	InteractionHandler,
 	InteractionHandlerTypes,
@@ -34,14 +34,14 @@ export class ModalHandler extends InteractionHandler {
 
 		const stopwatch = new Stopwatch();
 
-		const data = await this.container.image.eval(
+		const data = await this.container.utilities.image.eval(
 			code,
 			inject ? JSON.parse(inject) : undefined,
 		);
 
 		const buffer = data.image;
 		const file = new AttachmentBuilder(buffer!, {
-			name: generateOptimisedName(data.format ?? "png"),
+			name: optimalFileName(data.format ?? "png"),
 		});
 
 		return await interaction.editReply({

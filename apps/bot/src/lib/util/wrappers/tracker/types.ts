@@ -1,4 +1,4 @@
-import type { Nullable } from "../generic";
+import type { Nullable } from "../../../types/generic";
 
 export type CSGOPlatforms = "steam";
 export type ApexPlatforms = "origin" | "steam" | "xbl" | "psn";

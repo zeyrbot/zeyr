@@ -1,4 +1,3 @@
-import { deleteTag } from "../../lib/database/tags";
 import {
 	Command,
 	RegisterSubCommand,
@@ -14,8 +13,12 @@ import { Result } from "@sapphire/result";
 		.setName("delete")
 		.setDescription("Delete a tag")
 		.addStringOption((s) =>
-			s.setName("name").setDescription("Name of the tag").setRequired(true).setAutocomplete(true)
-		)
+			s
+				.setName("name")
+				.setDescription("Name of the tag")
+				.setRequired(true)
+				.setAutocomplete(true),
+		),
 )
 export class UserCommand extends Command {
 	@RequiresUserPermissions("ManageGuild")
@@ -25,7 +28,11 @@ export class UserCommand extends Command {
 		const name = interaction.options.getString("name", true);
 
 		const tag = await Result.fromAsync(
-			async () => await deleteTag(name, interaction.guildId),
+			async () =>
+				await this.container.utilities.database.tagDelete(
+					name,
+					interaction.guildId,
+				),
 		);
 
 		tag.unwrapOrElse(async (error) => {

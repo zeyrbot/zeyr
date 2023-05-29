@@ -3,8 +3,8 @@ process.env.NODE_ENV ??= "development";
 
 import "@kaname-png/plugin-subcommands-advanced/register";
 import "@sapphire/plugin-i18next/register";
-// Registering plugins
 import "@sapphire/plugin-logger/register";
+import "@sapphire/plugin-utilities-store/register";
 
 import {
 	ApplicationCommandRegistries,

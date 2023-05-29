@@ -1,11 +1,10 @@
-import { getOrCreateGuild } from "../database/guilds";
 import {
 	FetchParser,
 	ImagescriptParser,
 	NSFWParser,
 	OCRParser,
 } from "./parsers";
-import { LogLevel } from "@sapphire/framework";
+import { LogLevel, container } from "@sapphire/framework";
 import { type InternationalizationContext } from "@sapphire/plugin-i18next";
 import {
 	ActivityType,
@@ -85,8 +84,12 @@ export const CLIENT_OPTIONS: ClientOptions = {
 	logger: {
 		level: LogLevel.Debug,
 	},
-	intents: [GatewayIntentBits.GuildMessages, GatewayIntentBits.Guilds],
-	loadMessageCommandListeners: false, // Zeyr won't listen to any 'message' events, stay safe.
+	intents: [
+		GatewayIntentBits.GuildMessages,
+		GatewayIntentBits.Guilds,
+		GatewayIntentBits.GuildMessages,
+	],
+	loadMessageCommandListeners: false,
 	loadDefaultErrorListeners: true,
 	loadSubcommandErrorListeners: true,
 	presence: {
@@ -106,7 +109,9 @@ export const CLIENT_OPTIONS: ClientOptions = {
 		fetchLanguage: async (context: InternationalizationContext) => {
 			if (!context.guild) return "en-US";
 
-			const guild = await getOrCreateGuild(context.guild.id);
+			const guild = await container.utilities.database.guildGetOrCreate(
+				context.guild.id,
+			);
 
 			if (!guild) return "en-US";
 
@@ -116,9 +121,9 @@ export const CLIENT_OPTIONS: ClientOptions = {
 			fallbackLng: "en-US",
 			interpolation: {
 				defaultVariables: {
-					error: "🤕",
-					ok: "😊",
-					info: "🧐",
+					error: "⛔",
+					ok: "✅",
+					info: "ℹ",
 				},
 			},
 		},

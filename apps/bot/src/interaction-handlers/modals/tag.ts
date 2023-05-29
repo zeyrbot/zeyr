@@ -1,4 +1,3 @@
-import { addTag } from "../../lib/database/tags";
 import {
 	InteractionHandler,
 	InteractionHandlerTypes,
@@ -33,7 +32,12 @@ export class ModalHandler extends InteractionHandler {
 
 		const tag = await Result.fromAsync(
 			async () =>
-				await addTag(name, content, interaction.guildId, interaction.user.id),
+				await this.container.utilities.database.tagCreate(
+					name,
+					content,
+					interaction.guildId,
+					interaction.user.id,
+				),
 		);
 
 		tag.unwrapOrElse(async (error) => {

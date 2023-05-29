@@ -3,7 +3,7 @@ import { ApplyOptions } from "@sapphire/decorators";
 import { ApplicationCommandRegistry } from "@sapphire/framework";
 
 @ApplyOptions<Subcommand.Options>({
-  name: "tag",
+	name: "tag",
 })
 export class ParentCommand extends Subcommand {
 	public override registerApplicationCommands(

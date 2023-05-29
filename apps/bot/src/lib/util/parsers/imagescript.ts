@@ -18,7 +18,7 @@ export class ImagescriptParser extends BaseParser implements IParser {
 	}
 
 	public async parse(ctx: Context) {
-		const { image } = await container.image.eval(ctx.tag.payload!);
+		const { image } = await container.utilities.image.eval(ctx.tag.payload!);
 
 		if (!image) throw new Error("image returned nothing");
 

@@ -4,7 +4,9 @@ import {
 } from "@kaname-png/plugin-subcommands-advanced";
 import { resolveKey } from "@sapphire/plugin-i18next";
 
-@RegisterSubCommand('system', (builder) => builder.setName('ping').setDescription('Zeyr ping'))
+@RegisterSubCommand("system", (builder) =>
+	builder.setName("ping").setDescription("Zeyr latency statistics"),
+)
 export class UserCommand extends Command {
 	public override async chatInputRun(
 		interaction: Command.ChatInputInteraction<"cached">,

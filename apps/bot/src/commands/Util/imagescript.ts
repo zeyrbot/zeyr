@@ -11,9 +11,9 @@ import {
 
 @RegisterSubCommand("util", (builder) =>
 	builder
-	  .setName("imagescript")
-	  .setDescription("Runs imagescript code in a separate container")
-  )
+		.setName("imagescript")
+		.setDescription("Runs imagescript code in a separate container"),
+)
 export class UserCommand extends Command {
 	public override async chatInputRun(
 		interaction: Command.ChatInputInteraction<"cached">,

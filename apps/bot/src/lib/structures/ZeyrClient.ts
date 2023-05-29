@@ -1,4 +1,3 @@
-import { ImageManipulation } from "../util";
 import { PrismaClient } from "@prisma/client";
 import { SapphireClient, container } from "@sapphire/framework";
 import { greenBright, redBright } from "colorette";
@@ -9,7 +8,6 @@ export class ZeyrClient extends SapphireClient {
 		super(opts);
 
 		container.prisma = new PrismaClient();
-		container.image = new ImageManipulation();
 	}
 
 	public async start() {

@@ -26,6 +26,7 @@ export class FetchParser extends BaseParser implements IParser {
 		ctx.response.variables[ctx.tag.parameter!] = new SafeObjectTransformer(
 			data,
 		);
+
 		return "";
 	}
 }

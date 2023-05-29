@@ -1,11 +1,12 @@
-import { getTag, incrementTagUsage } from "../../lib/database/tags";
 import { tagParsers } from "../../lib/util";
 import {
 	Command,
 	RegisterSubCommand,
 } from "@kaname-png/plugin-subcommands-advanced";
 import { resolveKey } from "@sapphire/plugin-i18next";
+import { cast } from "@sapphire/utilities";
 import { AttachmentBuilder, EmbedBuilder, GuildMember } from "discord.js";
+import sharp from "sharp";
 import { Interpreter, StringTransformer } from "tagscript";
 import {
 	GuildTransformer,
@@ -13,18 +14,22 @@ import {
 	UserTransformer,
 } from "tagscript-plugin-discord";
 
-@RegisterSubCommand('tag', (builder) =>
+@RegisterSubCommand("tag", (builder) =>
 	builder
 		.setName("show")
 		.setDescription("Run and display a tag content")
 		.addStringOption((s) =>
-			s.setName("name").setDescription("Name of the tag").setRequired(true).setAutocomplete(true)
+			s
+				.setName("name")
+				.setDescription("Name of the tag")
+				.setRequired(true)
+				.setAutocomplete(true),
 		)
 		.addStringOption((s) =>
 			s
 				.setName("args")
 				.setDescription("Optional args of tag")
-				.setRequired(false)
+				.setRequired(false),
 		),
 )
 export class UserCommand extends Command {
@@ -37,7 +42,10 @@ export class UserCommand extends Command {
 		const embeds: EmbedBuilder[] = [];
 		const files: AttachmentBuilder[] = [];
 
-		const tag = await getTag(name, interaction.guildId!);
+		const tag = await this.container.utilities.database.tagGet(
+			name,
+			interaction.guildId!,
+		);
 
 		if (!tag) {
 			return interaction.reply(
@@ -56,11 +64,18 @@ export class UserCommand extends Command {
 		if (content.actions.nsfw?.nsfw)
 			return interaction.reply(content.actions.nsfw.message);
 
-		files.push(
-			...(content.actions.files || []).map(
-				(file) => new AttachmentBuilder(file),
-			),
-		);
+		if (content.actions.files) {
+			for (const file of content.actions.files) {
+				const isBuffer = file instanceof Buffer;
+				const url = isBuffer
+					? file
+					: await sharp(
+							await this.container.utilities.image.fetch(cast<string>(file)),
+					  ).toBuffer();
+
+				files.push(new AttachmentBuilder(url));
+			}
+		}
 
 		embeds.push(
 			...(content.actions.embed
@@ -81,7 +96,7 @@ export class UserCommand extends Command {
 			});
 		}
 
-		await incrementTagUsage(tag.id);
+		await this.container.utilities.database.tagUsageIncrement(tag.id);
 
 		return interaction.reply({
 			content: content.body!,

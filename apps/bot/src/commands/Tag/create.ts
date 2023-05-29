@@ -10,9 +10,7 @@ import {
 } from "discord.js";
 
 @RegisterSubCommand("tag", (builder) =>
-	builder
-		.setName("create")
-		.setDescription("Create a new tag")
+	builder.setName("create").setDescription("Create a new tag"),
 )
 export class UserCommand extends Command {
 	public override async chatInputRun(

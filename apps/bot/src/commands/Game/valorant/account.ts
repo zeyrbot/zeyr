@@ -1,26 +1,20 @@
-import { Valorant } from "../../../lib/util/apis";
+import { Valorant } from "../../../lib/util/wrappers/valorant";
 import { Colors } from "@discord-factory/colorize";
 import { Command } from "@kaname-png/plugin-subcommands-advanced";
 import { RegisterSubCommandGroup } from "@kaname-png/plugin-subcommands-advanced";
 import { resolveKey } from "@sapphire/plugin-i18next";
 import { EmbedBuilder } from "discord.js";
 
-@RegisterSubCommandGroup("game", "valorant", (builder) => 
+@RegisterSubCommandGroup("game", "valorant", (builder) =>
 	builder
 		.setName("account")
 		.setDescription("Display an user and it's information")
-		.addStringOption((s) => 
-			s
-				.setName("name")
-				.setDescription("Account name")
-				.setRequired(true)
+		.addStringOption((s) =>
+			s.setName("name").setDescription("Account name").setRequired(true),
 		)
-		.addStringOption((s) => 
-			s
-				.setName("tag")
-				.setDescription("Account tag")
-				.setRequired(true)
-		)
+		.addStringOption((s) =>
+			s.setName("tag").setDescription("Account tag").setRequired(true),
+		),
 )
 export class GroupCommand extends Command {
 	public override async chatInputRun(

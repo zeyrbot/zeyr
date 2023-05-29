@@ -1,4 +1,4 @@
-import { generateOptimisedName, lastMedia } from "../../lib/util";
+import { lastMedia, optimalFileName } from "../../lib/util";
 import {
 	Command,
 	RegisterSubCommand,
@@ -10,15 +10,24 @@ import { AttachmentBuilder } from "discord.js";
 
 @RegisterSubCommand("image", (builder) =>
 	builder
-	  .setName("jpeg")
-	  .setDescription("Renders the provided image as JPEG with given quality")
-	  .addNumberOption((s) =>
-		s.setName("quality").setDescription("Quality of the image").setMinValue(1).setMaxValue(100).setRequired(false)
-	  )
-	  .addAttachmentOption((o) =>
-		o.setName("image").setDescription("Image").setRequired(false)
-	  )
-  )export class UserCommand extends Command {
+		.setName("jpeg")
+		.setDescription("Renders the provided image as JPEG with given quality")
+		.addNumberOption((s) =>
+			s
+				.setName("quality")
+				.setDescription("Quality of the image")
+				.setMinValue(1)
+				.setMaxValue(100)
+				.setRequired(false),
+		)
+		.addAttachmentOption((o) =>
+			o
+				.setName("image")
+				.setDescription("Image to manipulate")
+				.setRequired(false),
+		),
+)
+export class UserCommand extends Command {
 	public override async chatInputRun(
 		interaction: Command.ChatInputInteraction<"cached">,
 	) {
@@ -35,11 +44,13 @@ import { AttachmentBuilder } from "discord.js";
 				await resolveKey(interaction.guild, "commands/images:invalidImage"),
 			);
 
-		const jpeg = await this.container.image.decode(image.proxyURL ?? image.url);
+		const jpeg = await this.container.utilities.image.decode(
+			image.proxyURL ?? image.url,
+		);
 
 		const { buffer } = await jpeg.encodeJPEG(quality);
 		const file = new AttachmentBuilder(Buffer.from(buffer), {
-			name: generateOptimisedName("jpg"),
+			name: optimalFileName("jpg"),
 		});
 
 		return interaction.editReply({

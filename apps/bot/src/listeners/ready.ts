@@ -1,7 +1,7 @@
-import { Dlist } from "../lib/util/apis";
+import { Dlist } from "../lib/util/wrappers/dlist";
 import { ApplyOptions } from "@sapphire/decorators";
 import { Listener, Piece, type PieceOptions, Store } from "@sapphire/framework";
-import { blue, blueBright, gray, yellow } from "colorette";
+import { blue, blueBright, gray, red, yellow } from "colorette";
 
 const dev = process.env.NODE_ENV !== "production";
 
@@ -11,6 +11,7 @@ export class UserEvent extends Listener {
 
 	public async run() {
 		this.printStoreDebugInformation();
+		this.printBanner();
 
 		if (!dev) {
 			await this.postGuildCount();
@@ -21,6 +22,27 @@ export class UserEvent extends Listener {
 		"1095425642159407165",
 		process.env.DLIST_KEY as string,
 	);
+
+	private printBanner() {
+		this.container.logger.info(this.logo.join("\n"));
+	}
+
+	private logo = [
+		red(String.raw`⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⡴⠞⢳⠀⠀⠀⠀⠀`),
+		red(String.raw`⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡔⠋⠀⢰⠎⠀⠀⠀⠀⠀`),
+		red(String.raw`⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣼⢆⣤⡞⠃⠀⠀⠀⠀⠀⠀`),
+		red(String.raw`⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣼⢠⠋⠁⠀⠀⠀⠀⠀⠀⠀⠀`),
+		red(String.raw`⠀⠀⠀⠀⢀⣀⣾⢳⠀⠀⠀⠀⢸⢠⠃⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀`),
+		red(String.raw`⣀⡤⠴⠊⠉⠀⠀⠈⠳⡀⠀⠀⠘⢎⠢⣀⣀⣀⠀⠀⠀⠀⠀⠀⠀`),
+		red(String.raw`⠳⣄⠀⠀⡠⡤⡀⠀⠘⣇⡀⠀⠀⠀⠉⠓⠒⠺⠭⢵⣦⡀⠀⠀⠀`),
+		red(String.raw`⠀⢹⡆⠀⢷⡇⠁⠀⠀⣸⠇⠀⠀⠀⠀⠀⢠⢤⠀⠀⠘⢷⣆⡀⠀`),
+		red(String.raw`⠀⠀⠘⠒⢤⡄⠖⢾⣭⣤⣄⠀⡔⢢⠀⡀⠎⣸⠀⠀⠀⠀⠹⣿⡀`),
+		red(String.raw`⠀⠀⢀⡤⠜⠃⠀⠀⠘⠛⣿⢸⠀⡼⢠⠃⣤⡟⠀⠀⠀⠀⠀⣿⡇`),
+		red(String.raw`⠀⠀⠸⠶⠖⢏⠀⠀⢀⡤⠤⠇⣴⠏⡾⢱⡏⠁⠀⠀⠀⠀⢠⣿⠃`),
+		red(String.raw`⠀⠀⠀⠀⠀⠈⣇⡀⠿⠀⠀⠀⡽⣰⢶⡼⠇⠀⠀⠀⠀⣠⣿⠟⠀`),
+		red(String.raw`⠀⠀⠀⠀⠀⠀⠈⠳⢤⣀⡶⠤⣷⣅⡀⠀⠀⠀⣀⡠⢔⠕⠁⠀⠀`),
+		red(String.raw`⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠙⠫⠿⠿⠿⠛⠋⠁⠀⠀⠀⠀`),
+	];
 
 	private async postGuildCount() {
 		this.dlist

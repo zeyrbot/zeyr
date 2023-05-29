@@ -1,4 +1,4 @@
-import { APIS, optimiseGithubCDN } from "../../lib/util";
+import { APIS, cdn } from "../../lib/util";
 import {
 	Command,
 	RegisterSubCommand,
@@ -9,25 +9,56 @@ import { Stopwatch } from "@sapphire/stopwatch";
 import { cast } from "@sapphire/utilities";
 import { AttachmentBuilder } from "discord.js";
 
-@RegisterSubCommand('util', (builder) =>
+@RegisterSubCommand("util", (builder) =>
 	builder
-		.setName('screenshot')
-		.setDescription('Take a screenshot of a website')
-		.addStringOption(option => option.setName('url').setDescription('URL of the website').setRequired(true))
-		.addBooleanOption(option => option.setName('fullpage').setDescription('Should screenshot full page').setRequired(false))
-		.addNumberOption(option => option.setName('wait').setDescription('Wait time before screenshot').setRequired(false))
-		.addNumberOption(option => option.setName('width').setDescription('Width of the screenshot').setRequired(false))
-		.addNumberOption(option => option.setName('height').setDescription('Height of the screenshot').setRequired(false))
-		.addStringOption(option => option.setName('format').setDescription('Format of the output').setRequired(false).addChoices({
-			name: 'png',
-			value: 'png'
-		},
-		{
-			name: 'jpeg',
-			value: 'jpeg'
-		}
+		.setName("screenshot")
+		.setDescription("Take a screenshot of a website")
+		.addStringOption((option) =>
+			option
+				.setName("url")
+				.setDescription("URL of the website")
+				.setRequired(true),
 		)
-	)
+		.addBooleanOption((option) =>
+			option
+				.setName("fullpage")
+				.setDescription("Should screenshot full page")
+				.setRequired(false),
+		)
+		.addNumberOption((option) =>
+			option
+				.setName("wait")
+				.setDescription("Wait time before screenshot")
+				.setRequired(false),
+		)
+		.addNumberOption((option) =>
+			option
+				.setName("width")
+				.setDescription("Width of the screenshot")
+				.setRequired(false),
+		)
+		.addNumberOption((option) =>
+			option
+				.setName("height")
+				.setDescription("Height of the screenshot")
+				.setRequired(false),
+		)
+		.addStringOption((option) =>
+			option
+				.setName("format")
+				.setDescription("Format of the output")
+				.setRequired(false)
+				.addChoices(
+					{
+						name: "png",
+						value: "png",
+					},
+					{
+						name: "jpeg",
+						value: "jpeg",
+					},
+				),
+		),
 )
 export class UserCommand extends Command {
 	public override async chatInputRun(
@@ -49,7 +80,7 @@ export class UserCommand extends Command {
 		if (badUrls.includes(url))
 			return interaction.editReply(
 				await resolveKey(interaction.guild, "commands/util:screenshotBadUrl", {
-					list: optimiseGithubCDN(
+					list: cdn(
 						"https://raw.githubusercontent.com/zeyrbot/assets/main/json/websites.json",
 					),
 				}),
@@ -86,7 +117,7 @@ export class UserCommand extends Command {
 		});
 	}
 
-	private bad = optimiseGithubCDN(
+	private bad = cdn(
 		"https://raw.githubusercontent.com/zeyrbot/assets/main/json/websites.json",
 	);
 }

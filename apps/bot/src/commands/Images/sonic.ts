@@ -1,4 +1,4 @@
-import { generateOptimisedName, optimiseGithubCDN } from "../../lib/util";
+import { cdn, optimalFileName } from "../../lib/util";
 import {
 	Command,
 	RegisterSubCommand,
@@ -11,12 +11,12 @@ import { Image, TextLayout } from "imagescript";
 
 @RegisterSubCommand("image", (builder) =>
 	builder
-	  .setName("sonic")
-	  .setDescription("Renders the given text on a sonic quote template")
-	  .addStringOption((s) =>
-		s.setName("text").setDescription("Text of the image").setRequired(true)
-	  )
-  )
+		.setName("sonic")
+		.setDescription("Renders the given text on a sonic quote template")
+		.addStringOption((s) =>
+			s.setName("text").setDescription("Text of the image").setRequired(true),
+		),
+)
 export class UserCommand extends Command {
 	public override async chatInputRun(
 		interaction: Command.ChatInputInteraction<"cached">,
@@ -26,9 +26,9 @@ export class UserCommand extends Command {
 
 		const text = interaction.options.getString("text", true);
 
-		const font = await this.container.image.font(this.IMPACT_URL);
+		const font = await this.container.utilities.image.font(this.IMPACT_URL);
 
-		const sonic = await this.container.image.decode(this.SONIC_URL);
+		const sonic = await this.container.utilities.image.decode(this.SONIC_URL);
 		const sonicText = await Image.renderText(
 			font,
 			64,
@@ -47,7 +47,7 @@ export class UserCommand extends Command {
 
 		const { buffer } = await sonic.encode();
 		const file = new AttachmentBuilder(Buffer.from(buffer), {
-			name: generateOptimisedName("gif"),
+			name: optimalFileName("gif"),
 		});
 
 		return interaction.editReply({
@@ -60,11 +60,11 @@ export class UserCommand extends Command {
 		});
 	}
 
-	private SONIC_URL = optimiseGithubCDN(
+	private SONIC_URL = cdn(
 		"https://raw.githubusercontent.com/zeyrbot/assets/main/images/sonic.jpg",
 	);
 
-	private IMPACT_URL = optimiseGithubCDN(
+	private IMPACT_URL = cdn(
 		"https://raw.githubusercontent.com/zeyrbot/assets/main/fonts/impact.ttf",
 	);
 

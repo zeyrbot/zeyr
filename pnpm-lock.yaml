@@ -37,14 +37,14 @@ importers:
         specifier: ^4.13.0
         version: 4.13.0
       rome:
-        specifier: 12.0.0
-        version: 12.0.0
+        specifier: 12.1.2
+        version: 12.1.2
       tsc-watch:
         specifier: ^6.0.0
         version: 6.0.1(typescript@5.0.4)
       turbo:
         specifier: latest
-        version: 1.9.8
+        version: 1.9.9
       typescript:
         specifier: ^5.0.4
         version: 5.0.4
@@ -81,12 +81,18 @@ importers:
       '@sapphire/plugin-subcommands':
         specifier: ^4.0.1
         version: 4.0.1
+      '@sapphire/plugin-utilities-store':
+        specifier: ^1.0.1
+        version: 1.0.1
       '@sapphire/result':
         specifier: ^2.6.3
         version: 2.6.3
       '@sapphire/stopwatch':
         specifier: ^1.5.0
         version: 1.5.0
+      '@sapphire/time-utilities':
+        specifier: ^1.7.9
+        version: 1.7.9
       '@sapphire/utilities':
         specifier: ^3.11.1
         version: 3.11.1
@@ -753,48 +759,48 @@ packages:
     resolution: {integrity: sha512-HrniowHRZXHuGT9XRgoXEaP2gJLXM5RMoItaY2PkjvuZ+iHc0Zjbm/302MB8YsPdWozAPHHn+jpFEcEn71OgPw==}
     requiresBuild: true
 
-  /@rometools/cli-darwin-arm64@12.0.0:
-    resolution: {integrity: sha512-kEFCzU6cgy6vfY0mkMzq57ea3srqV5X2wyCAxjVfA2JF7fioq695uWhy7yOCBW+nUUFIz62N9v1nf/aYqX8XkA==}
+  /@rometools/cli-darwin-arm64@12.1.2:
+    resolution: {integrity: sha512-9QxtAwNyX9n7ysxo+9qWczl70I1opulmX7LFNsRJKS9qqyTNc5K++btnNK07vWAIeQsMx4QYwr7241thuBMlFw==}
     cpu: [arm64]
     os: [darwin]
     requiresBuild: true
     dev: true
     optional: true
 
-  /@rometools/cli-darwin-x64@12.0.0:
-    resolution: {integrity: sha512-YDevVPKrkRFdjjM/3zOpOWI5mEY2ivjKM2eR8Yqv9xH3SZhyD/t67f/xo7Azp6NkGUVXSnHLGdkmIg+qrYgz5A==}
+  /@rometools/cli-darwin-x64@12.1.2:
+    resolution: {integrity: sha512-w28NkGYK/rSmQU2WkNzw1h7ec8IR5a7LzYwPHDvG2ogY5sTcygkg0TGKOF/MHUvixU6EBPrFobua2gPhpr/m5A==}
     cpu: [x64]
     os: [darwin]
     requiresBuild: true
     dev: true
     optional: true
 
-  /@rometools/cli-linux-arm64@12.0.0:
-    resolution: {integrity: sha512-n2LJg6eAZENUcJF99wjDeqQCr/40IqGUJDbX7NwiU1RvCy+RBZNmhcmSAaKOc6rCoLUcM9W5q+H4jfn4bWfJBA==}
+  /@rometools/cli-linux-arm64@12.1.2:
+    resolution: {integrity: sha512-7BPGqPtnJy1O8B/ucJ5Vg+p6EUvJJ9DazrT1UEdVR/4inPqAVac9PIZDjjHXyMrt/3IngnetPyn5EXNTAqpJVw==}
     cpu: [arm64]
     os: [linux]
     requiresBuild: true
     dev: true
     optional: true
 
-  /@rometools/cli-linux-x64@12.0.0:
-    resolution: {integrity: sha512-VuQO4eOrKmfrLrc8KzMaZypz3i1rD9FXRxwOFk6ha16DNHV+17dRQYm7jRZ1p+HrXdjAJYTScxR/E03yGLThlQ==}
+  /@rometools/cli-linux-x64@12.1.2:
+    resolution: {integrity: sha512-qH2iJKPLp34D0GFK1gLolHGkTA8q2vGKh2Ae1AwoTh87g0mXyyeQf4mAtxJtf4/ydMgjEkAZdEwyaevbTX8gnQ==}
     cpu: [x64]
     os: [linux]
     requiresBuild: true
     dev: true
     optional: true
 
-  /@rometools/cli-win32-arm64@12.0.0:
-    resolution: {integrity: sha512-lvOh5/B8YuQdI2ieGJnJ6CUMZxvVwA8+1VDkEZJyl5IEF8AXzbXYx4k6SFA5a79cfXEL9tJuJy0rn+Zs/+1yJQ==}
+  /@rometools/cli-win32-arm64@12.1.2:
+    resolution: {integrity: sha512-iIdqss2R8bni7C7isA9OLBj1UAA3MeKfca0aHNZr+2gSRdiSxO/47j6s3Tpebso99xsJBAFdWBOruG+l/C+LQg==}
     cpu: [arm64]
     os: [win32]
     requiresBuild: true
     dev: true
     optional: true
 
-  /@rometools/cli-win32-x64@12.0.0:
-    resolution: {integrity: sha512-yTfz71k8+9QIDzglKnMbEMMv1JUk30qfeSomgEUG2v0qDSbSq0Gs1ff0H0dysYOHLvZZmWA3IheOY/SC8fj1nA==}
+  /@rometools/cli-win32-x64@12.1.2:
+    resolution: {integrity: sha512-MKOd02sSnd/Biogh3rIKpLFZzYbDSVvRNAxbFHJOpyGLbeQHfAg7QxjKwz0PqyrHVjZaTEEPlswrf4IFii0GNg==}
     cpu: [x64]
     os: [win32]
     requiresBuild: true
@@ -821,6 +827,13 @@ packages:
       prompts: 2.4.2
       tslib: 2.5.0
     dev: true
+
+  /@sapphire/cron@1.1.0:
+    resolution: {integrity: sha512-ANyxI4eVpYNDjTXlzwcv/8dd8H9R2k9a0MUGrgIfF8y9FWcvpJM6xrKRs11K0PtDfKsR0C0sjfXdCTUHYcI9OQ==}
+    engines: {node: '>=v14.0.0', npm: '>=7.0.0'}
+    dependencies:
+      '@sapphire/utilities': 3.11.1
+    dev: false
 
   /@sapphire/decorators@6.0.1:
     resolution: {integrity: sha512-CyekhzVeiIda5E/IQzm0TWj+ZqKhWRaLWmB/6MTaOtXUwTlNMm/o7/bS54yM5PEAf1LTwwwuNL91sNUDS8sCPg==}
@@ -919,6 +932,13 @@ packages:
       tslib: 2.5.0
     dev: false
 
+  /@sapphire/plugin-utilities-store@1.0.1:
+    resolution: {integrity: sha512-LqXhKWkWw8YWoYgXeCHohEFVNsEcKmtyFkn7NiIP1nwc/Hw6REa8i1daMPYKGvxQJF6y45Km+L5p/tMorxwQkw==}
+    engines: {node: '>=v14.0.0', npm: '>=7.0.0'}
+    dependencies:
+      tslib: 2.5.0
+    dev: false
+
   /@sapphire/ratelimits@2.4.6:
     resolution: {integrity: sha512-E8ZogD+gtXw/iAFuyd42ZzUcYzOC3qGXZFOjU12o0cSYWObh7kQEqkS62BB0hMXy+GJH0X2+kqgMklME8EhWUg==}
     engines: {node: '>=v14.0.0', npm: '>=7.0.0'}
@@ -948,6 +968,21 @@ packages:
     engines: {node: '>=v14.0.0', npm: '>=7.0.0'}
     dependencies:
       tslib: 2.5.0
+    dev: false
+
+  /@sapphire/time-utilities@1.7.9:
+    resolution: {integrity: sha512-aZ3Ues3lZhc7Gee8nreoDwDK9SlCJusYSqGcb6fwYUfuNEJT9hwjjHqM6k6RW9dJ0xb/PfQs5dgRkhFRKAZ7iw==}
+    engines: {node: '>=v14.0.0', npm: '>=7.0.0'}
+    dependencies:
+      '@sapphire/cron': 1.1.0
+      '@sapphire/duration': 1.1.0
+      '@sapphire/timer-manager': 1.0.0
+      '@sapphire/timestamp': 1.0.1
+    dev: false
+
+  /@sapphire/timer-manager@1.0.0:
+    resolution: {integrity: sha512-vxxnv75QPMGKt6IB6nL2xRJfwzcUQ9DBGzJLg6G8eS5O4u7j3IR/yr/GQsa4gIpjw6kQOgn8lUdnSTlpnERTbQ==}
+    engines: {node: '>=v14.0.0', npm: '>=7.0.0'}
     dev: false
 
   /@sapphire/timestamp@1.0.1:
@@ -2855,18 +2890,18 @@ packages:
       fsevents: 2.3.2
     dev: true
 
-  /rome@12.0.0:
-    resolution: {integrity: sha512-w/tLvLj5PGUCx3R+Kna08BMq4zL83Xzh9spvrqoWa3Nkzk16SkD8JSpyWWP9WhI2r3qv3Xvc7FnYZ4QDnjAiYg==}
+  /rome@12.1.2:
+    resolution: {integrity: sha512-ObyDevKRU6k3R9fAK9hDvrX9FSPEJ0JWNv5i65enknV+epWjEIL0jnDuijPUX7MSVS6M/ngTiKUaeF3w63SJXw==}
     engines: {node: '>=14.*'}
     hasBin: true
     requiresBuild: true
     optionalDependencies:
-      '@rometools/cli-darwin-arm64': 12.0.0
-      '@rometools/cli-darwin-x64': 12.0.0
-      '@rometools/cli-linux-arm64': 12.0.0
-      '@rometools/cli-linux-x64': 12.0.0
-      '@rometools/cli-win32-arm64': 12.0.0
-      '@rometools/cli-win32-x64': 12.0.0
+      '@rometools/cli-darwin-arm64': 12.1.2
+      '@rometools/cli-darwin-x64': 12.1.2
+      '@rometools/cli-linux-arm64': 12.1.2
+      '@rometools/cli-linux-x64': 12.1.2
+      '@rometools/cli-win32-arm64': 12.1.2
+      '@rometools/cli-win32-x64': 12.1.2
     dev: true
 
   /run-parallel@1.2.0:
@@ -3410,65 +3445,65 @@ packages:
     dependencies:
       safe-buffer: 5.2.1
 
-  /turbo-darwin-64@1.9.8:
-    resolution: {integrity: sha512-PkTdBjPfgpj/Dob/6SjkzP0BBP80/KmFjLEocXVEECCLJE6tHKbWLRdvc79B0N6SufdYdZ1uvvoU3KPtBokSPw==}
+  /turbo-darwin-64@1.9.9:
+    resolution: {integrity: sha512-UDGM9E21eCDzF5t1F4rzrjwWutcup33e7ZjNJcW/mJDPorazZzqXGKEPIy9kXwKhamUUXfC7668r6ZuA1WXF2Q==}
     cpu: [x64]
     os: [darwin]
     requiresBuild: true
     dev: true
     optional: true
 
-  /turbo-darwin-arm64@1.9.8:
-    resolution: {integrity: sha512-sLwqOx3XV57QCEoJM9GnDDnnqidG8wf29ytxssBaWHBdeJTjupyrmzTUrX+tyKo3Q+CjWvbPLyqVqxT4g5NuXQ==}
+  /turbo-darwin-arm64@1.9.9:
+    resolution: {integrity: sha512-VyfkXzTJpYLTAQ9krq2myyEq7RPObilpS04lgJ4OO1piq76RNmSpX9F/t9JCaY9Pj/4TL7i0d8PM7NGhwEA5Ag==}
     cpu: [arm64]
     os: [darwin]
     requiresBuild: true
     dev: true
     optional: true
 
-  /turbo-linux-64@1.9.8:
-    resolution: {integrity: sha512-AMg6VT6sW7aOD1uOs5suxglXfTYz9T0uVyKGKokDweGOYTWmuTMGU5afUT1tYRUwQ+kVPJI+83Atl5Ob0oBsgw==}
+  /turbo-linux-64@1.9.9:
+    resolution: {integrity: sha512-Fu1MY29Odg8dHOqXcpIIGC3T63XLOGgnGfbobXMKdrC7JQDvtJv8TUCYciRsyknZYjyyKK1z6zKuYIiDjf3KeQ==}
     cpu: [x64]
     os: [linux]
     requiresBuild: true
     dev: true
     optional: true
 
-  /turbo-linux-arm64@1.9.8:
-    resolution: {integrity: sha512-tLnxFv+OIklwTjiOZ8XMeEeRDAf150Ry4BCivNwgTVFAqQGEqkFP6KGBy56hb5RRF1frPQpoPGipJNVm7c8m1w==}
+  /turbo-linux-arm64@1.9.9:
+    resolution: {integrity: sha512-50LI8NafPuJxdnMCBeDdzgyt1cgjQG7FwkyY336v4e95WJPUVjrHdrKH6jYXhOUyrv9+jCJxwX1Yrg02t5yJ1g==}
     cpu: [arm64]
     os: [linux]
     requiresBuild: true
     dev: true
     optional: true
 
-  /turbo-windows-64@1.9.8:
-    resolution: {integrity: sha512-r3pCjvXTMR7kq2E3iqwFlN1R7pFO/TOsuUjMhOSPP7HwuuUIinAckU4I9foM3q7ZCQd1XXScBUt3niDyHijAqQ==}
+  /turbo-windows-64@1.9.9:
+    resolution: {integrity: sha512-9IsTReoLmQl1IRsy3WExe2j2RKWXQyXujfJ4fXF+jp08KxjVF4/tYP2CIRJx/A7UP/7keBta27bZqzAjsmbSTA==}
     cpu: [x64]
     os: [win32]
     requiresBuild: true
     dev: true
     optional: true
 
-  /turbo-windows-arm64@1.9.8:
-    resolution: {integrity: sha512-CWzRbX2TM5IfHBC6uWM659qUOEDC4h0nn16ocG8yIq1IF3uZMzKRBHgGOT5m1BHom+R08V0NcjTmPRoqpiI0dg==}
+  /turbo-windows-arm64@1.9.9:
+    resolution: {integrity: sha512-CUu4hpeQo68JjDr0V0ygTQRLbS+/sNfdqEVV+Xz9136vpKn2WMQLAuUBVZV0Sp0S/7i+zGnplskT0fED+W46wQ==}
     cpu: [arm64]
     os: [win32]
     requiresBuild: true
     dev: true
     optional: true
 
-  /turbo@1.9.8:
-    resolution: {integrity: sha512-dTouGZBm4a2fE0OPafcTQERCp4i3ZOow0Pr0JlOyxKmzJy0JRwXypH013kbZoK6k1ET5tS/g9rwUXIM/AmWXXQ==}
+  /turbo@1.9.9:
+    resolution: {integrity: sha512-+ZS66LOT7ahKHxh6XrIdcmf2Yk9mNpAbPEj4iF2cs0cAeaDU3xLVPZFF0HbSho89Uxwhx7b5HBgPbdcjQTwQkg==}
     hasBin: true
     requiresBuild: true
     optionalDependencies:
-      turbo-darwin-64: 1.9.8
-      turbo-darwin-arm64: 1.9.8
-      turbo-linux-64: 1.9.8
-      turbo-linux-arm64: 1.9.8
-      turbo-windows-64: 1.9.8
-      turbo-windows-arm64: 1.9.8
+      turbo-darwin-64: 1.9.9
+      turbo-darwin-arm64: 1.9.9
+      turbo-linux-64: 1.9.9
+      turbo-linux-arm64: 1.9.9
+      turbo-windows-64: 1.9.9
+      turbo-windows-arm64: 1.9.9
     dev: true
 
   /tweetnacl@1.0.3:

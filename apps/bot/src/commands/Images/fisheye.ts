@@ -1,4 +1,4 @@
-import { generateOptimisedName, lastMedia } from "../../lib/util";
+import { lastMedia, optimalFileName } from "../../lib/util";
 import {
 	Command,
 	RegisterSubCommand,
@@ -10,15 +10,24 @@ import { AttachmentBuilder } from "discord.js";
 
 @RegisterSubCommand("image", (builder) =>
 	builder
-	  .setName("fisheye")
-	  .setDescription("🐟👁")
-	  .addIntegerOption((o) =>
-		o.setName("radius").setDescription("Radius of the effect").setMinValue(1).setMaxValue(10).setRequired(false)
-	  )
-	  .addAttachmentOption((o) =>
-		o.setName("image").setDescription("Image").setRequired(false)
-	  )
-  )export class UserCommand extends Command {
+		.setName("fisheye")
+		.setDescription("🐟👁")
+		.addIntegerOption((o) =>
+			o
+				.setName("radius")
+				.setDescription("Radius of the effect")
+				.setMinValue(1)
+				.setMaxValue(10)
+				.setRequired(false),
+		)
+		.addAttachmentOption((o) =>
+			o
+				.setName("image")
+				.setDescription("Image to manipulate")
+				.setRequired(false),
+		),
+)
+export class UserCommand extends Command {
 	public override async chatInputRun(
 		interaction: Command.ChatInputInteraction<"cached">,
 	) {
@@ -35,16 +44,17 @@ import { AttachmentBuilder } from "discord.js";
 				await resolveKey(interaction.guild, "commands/images:invalidImage"),
 			);
 
-		const output = await this.container.image.decode(
+		const output = await this.container.utilities.image.decode(
 			image.proxyURL ?? image.url,
 		);
 
+		output.resize(250, 250);
 		output.cropCircle();
 		output.fisheye(radius);
 
 		const { buffer } = await output.encode();
 		const file = new AttachmentBuilder(Buffer.from(buffer), {
-			name: generateOptimisedName("png"),
+			name: optimalFileName("png"),
 		});
 
 		return interaction.editReply({

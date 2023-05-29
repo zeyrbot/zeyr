@@ -1,4 +1,3 @@
-import { getTag } from "../../lib/database/tags";
 import { Colors } from "@discord-factory/colorize";
 import {
 	Command,
@@ -8,13 +7,17 @@ import { resolveKey } from "@sapphire/plugin-i18next";
 import { codeBlock } from "@sapphire/utilities";
 import { EmbedBuilder } from "discord.js";
 
-@RegisterSubCommand('tag', (builder) =>
+@RegisterSubCommand("tag", (builder) =>
 	builder
 		.setName("raw")
 		.setDescription("Show a tag's info")
 		.addStringOption((s) =>
-			s.setName("name").setDescription("Name of the tag").setRequired(true).setAutocomplete(true)
-		)
+			s
+				.setName("name")
+				.setDescription("Name of the tag")
+				.setRequired(true)
+				.setAutocomplete(true),
+		),
 )
 export class UserCommand extends Command {
 	public override async chatInputRun(
@@ -26,7 +29,10 @@ export class UserCommand extends Command {
 
 		const name = interaction.options.getString("name", true);
 
-		const tag = await getTag(name, interaction.guildId);
+		const tag = await this.container.utilities.database.tagGet(
+			name,
+			interaction.guildId,
+		);
 
 		if (!tag) {
 			return interaction.editReply(

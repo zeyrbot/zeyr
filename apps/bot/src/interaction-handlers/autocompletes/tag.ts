@@ -1,4 +1,3 @@
-import { getTagsList } from "../../lib/database/tags";
 import { ApplyOptions } from "@sapphire/decorators";
 import {
 	InteractionHandler,
@@ -8,7 +7,7 @@ import type { AutocompleteInteraction } from "discord.js";
 import Fuse from "fuse.js";
 
 @ApplyOptions<InteractionHandler.Options>({
-  interactionHandlerType: InteractionHandlerTypes.Autocomplete
+	interactionHandlerType: InteractionHandlerTypes.Autocomplete,
 })
 export class AutocompleteHandler extends InteractionHandler {
 	public override async run(
@@ -29,7 +28,9 @@ export class AutocompleteHandler extends InteractionHandler {
 
 		switch (focusedOption.name) {
 			case "name": {
-				const tags = await getTagsList(interaction.guildId!);
+				const tags = await this.container.utilities.database.tagsGet(
+					interaction.guildId!,
+				);
 
 				const fuse = new Fuse(tags, {
 					keys: ["name", "content"],

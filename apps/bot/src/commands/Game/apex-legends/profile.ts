@@ -1,16 +1,16 @@
-import type { ApexPlatforms } from "../../../lib/types/apis/tracker";
-import { TrackerGG } from "../../../lib/util";
+import { Tracker } from "../../../lib/util/wrappers/tracker";
+import type { ApexPlatforms } from "../../../lib/util/wrappers/tracker/types";
 import { Colors } from "@discord-factory/colorize";
 import { Command } from "@kaname-png/plugin-subcommands-advanced";
 import { RegisterSubCommandGroup } from "@kaname-png/plugin-subcommands-advanced";
 import { resolveKey } from "@sapphire/plugin-i18next";
 import { EmbedBuilder } from "discord.js";
 
-@RegisterSubCommandGroup("game", "apex-legends", (builder) => 
+@RegisterSubCommandGroup("game", "apex-legends", (builder) =>
 	builder
 		.setName("profile")
 		.setDescription("Lookup an user's info")
-		.addStringOption((s) => 
+		.addStringOption((s) =>
 			s
 				.setName("platform")
 				.setDescription("Platform to search on")
@@ -18,29 +18,30 @@ import { EmbedBuilder } from "discord.js";
 				.setChoices(
 					{
 						name: "Steam",
-						value: "steam"
+						value: "steam",
 					},
 					{
 						name: "Origin",
-						value: "origin"
+						value: "origin",
 					},
 					{
 						name: "XBL",
-						value: "xbl"
+						value: "xbl",
 					},
 					{
 						name: "Playstation",
-						value: "psn"
-					}
-				)
+						value: "psn",
+					},
+				),
 		)
-		.addStringOption((s) => 
+		.addStringOption((s) =>
 			s
 				.setName("id")
 				.setDescription("Name/Identifier of the profile")
-				.setRequired(true)
-		)
-)export class GroupCommand extends Command {
+				.setRequired(true),
+		),
+)
+export class GroupCommand extends Command {
 	public override async chatInputRun(
 		interaction: Command.ChatInputInteraction<"cached">,
 	) {
@@ -83,5 +84,5 @@ import { EmbedBuilder } from "discord.js";
 		});
 	}
 
-	private tracker = new TrackerGG(process.env.TRACKER_GG_KEY!);
+	private tracker = new Tracker(process.env.TRACKER_GG_KEY!);
 }

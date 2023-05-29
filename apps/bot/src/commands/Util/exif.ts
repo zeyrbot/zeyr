@@ -8,11 +8,13 @@ import { resolveKey } from "@sapphire/plugin-i18next";
 import { cast } from "@sapphire/utilities";
 import sharp from "sharp";
 
-@RegisterSubCommand('util', (builder) =>
+@RegisterSubCommand("util", (builder) =>
 	builder
-		.setName('exif')
-		.setDescription('Visualize in a human readable way image metadata')
-		.addAttachmentOption(option => option.setName('image').setDescription('Image').setRequired(false))
+		.setName("exif")
+		.setDescription("Visualize in a human readable way image metadata")
+		.addAttachmentOption((option) =>
+			option.setName("image").setDescription("Image").setRequired(false),
+		),
 )
 export class UserCommand extends Command {
 	public override async chatInputRun(
@@ -29,7 +31,7 @@ export class UserCommand extends Command {
 				await resolveKey(interaction.guild, "commands/images:invalidImage"),
 			);
 
-		const buffer = await this.container.image.sharp(
+		const buffer = await this.container.utilities.image.fetch(
 			image.proxyURL ?? image.url,
 		);
 

@@ -17,6 +17,8 @@ export class UserEvent extends Listener<
 				break;
 		}
 
+		// big todo: localize every possible error message (insane)
+
 		this.container.logger.error(
 			`Encountered error on chat input command "${name}" at path "${location.full}"`,
 			error,

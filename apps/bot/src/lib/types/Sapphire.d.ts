@@ -1,10 +1,17 @@
-import type { ImageManipulation } from "../util";
+import type { DatabaseUtility } from "../../utilities/database";
+import type { ImageUtility } from "../../utilities/image";
 import type { PrismaClient } from "@prisma/client";
 
 declare module "@sapphire/pieces" {
 	interface Container {
 		prisma: PrismaClient;
-		image: ImageManipulation;
+	}
+}
+
+declare module "@sapphire/plugin-utilities-store" {
+	export interface Utilities {
+		image: ImageUtility;
+		database: DatabaseUtility;
 	}
 }
 

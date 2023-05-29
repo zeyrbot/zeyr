@@ -1,8 +1,4 @@
-import {
-	generateOptimisedName,
-	lastMedia,
-	optimiseGithubCDN,
-} from "../../lib/util";
+import { cdn, lastMedia, optimalFileName } from "../../lib/util";
 import {
 	Command,
 	RegisterSubCommand,
@@ -14,12 +10,12 @@ import { AttachmentBuilder } from "discord.js";
 
 @RegisterSubCommand("image", (builder) =>
 	builder
-	  .setName("speech-balloon")
-	  .setDescription("Renders a speech bubble with the given image")
-	  .addAttachmentOption((o) =>
-		o.setName("image").setDescription("🤓🤓").setRequired(false)
-	  )
-  )
+		.setName("speech-balloon")
+		.setDescription("Renders a speech bubble with the given image")
+		.addAttachmentOption((o) =>
+			o.setName("image").setDescription("🤓🤓").setRequired(false),
+		),
+)
 export class UserCommand extends Command {
 	public override async chatInputRun(
 		interaction: Command.ChatInputInteraction<"cached">,
@@ -31,13 +27,17 @@ export class UserCommand extends Command {
 			interaction.options.getAttachment("image") ??
 			(await lastMedia(interaction.channel!));
 
+		console.log(image);
+
 		if (!image)
 			return interaction.editReply(
 				await resolveKey(interaction.guild, "commands/images:invalidImage"),
 			);
 
-		const balloon = await this.container.image.decode(this.SPEECH_BALLOON_URL);
-		const speech = await this.container.image.decode(
+		const balloon = await this.container.utilities.image.decode(
+			this.SPEECH_BALLOON_URL,
+		);
+		const speech = await this.container.utilities.image.decode(
 			image.proxyURL ?? image.url,
 		);
 
@@ -47,7 +47,7 @@ export class UserCommand extends Command {
 
 		const { buffer } = await speech.encode();
 		const file = new AttachmentBuilder(Buffer.from(buffer), {
-			name: generateOptimisedName("gif"),
+			name: optimalFileName("gif"),
 		});
 
 		return interaction.editReply({
@@ -60,7 +60,7 @@ export class UserCommand extends Command {
 		});
 	}
 
-	private SPEECH_BALLOON_URL = optimiseGithubCDN(
+	private SPEECH_BALLOON_URL = cdn(
 		"https://raw.githubusercontent.com/zeyrbot/assets/main/images/z0nqjst12ih61.jpg",
 	);
 }
