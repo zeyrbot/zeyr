@@ -1,7 +1,0 @@
-{
-	"valorantAccountNotFound": "{{error}} I couldn't find that account",
-	"valorantAccountWatching": "You are watching {{name}}'s valorant account stats",
-	"valorantMMRCurrentTier": "Current tier",
-	"apexProfileNotFound": "{{error}} I couldn't find that profile on that platform",
-	"apexProfileDescription": "{{user}} has {{views}} views"
-}

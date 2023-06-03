@@ -1,6 +1,8 @@
 import { lastMedia, optimalFileName } from "../../../lib/util";
-import { Command } from "@kaname-png/plugin-subcommands-advanced";
-import { RegisterSubCommandGroup } from "@kaname-png/plugin-subcommands-advanced";
+import {
+	Command,
+	RegisterSubCommandGroup
+} from "@kaname-png/plugin-subcommands-advanced";
 import { resolveKey } from "@sapphire/plugin-i18next";
 import { Stopwatch } from "@sapphire/stopwatch";
 import { cast } from "@sapphire/utilities";

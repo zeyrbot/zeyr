@@ -1,5 +1,7 @@
-import { Command } from "@kaname-png/plugin-subcommands-advanced";
-import { RegisterSubCommandGroup } from "@kaname-png/plugin-subcommands-advanced";
+import {
+	Command,
+	RegisterSubCommandGroup
+} from "@kaname-png/plugin-subcommands-advanced";
 
 @RegisterSubCommandGroup("tag", "preset", (builder) =>
 	builder

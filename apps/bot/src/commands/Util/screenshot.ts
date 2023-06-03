@@ -1,4 +1,4 @@
-import { APIS, cdn } from "../../lib/util";
+import { cdn } from "../../lib/util";
 import {
 	Command,
 	RegisterSubCommand
@@ -8,6 +8,7 @@ import { resolveKey } from "@sapphire/plugin-i18next";
 import { Stopwatch } from "@sapphire/stopwatch";
 import { cast } from "@sapphire/utilities";
 import { AttachmentBuilder } from "discord.js";
+import { Apis } from "../../lib/enums/apis";
 
 @RegisterSubCommand("util", (builder) =>
 	builder
@@ -86,7 +87,7 @@ export class UserCommand extends Command {
 				})
 			);
 
-		const requestUrl = new URL(APIS.SCREENSHOT);
+		const requestUrl = new URL(Apis.SCREENSHOT);
 
 		requestUrl.searchParams.append("resX", width.toString());
 		requestUrl.searchParams.append("resY", height.toString());
