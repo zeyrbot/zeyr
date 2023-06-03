@@ -1,6 +1,6 @@
 import type {
 	ContextMenuCommandDeniedPayload,
-	Events,
+	Events
 } from "@sapphire/framework";
 import { Listener, UserError } from "@sapphire/framework";
 
@@ -9,7 +9,7 @@ export class UserEvent extends Listener<
 > {
 	public async run(
 		{ context, message: content }: UserError,
-		{ interaction }: ContextMenuCommandDeniedPayload,
+		{ interaction }: ContextMenuCommandDeniedPayload
 	) {
 		// `context: { silent: true }` should make UserError silent:
 		// Use cases for this are for example permissions error when running the `eval` command.
@@ -18,14 +18,14 @@ export class UserEvent extends Listener<
 		if (interaction.deferred || interaction.replied) {
 			return interaction.editReply({
 				content,
-				allowedMentions: { users: [interaction.user.id], roles: [] },
+				allowedMentions: { users: [interaction.user.id], roles: [] }
 			});
 		}
 
 		return interaction.reply({
 			content,
 			allowedMentions: { users: [interaction.user.id], roles: [] },
-			ephemeral: true,
+			ephemeral: true
 		});
 	}
 }

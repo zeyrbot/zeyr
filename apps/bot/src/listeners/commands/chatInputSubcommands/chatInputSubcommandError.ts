@@ -1,7 +1,7 @@
 import { Listener, type UserError } from "@sapphire/framework";
 import {
 	type ChatInputSubcommandErrorPayload,
-	SubcommandPluginEvents,
+	SubcommandPluginEvents
 } from "@sapphire/plugin-subcommands";
 
 export class UserEvent extends Listener<
@@ -21,13 +21,13 @@ export class UserEvent extends Listener<
 
 		this.container.logger.error(
 			`Encountered error on chat input command "${name}" at path "${location.full}"`,
-			error,
+			error
 		);
 		return context.interaction[
 			context.interaction.deferred ? "editReply" : "reply"
 		]({
 			content: errorMessage,
-			ephemeral: true,
+			ephemeral: true
 		});
 	}
 }

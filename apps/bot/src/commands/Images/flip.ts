@@ -1,7 +1,7 @@
 import { lastMedia, optimalFileName } from "../../lib/util";
 import {
 	Command,
-	RegisterSubCommand,
+	RegisterSubCommand
 } from "@kaname-png/plugin-subcommands-advanced";
 import { resolveKey } from "@sapphire/plugin-i18next";
 import { Stopwatch } from "@sapphire/stopwatch";
@@ -20,31 +20,31 @@ import { AttachmentBuilder } from "discord.js";
 				.setChoices(
 					{
 						name: "Vertical",
-						value: "vertical",
+						value: "vertical"
 					},
 					{
 						name: "Horizontal",
-						value: "horizontal",
-					},
-				),
+						value: "horizontal"
+					}
+				)
 		)
 		.addAttachmentOption((o) =>
 			o
 				.setName("image")
 				.setDescription("Image to manipulate")
-				.setRequired(false),
-		),
+				.setRequired(false)
+		)
 )
 export class UserCommand extends Command {
 	public override async chatInputRun(
-		interaction: Command.ChatInputInteraction<"cached">,
+		interaction: Command.ChatInputInteraction<"cached">
 	) {
 		await interaction.deferReply({ fetchReply: true });
 		const stopwatch = new Stopwatch();
 
 		const direction =
 			cast<"vertical" | "horizontal">(
-				interaction.options.getString("direction"),
+				interaction.options.getString("direction")
 			) ?? "vertical";
 		const image =
 			interaction.options.getAttachment("image") ??
@@ -52,11 +52,11 @@ export class UserCommand extends Command {
 
 		if (!image)
 			return interaction.editReply(
-				await resolveKey(interaction.guild, "commands/images:invalidImage"),
+				await resolveKey(interaction.guild, "commands/images:invalidImage")
 			);
 
 		const output = await this.container.utilities.image.sharp(
-			image.proxyURL ?? image.url,
+			image.proxyURL ?? image.url
 		);
 
 		if (direction === "vertical") {
@@ -67,16 +67,16 @@ export class UserCommand extends Command {
 
 		const buffer = await output.png().toBuffer();
 		const file = new AttachmentBuilder(Buffer.from(buffer), {
-			name: optimalFileName("png"),
+			name: optimalFileName("png")
 		});
 
 		return interaction.editReply({
 			content: cast<string>(
 				await resolveKey(interaction.guild, "general:stopwatchFinished", {
-					time: stopwatch.stop().toString(),
-				}),
+					time: stopwatch.stop().toString()
+				})
 			),
-			files: [file],
+			files: [file]
 		});
 	}
 }

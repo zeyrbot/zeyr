@@ -1,13 +1,12 @@
 import { cdn } from "../../lib/util/common/performance";
-import { Urbandictionary } from "../../lib/util/wrappers/urbandictionary";
-import type { UrbanTerm } from "../../lib/util/wrappers/urbandictionary/types";
 import { Colors } from "@discord-factory/colorize";
 import {
 	Command,
-	RegisterSubCommand,
+	RegisterSubCommand
 } from "@kaname-png/plugin-subcommands-advanced";
 import { PaginatedMessage } from "@sapphire/discord.js-utilities";
 import { UserError } from "@sapphire/framework";
+import { Client as Urbandictionary, type Term } from "@zeyrbot/urbandictionary";
 import { EmbedBuilder } from "discord.js";
 
 @RegisterSubCommand("util", (builder) =>
@@ -15,12 +14,12 @@ import { EmbedBuilder } from "discord.js";
 		.setName("urbandictionary")
 		.setDescription("Search definitions on Urbandictionary")
 		.addStringOption((s) =>
-			s.setName("term").setDescription("Term to search for").setRequired(true),
-		),
+			s.setName("term").setDescription("Term to search for").setRequired(true)
+		)
 )
 export class UserCommand extends Command {
 	public override async chatInputRun(
-		interaction: Command.ChatInputInteraction<"cached">,
+		interaction: Command.ChatInputInteraction<"cached">
 	) {
 		const term = interaction.options.getString("term", true);
 
@@ -29,22 +28,22 @@ export class UserCommand extends Command {
 		if (!list || list.length <= 0) {
 			throw new UserError({
 				message: "No definitions",
-				identifier: "UrbandictionaryNoDefinitions",
+				identifier: "UrbandictionaryNoDefinitions"
 			});
 		}
 
 		return await this.pagination(list).run(interaction);
 	}
 
-	public pagination(list: UrbanTerm[]) {
+	public pagination(list: Term[]) {
 		const definition = new PaginatedMessage({
 			template: new EmbedBuilder()
 				.setColor(Colors.SKY_500)
 				.setThumbnail(
 					cdn(
-						"https://raw.githubusercontent.com/zeyrbot/assets/main/images/information_2139-fe0f.png",
-					),
-				),
+						"https://raw.githubusercontent.com/zeyrbot/assets/main/images/information_2139-fe0f.png"
+					)
+				)
 		});
 
 		for (const item of list) {
@@ -54,27 +53,27 @@ export class UserCommand extends Command {
 					.setTitle("Urbandictionary")
 					.setAuthor({
 						name: item.word,
-						url: item.permalink,
+						url: item.permalink
 					})
 					.setFooter({
-						text: ` ${item.author}`,
+						text: ` ${item.author}`
 					})
 					.addFields([
 						{
 							name: "📋",
-							value: this.parseMaskedLinks(item.example),
+							value: this.parseMaskedLinks(item.example)
 						},
 						{
 							name: "👍",
 							value: item.thumbs_up.toString(),
-							inline: true,
+							inline: true
 						},
 						{
 							name: "👎",
 							value: item.thumbs_down.toString(),
-							inline: true,
-						},
-					]),
+							inline: true
+						}
+					])
 			);
 		}
 
@@ -84,7 +83,7 @@ export class UserCommand extends Command {
 	private parseMaskedLinks(toParse: string) {
 		return toParse.replace(
 			this.maskRegex,
-			"[$1](https://www.urbandictionary.com/define.php?term=s)",
+			"[$1](https://www.urbandictionary.com/define.php?term=s)"
 		);
 	}
 

@@ -1,15 +1,15 @@
 import {
 	Command,
-	RegisterSubCommand,
+	RegisterSubCommand
 } from "@kaname-png/plugin-subcommands-advanced";
 import { resolveKey } from "@sapphire/plugin-i18next";
 
 @RegisterSubCommand("system", (builder) =>
-	builder.setName("ping").setDescription("Zeyr latency statistics"),
+	builder.setName("ping").setDescription("Zeyr latency statistics")
 )
 export class UserCommand extends Command {
 	public override async chatInputRun(
-		interaction: Command.ChatInputInteraction<"cached">,
+		interaction: Command.ChatInputInteraction<"cached">
 	) {
 		return await this.ping(interaction);
 	}
@@ -24,9 +24,9 @@ export class UserCommand extends Command {
 		const pingMessage = await interaction.reply({
 			content: (await resolveKey(
 				interaction.guild,
-				"commands/system:pingWait",
+				"commands/system:pingWait"
 			)) as string,
-			fetchReply: true,
+			fetchReply: true
 		});
 
 		const ws = Math.round(this.container.client.ws.ping);
@@ -39,12 +39,12 @@ export class UserCommand extends Command {
 			{
 				ws,
 				latency,
-				db,
-			},
+				db
+			}
 		);
 
 		return interaction.editReply({
-			content,
+			content
 		});
 	}
 }

@@ -1,7 +1,7 @@
 import { tagParsers } from "../../lib/util";
 import {
 	Command,
-	RegisterSubCommand,
+	RegisterSubCommand
 } from "@kaname-png/plugin-subcommands-advanced";
 import { resolveKey } from "@sapphire/plugin-i18next";
 import { cast } from "@sapphire/utilities";
@@ -11,7 +11,7 @@ import { Interpreter, StringTransformer } from "tagscript";
 import {
 	GuildTransformer,
 	MemberTransformer,
-	UserTransformer,
+	UserTransformer
 } from "tagscript-plugin-discord";
 
 @RegisterSubCommand("tag", (builder) =>
@@ -23,18 +23,18 @@ import {
 				.setName("name")
 				.setDescription("Name of the tag")
 				.setRequired(true)
-				.setAutocomplete(true),
+				.setAutocomplete(true)
 		)
 		.addStringOption((s) =>
 			s
 				.setName("args")
 				.setDescription("Optional args of tag")
-				.setRequired(false),
-		),
+				.setRequired(false)
+		)
 )
 export class UserCommand extends Command {
 	public override async chatInputRun(
-		interaction: Command.ChatInputInteraction<"cached">,
+		interaction: Command.ChatInputInteraction<"cached">
 	) {
 		const name = interaction.options.getString("name", true);
 		const args = interaction.options.getString("args");
@@ -44,12 +44,12 @@ export class UserCommand extends Command {
 
 		const tag = await this.container.utilities.database.tagGet(
 			name,
-			interaction.guildId!,
+			interaction.guildId!
 		);
 
 		if (!tag) {
 			return interaction.reply(
-				await resolveKey(interaction.guild!, "commands/tag:tagNotFound"),
+				await resolveKey(interaction.guild!, "commands/tag:tagNotFound")
 			);
 		}
 
@@ -58,7 +58,7 @@ export class UserCommand extends Command {
 			user: new UserTransformer(interaction.user),
 			member: new MemberTransformer(interaction.member as GuildMember),
 			guild: new GuildTransformer(interaction.guild!),
-			args: new StringTransformer(args ?? ""),
+			args: new StringTransformer(args ?? "")
 		});
 
 		if (content.actions.nsfw?.nsfw)
@@ -66,12 +66,12 @@ export class UserCommand extends Command {
 
 		if (content.actions.files) {
 			for (const file of content.actions.files) {
-				const isBuffer = file instanceof Buffer;
-				const url = isBuffer
-					? file
-					: await sharp(
-							await this.container.utilities.image.fetch(cast<string>(file)),
-					  ).toBuffer();
+				const url =
+					file instanceof Buffer
+						? file
+						: await sharp(
+								await this.container.utilities.image.fetch(cast<string>(file))
+						  ).toBuffer();
 
 				files.push(new AttachmentBuilder(url));
 			}
@@ -80,19 +80,19 @@ export class UserCommand extends Command {
 		embeds.push(
 			...(content.actions.embed
 				? [new EmbedBuilder(content.actions.embed)]
-				: []),
+				: [])
 		);
 
 		if (content.actions.deleteMessage) {
 			interaction.reply({
 				content: "🎉 Done",
-				ephemeral: true,
+				ephemeral: true
 			});
 
 			return interaction.channel?.send({
 				content: content.body!,
 				embeds,
-				files,
+				files
 			});
 		}
 
@@ -101,7 +101,7 @@ export class UserCommand extends Command {
 		return interaction.reply({
 			content: content.body!,
 			embeds,
-			files,
+			files
 		});
 	}
 }

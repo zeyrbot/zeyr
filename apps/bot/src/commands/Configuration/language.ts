@@ -1,13 +1,13 @@
 import { languages } from "../../lib/util";
 import {
 	Command,
-	RegisterSubCommand,
+	RegisterSubCommand
 } from "@kaname-png/plugin-subcommands-advanced";
 import { ApplyOptions } from "@sapphire/decorators";
 import { resolveKey } from "@sapphire/plugin-i18next";
 
 @ApplyOptions<Command.Options>({
-	requiredUserPermissions: ["ManageGuild"],
+	requiredUserPermissions: ["ManageGuild"]
 })
 @RegisterSubCommand("configuration", (builder) =>
 	builder
@@ -21,41 +21,41 @@ import { resolveKey } from "@sapphire/plugin-i18next";
 				.setChoices(
 					...languages.map((l) => ({
 						name: l.name,
-						value: l.value,
-					})),
-				),
-		),
+						value: l.value
+					}))
+				)
+		)
 )
 export class UserCommand extends Command {
 	public override async chatInputRun(
-		interaction: Command.ChatInputInteraction<"cached">,
+		interaction: Command.ChatInputInteraction<"cached">
 	) {
 		const language = interaction.options.getString("lang", true);
 
 		const guild = await this.container.utilities.database.guildGetOrCreate(
-			interaction.guildId,
+			interaction.guildId
 		);
 
 		if (!guild)
 			return interaction.reply(
-				await resolveKey(interaction.guild, "generic:databaseGuildNotFound"),
+				await resolveKey(interaction.guild, "generic:databaseGuildNotFound")
 			);
 
 		if (guild.language === language)
 			return interaction.reply(
 				await resolveKey(
 					interaction.guild,
-					"commands/configuration:languageIsEqual",
-				),
+					"commands/configuration:languageIsEqual"
+				)
 			);
 
 		await this.container.utilities.database.guildUpdate(
 			{
-				id: interaction.guildId,
+				id: interaction.guildId
 			},
 			{
-				language,
-			},
+				language
+			}
 		);
 
 		return interaction.reply(
@@ -63,9 +63,9 @@ export class UserCommand extends Command {
 				interaction.guild,
 				"commands/configuration:languageSuccess",
 				{
-					language,
-				},
-			),
+					language
+				}
+			)
 		);
 	}
 }

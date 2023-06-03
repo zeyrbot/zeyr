@@ -22,6 +22,9 @@
 		"@sapphire/time-utilities": "^1.7.9",
 		"@sapphire/utilities": "^3.11.1",
 		"@skyra/env-utilities": "^1.2.0",
+		"@zeyrbot/dlist": "^1.0.1",
+		"@zeyrbot/mdn": "^1.1.0",
+		"@zeyrbot/urbandictionary": "^1.0.3",
 		"discord.js": "^14.9.0",
 		"fuse.js": "^6.6.2",
 		"imagescript": "^1.2.16",
@@ -35,7 +38,7 @@
 		"@sapphire/cli": "^1.6.0",
 		"@types/sharp": "latest",
 		"tsc-watch": "^6.0.0",
-		"typescript": "^5.0.4"
+		"typescript": "latest"
 	},
 	"scripts": {
 		"sapphire": "sapphire",

@@ -1,4 +1,6 @@
 {
 	"screenshotBadUrl": "{{error}} The provided URL is blacklisted\n\nSee the full list [here]({{list}})",
-	"exifOk": "```md\nMimetype: {{mimetype}}\nSize: {{size}}\nDimensions: {{dimensions}}```"
+	"exifOk": "```md\nMimetype: {{mimetype}}\nSize: {{size}}\nDimensions: {{dimensions}}```",
+	"docsMDNOk": "Found {{results}} results (wip)",
+	"docsMDNTargetOk": "Found {{results}} results (wip) *{{target}}*"
 }

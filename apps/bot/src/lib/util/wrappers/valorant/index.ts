@@ -3,7 +3,7 @@ import type {
 	ValorantAccount,
 	ValorantMMR,
 	ValorantRegions,
-	ValorantRoot,
+	ValorantRoot
 } from "./types";
 import { FetchResultTypes, fetch } from "@sapphire/fetch";
 
@@ -19,9 +19,9 @@ export class Valorant {
 		return fetch<ValorantRoot<ValorantAccount>>(
 			`${this.baseUrl}/v1/account/${name}/${tag}`,
 			{
-				headers: this.headers,
+				headers: this.headers
 			},
-			FetchResultTypes.JSON,
+			FetchResultTypes.JSON
 		);
 	}
 
@@ -29,9 +29,9 @@ export class Valorant {
 		return fetch<ValorantRoot<ValorantMMR>>(
 			`${this.baseUrl}/v2/mmr/${region}/${name}/${tag}`,
 			{
-				headers: this.headers,
+				headers: this.headers
 			},
-			FetchResultTypes.JSON,
+			FetchResultTypes.JSON
 		);
 	}
 
@@ -39,13 +39,13 @@ export class Valorant {
 		return fetch(
 			`${this.baseUrl}/v1/crosshair/generate?id=${code}`,
 			{
-				headers: this.headers,
+				headers: this.headers
 			},
-			FetchResultTypes.Buffer,
+			FetchResultTypes.Buffer
 		);
 	}
 
 	private headers = {
-		Authorization: this.key ?? "",
+		Authorization: this.key ?? ""
 	};
 }

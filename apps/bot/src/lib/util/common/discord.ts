@@ -5,7 +5,7 @@ export async function lastMedia(channel: GuildTextBasedChannel, limit = 30) {
 
 	const lastMessage = messages.find(
 		(message: Message) =>
-			message.attachments.size > 0 || message.embeds[0]?.data.url,
+			message.attachments.size > 0 || message.embeds[0]?.data.url
 	);
 
 	if (!lastMessage) return undefined;
@@ -16,6 +16,6 @@ export async function lastMedia(channel: GuildTextBasedChannel, limit = 30) {
 
 	return {
 		...attachment,
-		mediaUrl: attachment.proxyURL ?? attachment.url,
+		mediaUrl: attachment.proxyURL ?? attachment.url
 	};
 }

@@ -2,7 +2,7 @@ import { optimalFileName } from "../../lib/util";
 import {
 	InteractionHandler,
 	InteractionHandlerTypes,
-	type PieceContext,
+	type PieceContext
 } from "@sapphire/framework";
 import { resolveKey } from "@sapphire/plugin-i18next";
 import { Stopwatch } from "@sapphire/stopwatch";
@@ -13,7 +13,7 @@ export class ModalHandler extends InteractionHandler {
 	public constructor(ctx: PieceContext, options: InteractionHandler.Options) {
 		super(ctx, {
 			...options,
-			interactionHandlerType: InteractionHandlerTypes.ModalSubmit,
+			interactionHandlerType: InteractionHandlerTypes.ModalSubmit
 		});
 	}
 
@@ -28,29 +28,33 @@ export class ModalHandler extends InteractionHandler {
 
 	public async run(
 		interaction: ModalSubmitInteraction<"cached">,
-		{ code, inject }: InteractionHandler.ParseResult<this>,
+		{ code, inject }: InteractionHandler.ParseResult<this>
 	) {
 		await interaction.deferReply({ fetchReply: true });
 
 		const stopwatch = new Stopwatch();
 
-		const data = await this.container.utilities.image.eval(
+		const { image, format } = await this.container.utilities.image.eval(
 			code,
-			inject ? JSON.parse(inject) : undefined,
+			inject ? JSON.parse(inject) : undefined
 		);
 
-		const buffer = data.image;
+		if (!image) {
+			throw new Error("Invalid output");
+		}
+
+		const buffer = image;
 		const file = new AttachmentBuilder(buffer!, {
-			name: optimalFileName(data.format ?? "png"),
+			name: optimalFileName(format ?? "png")
 		});
 
 		return await interaction.editReply({
 			content: cast<string>(
 				await resolveKey(interaction.guild, "general:stopwatchFinished", {
-					time: stopwatch.stop().toString(),
-				}),
+					time: stopwatch.stop().toString()
+				})
 			),
-			files: [file],
+			files: [file]
 		});
 	}
 }

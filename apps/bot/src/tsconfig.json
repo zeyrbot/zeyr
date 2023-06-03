@@ -6,8 +6,10 @@
         "rootDir": ".",
         "tsBuildInfoFile": "../dist/.tsbuildinfo",
         "composite": true,
+        "experimentalDecorators": true,
         "emitDecoratorMetadata": true,
-        "resolveJsonModule": true
+        "resolveJsonModule": true,
+        "esModuleInterop": true
     },
     "include": [
         ".",

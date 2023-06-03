@@ -1,7 +1,7 @@
 import { Colors } from "@discord-factory/colorize";
 import {
 	Command,
-	RegisterSubCommand,
+	RegisterSubCommand
 } from "@kaname-png/plugin-subcommands-advanced";
 import type { Tag } from "@prisma/client";
 import { PaginatedMessage } from "@sapphire/discord.js-utilities";
@@ -19,29 +19,29 @@ import { EmbedBuilder, Guild, User } from "discord.js";
 			u
 				.setName("user")
 				.setDescription("User to see tags from")
-				.setRequired(false),
-		),
+				.setRequired(false)
+		)
 )
 export class UserCommand extends Command {
 	public override async chatInputRun(
-		interaction: Command.ChatInputInteraction<"cached">,
+		interaction: Command.ChatInputInteraction<"cached">
 	) {
 		const user = interaction.options.getUser("user", false);
 		const tags = await this.container.utilities.database.tagsGet(
 			interaction.guildId,
-			user?.id,
+			user?.id
 		);
 
 		if (tags.length <= 0) {
 			return interaction.reply(
-				await resolveKey(interaction.guild, "commands/tag:tagListNoTags"),
+				await resolveKey(interaction.guild, "commands/tag:tagListNoTags")
 			);
 		}
 
 		return await this.pagination(
 			await fetchT(interaction.guild),
 			user ?? interaction.guild,
-			tags,
+			tags
 		).run(interaction);
 	}
 
@@ -51,14 +51,14 @@ export class UserCommand extends Command {
 				.setColor(Colors.SKY_500)
 				.setTitle(
 					t("commands/tag:tagListTitle", {
-						target: target instanceof Guild ? target.name : target.username,
-					}),
+						target: target instanceof Guild ? target.name : target.username
+					})
 				)
 				.setFooter({
 					text: t("commands/tag:tagListFooter", {
-						total: tags.length,
-					}),
-				}),
+						total: tags.length
+					})
+				})
 		});
 
 		const pages = chunk(tags, 10);
@@ -66,7 +66,7 @@ export class UserCommand extends Command {
 		for (const pageTags of pages) {
 			pagination.addPageEmbed((embed) =>
 				embed //
-					.setDescription(pageTags.map((tag) => `- ${tag.name}`).join("\n")),
+					.setDescription(pageTags.map((tag) => `- ${tag.name}`).join("\n"))
 			);
 		}
 

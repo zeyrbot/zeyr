@@ -9,7 +9,7 @@ export async function secureFetch(url: string, init?: RequestInit) {
 
 	const response = await fetch(url, {
 		...init,
-		signal: controller.signal,
+		signal: controller.signal
 	});
 
 	clearTimeout(id);

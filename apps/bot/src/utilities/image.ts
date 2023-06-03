@@ -1,14 +1,11 @@
 import {
 	ImagescriptFormat,
-	type ImagescriptOutput,
+	type ImagescriptOutput
 } from "../lib/types/imagescript";
-import { minutes } from "../lib/util";
 import { secureFetch } from "../lib/util/common/misc";
 import { ApplyOptions } from "@sapphire/decorators";
 import { FetchResultTypes, fetch } from "@sapphire/fetch";
-import { UserError } from "@sapphire/framework";
 import { Utility } from "@sapphire/plugin-utilities-store";
-import { cast } from "@sapphire/utilities";
 import Imagescript, { Frame, GIF, Image, decode } from "imagescript";
 import sharp from "sharp";
 import SimplexNoise from "simplex-noise";
@@ -16,7 +13,7 @@ import { inspect } from "util";
 import { runInNewContext } from "vm";
 
 @ApplyOptions<Utility.Options>({
-	name: "image",
+	name: "image"
 })
 export class ImageUtility extends Utility {
 	public async decodeWEBP(input: Buffer) {
@@ -57,7 +54,7 @@ export class ImageUtility extends Utility {
 
 	public async eval(
 		code: string,
-		inject?: Record<string, unknown>,
+		inject?: Record<string, unknown>
 	): Promise<ImagescriptOutput> {
 		const script = `(async() => {
 			${code}
@@ -69,7 +66,7 @@ export class ImageUtility extends Utility {
 			}
 		})()`;
 		const _console = {
-			log: (arg: string) => `${arg}\n`,
+			log: (arg: string) => `${arg}\n`
 		};
 
 		let result: Uint8Array | undefined;
@@ -88,27 +85,17 @@ export class ImageUtility extends Utility {
 					console: _console,
 					fetch: secureFetch,
 					process: "no",
-					...inject,
+					...inject
 				},
-				{ timeout: minutes(1) },
+				{ timeout: 60_000 }
 			);
 		} catch (e) {
-			throw new UserError({
-				message: cast<Error>(e).message,
-				identifier: "ImagescriptError",
-			});
+			throw new Error((e as Error).message);
 		}
 
-		if (result === undefined)
-			throw new UserError({
-				message: "Code returned no response",
-				identifier: "ImagescriptNoResponse",
-			});
+		if (result === undefined) throw new Error("Code returned no response");
 		if (!(result instanceof Uint8Array))
-			throw new UserError({
-				message: "Code returned invalid response",
-				identifier: "ImagescriptInvalidResponse",
-			});
+			throw new Error("Code returned invalid response");
 
 		if (result instanceof ArrayBuffer) result = new Uint8Array(result);
 
@@ -118,7 +105,7 @@ export class ImageUtility extends Utility {
 				? result instanceof Image
 					? ImagescriptFormat.PNG
 					: ImagescriptFormat.GIF
-				: undefined,
+				: undefined
 		};
 
 		if (result) {

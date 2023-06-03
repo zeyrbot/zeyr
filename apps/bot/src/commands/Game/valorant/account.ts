@@ -10,18 +10,18 @@ import { EmbedBuilder } from "discord.js";
 		.setName("account")
 		.setDescription("Display an user and it's information")
 		.addStringOption((s) =>
-			s.setName("name").setDescription("Account name").setRequired(true),
+			s.setName("name").setDescription("Account name").setRequired(true)
 		)
 		.addStringOption((s) =>
-			s.setName("tag").setDescription("Account tag").setRequired(true),
-		),
+			s.setName("tag").setDescription("Account tag").setRequired(true)
+		)
 )
 export class GroupCommand extends Command {
 	public override async chatInputRun(
-		interaction: Command.ChatInputInteraction<"cached">,
+		interaction: Command.ChatInputInteraction<"cached">
 	) {
 		await interaction.deferReply({
-			fetchReply: true,
+			fetchReply: true
 		});
 		const name = interaction.options.getString("name", true);
 		const tag = interaction.options.getString("tag", true);
@@ -32,14 +32,14 @@ export class GroupCommand extends Command {
 			return interaction.editReply(
 				await resolveKey(
 					interaction.guild,
-					"commands/game:valorantAccountNotFound",
-				),
+					"commands/game:valorantAccountNotFound"
+				)
 			);
 
 		const { data: mmr } = await this.valorant.mmr(
 			account.region,
 			account.name,
-			account.tag,
+			account.tag
 		);
 
 		const embed = new EmbedBuilder()
@@ -52,29 +52,29 @@ export class GroupCommand extends Command {
 					interaction.guild,
 					"commands/game:valorantAccountWatching",
 					{
-						name,
-					},
-				),
+						name
+					}
+				)
 			)
 			.addFields([
 				{
 					name: "Elo",
-					value: String(mmr.current_data.elo),
+					value: String(mmr.current_data.elo)
 				},
 				{
 					name: await resolveKey(
 						interaction.guild,
-						"commands/game:valorantMMRCurrentTier",
+						"commands/game:valorantMMRCurrentTier"
 					),
-					value: mmr.current_data.currenttierpatched,
-				},
+					value: mmr.current_data.currenttierpatched
+				}
 			])
 			.setFooter({
-				text: account.puuid,
+				text: account.puuid
 			});
 
 		return interaction.editReply({
-			embeds: [embed],
+			embeds: [embed]
 		});
 	}
 

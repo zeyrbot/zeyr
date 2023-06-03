@@ -1,18 +1,18 @@
 import { ApplyOptions } from "@sapphire/decorators";
 import {
 	InteractionHandler,
-	InteractionHandlerTypes,
+	InteractionHandlerTypes
 } from "@sapphire/framework";
 import type { AutocompleteInteraction } from "discord.js";
 import Fuse from "fuse.js";
 
 @ApplyOptions<InteractionHandler.Options>({
-	interactionHandlerType: InteractionHandlerTypes.Autocomplete,
+	interactionHandlerType: InteractionHandlerTypes.Autocomplete
 })
 export class AutocompleteHandler extends InteractionHandler {
 	public override async run(
 		interaction: AutocompleteInteraction,
-		result: InteractionHandler.ParseResult<this>,
+		result: InteractionHandler.ParseResult<this>
 	) {
 		return interaction.respond(result);
 	}
@@ -29,11 +29,11 @@ export class AutocompleteHandler extends InteractionHandler {
 		switch (focusedOption.name) {
 			case "name": {
 				const tags = await this.container.utilities.database.tagsGet(
-					interaction.guildId!,
+					interaction.guildId!
 				);
 
 				const fuse = new Fuse(tags, {
-					keys: ["name", "content"],
+					keys: ["name", "content"]
 				});
 
 				const fuzzySearch =
@@ -46,8 +46,8 @@ export class AutocompleteHandler extends InteractionHandler {
 				return this.some(
 					fuzzySearch.map((entry) => ({
 						name: entry.name,
-						value: entry.name,
-					})),
+						value: entry.name
+					}))
 				);
 			}
 			default:

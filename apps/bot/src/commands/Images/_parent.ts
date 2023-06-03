@@ -3,15 +3,15 @@ import { ApplyOptions } from "@sapphire/decorators";
 import { ApplicationCommandRegistry } from "@sapphire/framework";
 
 @ApplyOptions<Subcommand.Options>({
-	name: "image",
+	name: "image"
 })
 export class ParentCommand extends Subcommand {
 	public override registerApplicationCommands(
-		registry: ApplicationCommandRegistry,
+		registry: ApplicationCommandRegistry
 	) {
 		registry.registerChatInputCommand((ctx) => {
 			ctx.addSubcommandGroup((sc) =>
-				sc.setName("gif").setDescription("GIF commands"),
+				sc.setName("gif").setDescription("GIF commands")
 			);
 
 			this.hooks.subcommands(this, ctx);

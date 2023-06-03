@@ -3,32 +3,32 @@ import { ApplyOptions } from "@sapphire/decorators";
 import { Utility } from "@sapphire/plugin-utilities-store";
 
 @ApplyOptions<Utility.Options>({
-	name: "database",
+	name: "database"
 })
 export class DatabaseUtility extends Utility {
 	// guilds manager
 	public async guildUpdate(
 		where: Prisma.GuildWhereUniqueInput,
-		data: Prisma.GuildUpdateInput,
+		data: Prisma.GuildUpdateInput
 	) {
 		await this.container.prisma.guild.update({
 			where,
-			data,
+			data
 		});
 	}
 
 	public async guildGetOrCreate(id: string) {
 		const guild = await this.container.prisma.guild.findUnique({
 			where: {
-				id,
-			},
+				id
+			}
 		});
 
 		if (!guild) {
 			await this.container.prisma.guild.create({
 				data: {
-					id,
-				},
+					id
+				}
 			});
 
 			return undefined;
@@ -40,16 +40,16 @@ export class DatabaseUtility extends Utility {
 	public async guildCreate(id: string) {
 		return await this.container.prisma.guild.create({
 			data: {
-				id,
-			},
+				id
+			}
 		});
 	}
 
 	public async guildDelete(id: string) {
 		await this.container.prisma.guild.delete({
 			where: {
-				id,
-			},
+				id
+			}
 		});
 	}
 
@@ -58,11 +58,11 @@ export class DatabaseUtility extends Utility {
 		return this.container.prisma.tag.findFirst({
 			where: {
 				name,
-				guildId,
+				guildId
 			},
 			include: {
-				author: true,
-			},
+				author: true
+			}
 		});
 	}
 
@@ -70,21 +70,21 @@ export class DatabaseUtility extends Utility {
 		return this.container.prisma.tag.findMany({
 			where: {
 				guildId,
-				memberId,
-			},
+				memberId
+			}
 		});
 	}
 
 	public async tagUsageIncrement(id: number) {
 		return this.container.prisma.tag.update({
 			where: {
-				id,
+				id
 			},
 			data: {
 				uses: {
-					increment: 1,
-				},
-			},
+					increment: 1
+				}
+			}
 		});
 	}
 
@@ -93,9 +93,9 @@ export class DatabaseUtility extends Utility {
 			where: {
 				name_guildId: {
 					guildId,
-					name,
-				},
-			},
+					name
+				}
+			}
 		});
 	}
 
@@ -103,20 +103,20 @@ export class DatabaseUtility extends Utility {
 		name: string,
 		content: string,
 		guildId: string,
-		memberId: string,
+		memberId: string
 	) {
 		return this.container.prisma.member.upsert({
 			where: {
-				id: memberId,
+				id: memberId
 			},
 			update: {
 				tags: {
 					create: {
 						name,
 						content,
-						guildId,
-					},
-				},
+						guildId
+					}
+				}
 			},
 			create: {
 				id: memberId,
@@ -124,20 +124,20 @@ export class DatabaseUtility extends Utility {
 					create: {
 						name,
 						content,
-						guildId,
-					},
+						guildId
+					}
 				},
 				guild: {
 					connectOrCreate: {
 						where: {
-							id: guildId,
+							id: guildId
 						},
 						create: {
-							id: guildId,
-						},
-					},
-				},
-			},
+							id: guildId
+						}
+					}
+				}
+			}
 		});
 	}
 }

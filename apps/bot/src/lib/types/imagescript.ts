@@ -5,5 +5,5 @@ export interface ImagescriptOutput {
 
 export enum ImagescriptFormat {
 	PNG = "png",
-	GIF = "gif",
+	GIF = "gif"
 }

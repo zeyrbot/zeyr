@@ -8,23 +8,23 @@ import { AttachmentBuilder } from "discord.js";
 		.setName("crosshair")
 		.setDescription("Convert crosshair code into a image")
 		.addStringOption((s) =>
-			s.setName("code").setDescription("Crosshair's code").setRequired(true),
-		),
+			s.setName("code").setDescription("Crosshair's code").setRequired(true)
+		)
 )
 export class GroupCommand extends Command {
 	public override async chatInputRun(
-		interaction: Command.ChatInputInteraction<"cached">,
+		interaction: Command.ChatInputInteraction<"cached">
 	) {
 		const code = interaction.options.getString("code", true);
 
 		const crosshair = await this.valorant.crosshair(code);
 
 		const image = new AttachmentBuilder(Buffer.from(crosshair), {
-			name: "crosshair.png",
+			name: "crosshair.png"
 		});
 
 		return interaction.reply({
-			files: [image],
+			files: [image]
 		});
 	}
 

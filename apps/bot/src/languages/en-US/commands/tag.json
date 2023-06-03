@@ -10,5 +10,7 @@
 	"tagDeleteMissingPermissions": "{{error}} You are not allowed to delete this tag",
 	"tagListNoTags": "{{error}} This guild has no tags to show",
 	"tagListTitle": "Seeing tags from {{target}}",
-	"tagListFooter": " Total tags: {{total}}"
+	"tagListFooter": " Total tags: {{total}}",
+	"tagPresetNotFound": "{{error}} Preset not found",
+	"tagPresetOk": "{{ok}} Successfully copied preset {{preset}} into this guild"
 }

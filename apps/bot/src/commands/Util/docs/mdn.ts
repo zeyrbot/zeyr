@@ -1,5 +1,7 @@
 import { Command } from "@kaname-png/plugin-subcommands-advanced";
 import { RegisterSubCommandGroup } from "@kaname-png/plugin-subcommands-advanced";
+import { resolveKey } from "@sapphire/plugin-i18next";
+import { Client as MDN } from "@zeyrbot/mdn";
 
 @RegisterSubCommandGroup("util", "docs", (builder) =>
 	builder
@@ -9,18 +11,36 @@ import { RegisterSubCommandGroup } from "@kaname-png/plugin-subcommands-advanced
 			builder
 				.setName("query")
 				.setDescription("Query to search for")
-				.setRequired(true),
+				.setRequired(true)
 		)
 		.addUserOption((builder) =>
-			builder.setName("target").setDescription("Target to @ping on response"),
-		),
+			builder.setName("target").setDescription("Target to @ping on response")
+		)
 )
 export class GroupCommand extends Command {
 	public override async chatInputRun(
-		interaction: Command.ChatInputInteraction<"cached">,
+		interaction: Command.ChatInputInteraction<"cached">
 	) {
-		return interaction.reply(
-			"work in progress\n\nhey im runa (zeyr founder lol) im too sleepy rn so i maybe finish this later lol",
-		);
+		const query = interaction.options.getString("query", true);
+		const target = interaction.options.getUser("target");
+
+		const search = await this.mdn.search(query);
+
+		if (target) {
+			return interaction.reply(
+				await resolveKey(interaction.guild, "commands/util:docsMDNTargetOk", {
+					results: search.documents?.length,
+					target: target.toString()
+				})
+			);
+		} else {
+			return interaction.reply(
+				await resolveKey(interaction.guild, "commands/util:docsMDNOk", {
+					results: search.documents?.length
+				})
+			);
+		}
 	}
+
+	private mdn = new MDN();
 }

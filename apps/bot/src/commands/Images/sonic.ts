@@ -1,7 +1,7 @@
 import { cdn, optimalFileName } from "../../lib/util";
 import {
 	Command,
-	RegisterSubCommand,
+	RegisterSubCommand
 } from "@kaname-png/plugin-subcommands-advanced";
 import { resolveKey } from "@sapphire/plugin-i18next";
 import { Stopwatch } from "@sapphire/stopwatch";
@@ -14,12 +14,12 @@ import { Image, TextLayout } from "imagescript";
 		.setName("sonic")
 		.setDescription("Renders the given text on a sonic quote template")
 		.addStringOption((s) =>
-			s.setName("text").setDescription("Text of the image").setRequired(true),
-		),
+			s.setName("text").setDescription("Text of the image").setRequired(true)
+		)
 )
 export class UserCommand extends Command {
 	public override async chatInputRun(
-		interaction: Command.ChatInputInteraction<"cached">,
+		interaction: Command.ChatInputInteraction<"cached">
 	) {
 		await interaction.deferReply({ fetchReply: true });
 		const stopwatch = new Stopwatch();
@@ -34,7 +34,7 @@ export class UserCommand extends Command {
 			64,
 			text,
 			0xffffffff,
-			this.layout,
+			this.layout
 		);
 
 		sonicText.crop(0, 0, 580, 584);
@@ -42,36 +42,36 @@ export class UserCommand extends Command {
 		sonic.composite(
 			sonicText,
 			378 + (580 - sonicText.width) / 2,
-			103 + (584 - sonicText.height) / 2,
+			103 + (584 - sonicText.height) / 2
 		);
 
 		const { buffer } = await sonic.encode();
 		const file = new AttachmentBuilder(Buffer.from(buffer), {
-			name: optimalFileName("gif"),
+			name: optimalFileName("gif")
 		});
 
 		return interaction.editReply({
 			content: cast<string>(
 				await resolveKey(interaction.guild, "general:stopwatchFinished", {
-					time: stopwatch.stop().toString(),
-				}),
+					time: stopwatch.stop().toString()
+				})
 			),
-			files: [file],
+			files: [file]
 		});
 	}
 
 	private SONIC_URL = cdn(
-		"https://raw.githubusercontent.com/zeyrbot/assets/main/images/sonic.jpg",
+		"https://raw.githubusercontent.com/zeyrbot/assets/main/images/sonic.jpg"
 	);
 
 	private IMPACT_URL = cdn(
-		"https://raw.githubusercontent.com/zeyrbot/assets/main/fonts/impact.ttf",
+		"https://raw.githubusercontent.com/zeyrbot/assets/main/fonts/impact.ttf"
 	);
 
 	private layout = new TextLayout({
 		maxWidth: 580,
 		maxHeight: 584,
 		verticalAlign: "center",
-		horizontalAlign: "middle",
+		horizontalAlign: "middle"
 	});
 }

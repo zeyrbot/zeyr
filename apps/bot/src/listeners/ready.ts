@@ -1,6 +1,7 @@
-import { Dlist } from "../lib/util/wrappers/dlist";
 import { ApplyOptions } from "@sapphire/decorators";
 import { Listener, Piece, type PieceOptions, Store } from "@sapphire/framework";
+import { cast } from "@sapphire/utilities";
+import { Client as Dlist } from "@zeyrbot/dlist";
 import { blue, blueBright, gray, red, yellow } from "colorette";
 
 const dev = process.env.NODE_ENV !== "production";
@@ -18,10 +19,10 @@ export class UserEvent extends Listener {
 		}
 	}
 
-	private dlist = new Dlist(
-		"1095425642159407165",
-		process.env.DLIST_KEY as string,
-	);
+	private dlist = new Dlist({
+		id: "1095425642159407165",
+		token: cast<string>(process.env.DLIST_KEY)
+	});
 
 	private printBanner() {
 		this.container.logger.info(this.logo.join("\n"));
@@ -41,14 +42,14 @@ export class UserEvent extends Listener {
 		red(String.raw`⠀⠀⠸⠶⠖⢏⠀⠀⢀⡤⠤⠇⣴⠏⡾⢱⡏⠁⠀⠀⠀⠀⢠⣿⠃`),
 		red(String.raw`⠀⠀⠀⠀⠀⠈⣇⡀⠿⠀⠀⠀⡽⣰⢶⡼⠇⠀⠀⠀⠀⣠⣿⠟⠀`),
 		red(String.raw`⠀⠀⠀⠀⠀⠀⠈⠳⢤⣀⡶⠤⣷⣅⡀⠀⠀⠀⣀⡠⢔⠕⠁⠀⠀`),
-		red(String.raw`⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠙⠫⠿⠿⠿⠛⠋⠁⠀⠀⠀⠀`),
+		red(String.raw`⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠙⠫⠿⠿⠿⠛⠋⠁⠀⠀⠀⠀`)
 	];
 
 	private async postGuildCount() {
 		this.dlist
 			.postGuildCount(this.container.client.guilds.cache.size)
 			.then(() =>
-				this.container.logger.info(`${blueBright("")} Posted guild count`),
+				this.container.logger.info(`${blueBright("")} Posted guild count`)
 			);
 	}
 
@@ -64,8 +65,8 @@ export class UserEvent extends Listener {
 	private styleStore(store: Store<Piece<PieceOptions>>, last: boolean) {
 		return gray(
 			`${last ? "└─" : "├─"} Loaded ${this.style(
-				store.size.toString().padEnd(3, " "),
-			)} ${store.name}.`,
+				store.size.toString().padEnd(3, " ")
+			)} ${store.name}.`
 		);
 	}
 }

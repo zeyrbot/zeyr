@@ -1,20 +1,20 @@
 import {
 	Command,
-	RegisterSubCommand,
+	RegisterSubCommand
 } from "@kaname-png/plugin-subcommands-advanced";
 import {
 	ActionRowBuilder,
 	ModalBuilder,
 	TextInputBuilder,
-	TextInputStyle,
+	TextInputStyle
 } from "discord.js";
 
 @RegisterSubCommand("tag", (builder) =>
-	builder.setName("create").setDescription("Create a new tag"),
+	builder.setName("create").setDescription("Create a new tag")
 )
 export class UserCommand extends Command {
 	public override async chatInputRun(
-		interaction: Command.ChatInputInteraction<"cached">,
+		interaction: Command.ChatInputInteraction<"cached">
 	) {
 		const modal = new ModalBuilder()
 			.setCustomId("@tag/add")
@@ -26,7 +26,7 @@ export class UserCommand extends Command {
 						.setLabel("Name")
 						.setPlaceholder("E.g: welcome")
 						.setRequired(true)
-						.setStyle(TextInputStyle.Short),
+						.setStyle(TextInputStyle.Short)
 				),
 				new ActionRowBuilder<TextInputBuilder>().addComponents(
 					new TextInputBuilder()
@@ -34,8 +34,8 @@ export class UserCommand extends Command {
 						.setLabel("Content")
 						.setPlaceholder("Content of the tag")
 						.setRequired(true)
-						.setStyle(TextInputStyle.Paragraph),
-				),
+						.setStyle(TextInputStyle.Paragraph)
+				)
 			);
 
 		return await interaction.showModal(modal);

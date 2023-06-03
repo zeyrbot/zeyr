@@ -18,39 +18,39 @@ import { EmbedBuilder } from "discord.js";
 				.setChoices(
 					{
 						name: "Steam",
-						value: "steam",
+						value: "steam"
 					},
 					{
 						name: "Origin",
-						value: "origin",
+						value: "origin"
 					},
 					{
 						name: "XBL",
-						value: "xbl",
+						value: "xbl"
 					},
 					{
 						name: "Playstation",
-						value: "psn",
-					},
-				),
+						value: "psn"
+					}
+				)
 		)
 		.addStringOption((s) =>
 			s
 				.setName("id")
 				.setDescription("Name/Identifier of the profile")
-				.setRequired(true),
-		),
+				.setRequired(true)
+		)
 )
 export class GroupCommand extends Command {
 	public override async chatInputRun(
-		interaction: Command.ChatInputInteraction<"cached">,
+		interaction: Command.ChatInputInteraction<"cached">
 	) {
 		await interaction.deferReply({
-			fetchReply: true,
+			fetchReply: true
 		});
 		const platform = interaction.options.getString(
 			"platform",
-			true,
+			true
 		) as ApexPlatforms;
 		const id = interaction.options.getString("id", true);
 
@@ -58,10 +58,7 @@ export class GroupCommand extends Command {
 
 		if (!profile)
 			return interaction.editReply(
-				await resolveKey(
-					interaction.guild,
-					"commands/game:apexProfileNotFound",
-				),
+				await resolveKey(interaction.guild, "commands/game:apexProfileNotFound")
 			);
 
 		const embed = new EmbedBuilder()
@@ -74,13 +71,13 @@ export class GroupCommand extends Command {
 					"commands/game:apexProfileDescription",
 					{
 						user: profile.platformInfo.platformUserId,
-						views: profile.userInfo.pageviews,
-					},
-				),
+						views: profile.userInfo.pageviews
+					}
+				)
 			);
 
 		return interaction.editReply({
-			embeds: [embed],
+			embeds: [embed]
 		});
 	}
 

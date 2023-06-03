@@ -1,16 +1,17 @@
-import { lastMedia, optimalFileName } from "../../../lib/util";
-import { Command } from "@kaname-png/plugin-subcommands-advanced";
-import { RegisterSubCommandGroup } from "@kaname-png/plugin-subcommands-advanced";
+import { lastMedia, optimalFileName } from "../../lib/util";
+import {
+	Command,
+	RegisterSubCommand
+} from "@kaname-png/plugin-subcommands-advanced";
 import { resolveKey } from "@sapphire/plugin-i18next";
 import { Stopwatch } from "@sapphire/stopwatch";
 import { cast } from "@sapphire/utilities";
 import { AttachmentBuilder } from "discord.js";
-import { Frame, GIF } from "imagescript";
 
-@RegisterSubCommandGroup("image", "gif", (builder) =>
+@RegisterSubCommand("image", (builder) =>
 	builder
-		.setName("invert")
-		.setDescription("Renders a looped GIF inverting the provided image")
+		.setName("deepfry")
+		.setDescription("Deepfries the provided image")
 		.addAttachmentOption((o) =>
 			o
 				.setName("image")
@@ -18,7 +19,7 @@ import { Frame, GIF } from "imagescript";
 				.setRequired(false)
 		)
 )
-export class GroupCommand extends Command {
+export class UserCommand extends Command {
 	public override async chatInputRun(
 		interaction: Command.ChatInputInteraction<"cached">
 	) {
@@ -34,25 +35,24 @@ export class GroupCommand extends Command {
 				await resolveKey(interaction.guild, "commands/images:invalidImage")
 			);
 
-		const frames: Frame[] = [];
-
 		const output = await this.container.utilities.image.decode(
 			image.proxyURL ?? image.url
 		);
 
-		// output.resize(this.OPTIMAL_WIDTH, this.OPTIMAL_HEIGHT);
+		const originalWidth = output.width;
+		const originalHeight = output.height;
 
-		for (let i = 0; i < this.FRAME_COUNT; i++) {
-			frames.push(
-				Frame.from(output.invert(), 1, 0, 0, Frame.DISPOSAL_BACKGROUND)
-			);
-		}
+		output.resize(100, 100);
+		output.red(10);
+		output.saturation(100, true);
+		output.lightness(0.6);
+		output.red(50);
+		output.green(10);
+		output.resize(originalWidth, originalHeight);
 
-		frames.pop();
-
-		const gif = await new GIF(frames).encode(100);
-		const file = new AttachmentBuilder(Buffer.from(gif), {
-			name: optimalFileName("gif")
+		const { buffer } = await output.encodeJPEG(1);
+		const file = new AttachmentBuilder(Buffer.from(buffer), {
+			name: optimalFileName("jpg")
 		});
 
 		return interaction.editReply({
@@ -64,8 +64,4 @@ export class GroupCommand extends Command {
 			files: [file]
 		});
 	}
-
-	private FRAME_COUNT = 5;
-	// private OPTIMAL_WIDTH = 180;
-	// private OPTIMAL_HEIGHT = 180;
 }

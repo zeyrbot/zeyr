@@ -1,6 +1,6 @@
 export function cdn(url: string) {
 	const optimisedUrl = new URL(
-		url.replace("raw.githubusercontent.com", "rawcdn.githack.com"),
+		url.replace("raw.githubusercontent.com", "rawcdn.githack.com")
 	);
 	optimisedUrl.searchParams.append("min", "1");
 

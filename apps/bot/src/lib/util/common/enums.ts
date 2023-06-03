@@ -5,5 +5,5 @@ export enum APIS {
 	BLITZ = "https://zblitz.vercel.app/api",
 	VALORANT = "https://api.henrikdev.xyz/valorant",
 	SCREENSHOT = "https://backup15.terasp.net/api/screenshot",
-	TRACKERGG = "https://public-api.tracker.gg/v2",
+	TRACKERGG = "https://public-api.tracker.gg/v2"
 }

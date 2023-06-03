@@ -15,12 +15,12 @@ import { Frame, GIF } from "imagescript";
 			o
 				.setName("image")
 				.setDescription("Image to manipulate")
-				.setRequired(false),
-		),
+				.setRequired(false)
+		)
 )
 export class GroupCommand extends Command {
 	public override async chatInputRun(
-		interaction: Command.ChatInputInteraction<"cached">,
+		interaction: Command.ChatInputInteraction<"cached">
 	) {
 		await interaction.deferReply({ fetchReply: true });
 		const stopwatch = new Stopwatch();
@@ -31,13 +31,13 @@ export class GroupCommand extends Command {
 
 		if (!image)
 			return interaction.editReply(
-				await resolveKey(interaction.guild, "commands/images:invalidImage"),
+				await resolveKey(interaction.guild, "commands/images:invalidImage")
 			);
 
 		const frames: Frame[] = [];
 
 		const output = await this.container.utilities.image.decode(
-			image.proxyURL ?? image.url,
+			image.proxyURL ?? image.url
 		);
 
 		output.resize(this.OPTIMAL_WIDTH, this.OPTIMAL_HEIGHT);
@@ -52,8 +52,8 @@ export class GroupCommand extends Command {
 					110,
 					0,
 					0,
-					Frame.DISPOSAL_BACKGROUND,
-				),
+					Frame.DISPOSAL_BACKGROUND
+				)
 			);
 		}
 
@@ -61,16 +61,16 @@ export class GroupCommand extends Command {
 
 		const gif = await new GIF(frames).encode(100);
 		const file = new AttachmentBuilder(Buffer.from(gif), {
-			name: optimalFileName("gif"),
+			name: optimalFileName("gif")
 		});
 
 		return interaction.editReply({
 			content: cast<string>(
 				await resolveKey(interaction.guild, "general:stopwatchFinished", {
-					time: stopwatch.stop().toString(),
-				}),
+					time: stopwatch.stop().toString()
+				})
 			),
-			files: [file],
+			files: [file]
 		});
 	}
 

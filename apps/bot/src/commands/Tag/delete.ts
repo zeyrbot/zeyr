@@ -1,6 +1,6 @@
 import {
 	Command,
-	RegisterSubCommand,
+	RegisterSubCommand
 } from "@kaname-png/plugin-subcommands-advanced";
 import { RequiresUserPermissions } from "@sapphire/decorators";
 import { resolveKey } from "@sapphire/plugin-i18next";
@@ -17,13 +17,13 @@ import { Result } from "@sapphire/result";
 				.setName("name")
 				.setDescription("Name of the tag")
 				.setRequired(true)
-				.setAutocomplete(true),
-		),
+				.setAutocomplete(true)
+		)
 )
 export class UserCommand extends Command {
 	@RequiresUserPermissions("ManageGuild")
 	public override async chatInputRun(
-		interaction: Command.ChatInputInteraction<"cached">,
+		interaction: Command.ChatInputInteraction<"cached">
 	) {
 		const name = interaction.options.getString("name", true);
 
@@ -31,21 +31,21 @@ export class UserCommand extends Command {
 			async () =>
 				await this.container.utilities.database.tagDelete(
 					name,
-					interaction.guildId,
-				),
+					interaction.guildId
+				)
 		);
 
 		tag.unwrapOrElse(async (error) => {
 			console.log(error);
 			return interaction.reply(
-				await resolveKey(interaction.guild, "commands/tag:tagNotFound"),
+				await resolveKey(interaction.guild, "commands/tag:tagNotFound")
 			);
 		});
 
 		return interaction.reply(
 			await resolveKey(interaction.guild, "commands/tag:tagDeleteOk", {
-				tag: name,
-			}),
+				tag: name
+			})
 		);
 	}
 }

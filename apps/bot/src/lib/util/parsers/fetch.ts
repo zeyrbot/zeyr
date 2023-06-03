@@ -2,7 +2,7 @@ import {
 	BaseParser,
 	Context,
 	type IParser,
-	SafeObjectTransformer,
+	SafeObjectTransformer
 } from "tagscript";
 
 /**
@@ -24,7 +24,7 @@ export class FetchParser extends BaseParser implements IParser {
 		const data = await (await fetch(ctx.tag.payload!)).text();
 
 		ctx.response.variables[ctx.tag.parameter!] = new SafeObjectTransformer(
-			data,
+			data
 		);
 
 		return "";

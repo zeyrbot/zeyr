@@ -1,7 +1,7 @@
 import { lastMedia, optimalFileName } from "../../lib/util";
 import {
 	Command,
-	RegisterSubCommand,
+	RegisterSubCommand
 } from "@kaname-png/plugin-subcommands-advanced";
 import { resolveKey } from "@sapphire/plugin-i18next";
 import { Stopwatch } from "@sapphire/stopwatch";
@@ -18,18 +18,18 @@ import { AttachmentBuilder } from "discord.js";
 				.setDescription("Quality of the image")
 				.setMinValue(1)
 				.setMaxValue(100)
-				.setRequired(false),
+				.setRequired(false)
 		)
 		.addAttachmentOption((o) =>
 			o
 				.setName("image")
 				.setDescription("Image to manipulate")
-				.setRequired(false),
-		),
+				.setRequired(false)
+		)
 )
 export class UserCommand extends Command {
 	public override async chatInputRun(
-		interaction: Command.ChatInputInteraction<"cached">,
+		interaction: Command.ChatInputInteraction<"cached">
 	) {
 		await interaction.deferReply({ fetchReply: true });
 		const stopwatch = new Stopwatch();
@@ -41,25 +41,25 @@ export class UserCommand extends Command {
 
 		if (!image)
 			return interaction.editReply(
-				await resolveKey(interaction.guild, "commands/images:invalidImage"),
+				await resolveKey(interaction.guild, "commands/images:invalidImage")
 			);
 
 		const jpeg = await this.container.utilities.image.decode(
-			image.proxyURL ?? image.url,
+			image.proxyURL ?? image.url
 		);
 
 		const { buffer } = await jpeg.encodeJPEG(quality);
 		const file = new AttachmentBuilder(Buffer.from(buffer), {
-			name: optimalFileName("jpg"),
+			name: optimalFileName("jpg")
 		});
 
 		return interaction.editReply({
 			content: cast<string>(
 				await resolveKey(interaction.guild, "general:stopwatchFinished", {
-					time: stopwatch.stop().toString(),
-				}),
+					time: stopwatch.stop().toString()
+				})
 			),
-			files: [file],
+			files: [file]
 		});
 	}
 }

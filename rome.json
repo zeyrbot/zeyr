@@ -1,13 +1,15 @@
 {
 	"$schema": "./node_modules/rome/configuration_schema.json",
-	"organizeImports": {
-		"enabled": true
+	"files": {
+		"ignore": ["node_modules", "dist", ".svelte-kit"]
 	},
 	"linter": {
 		"enabled": true,
-		"ignore": ["node_modules", "dist", ".svelte-kit"],
 		"rules": {
 			"recommended": true,
+			"correctness": {
+				"noUnreachable": "error"
+			},
 			"style": {
 				"noNonNullAssertion": "off"
 			}
@@ -15,6 +17,18 @@
 	},
 	"formatter": {
 		"enabled": true,
-		"ignore": ["node_modules", "dist", ".svelte-kit"]
+		"formatWithErrors": true,
+		"indentSize": 4,
+		"indentStyle": "tab"
+	},
+	"javascript": {
+		"formatter": {
+			"trailingComma": "none",
+			"semicolons": "always",
+			"quoteStyle": "double"
+		}
+	},
+	"organizeImports": {
+		"enabled": true
 	}
 }

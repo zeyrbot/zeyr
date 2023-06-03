@@ -17,7 +17,7 @@ export class ZeyrClient extends SapphireClient {
 			.$connect()
 			.then(() => container.logger.info(`${greenBright("")} Prisma online`))
 			.catch(() =>
-				container.logger.fatal(`${redBright("")} Prisma connection failed`),
+				container.logger.fatal(`${redBright("")} Prisma connection failed`)
 			);
 	}
 

@@ -1,5 +1,4 @@
 import { container } from "@sapphire/pieces";
-import { cast } from "@sapphire/utilities";
 import { BaseParser, Context, type IParser } from "tagscript";
 
 /**
@@ -22,7 +21,7 @@ export class ImagescriptParser extends BaseParser implements IParser {
 
 		if (!image) throw new Error("image returned nothing");
 
-		ctx.response.actions.files = [cast<string>(image)];
+		ctx.response.actions.files = [image];
 
 		return "";
 	}

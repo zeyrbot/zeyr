@@ -3,7 +3,7 @@ import type {
 	ApexPlatforms,
 	ApexProfile,
 	CSGOPlatforms,
-	TrackerRoot,
+	TrackerRoot
 } from "./types";
 import { FetchResultTypes, fetch } from "@sapphire/fetch";
 
@@ -21,10 +21,10 @@ export class Tracker {
 			{
 				headers: {
 					"TRN-Api-Key": this.key!,
-					"Content-Type": "application/json",
-				},
+					"Content-Type": "application/json"
+				}
 			},
-			FetchResultTypes.JSON,
+			FetchResultTypes.JSON
 		);
 	}
 
@@ -35,10 +35,10 @@ export class Tracker {
 			{
 				headers: {
 					"TRN-Api-Key": this.key!,
-					"Content-Type": "application/json",
-				},
+					"Content-Type": "application/json"
+				}
 			},
-			FetchResultTypes.JSON,
+			FetchResultTypes.JSON
 		);
 	}
 }

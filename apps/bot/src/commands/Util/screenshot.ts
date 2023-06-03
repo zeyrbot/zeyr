@@ -1,7 +1,7 @@
 import { APIS, cdn } from "../../lib/util";
 import {
 	Command,
-	RegisterSubCommand,
+	RegisterSubCommand
 } from "@kaname-png/plugin-subcommands-advanced";
 import { FetchResultTypes, fetch } from "@sapphire/fetch";
 import { resolveKey } from "@sapphire/plugin-i18next";
@@ -17,31 +17,31 @@ import { AttachmentBuilder } from "discord.js";
 			option
 				.setName("url")
 				.setDescription("URL of the website")
-				.setRequired(true),
+				.setRequired(true)
 		)
 		.addBooleanOption((option) =>
 			option
 				.setName("fullpage")
 				.setDescription("Should screenshot full page")
-				.setRequired(false),
+				.setRequired(false)
 		)
 		.addNumberOption((option) =>
 			option
 				.setName("wait")
 				.setDescription("Wait time before screenshot")
-				.setRequired(false),
+				.setRequired(false)
 		)
 		.addNumberOption((option) =>
 			option
 				.setName("width")
 				.setDescription("Width of the screenshot")
-				.setRequired(false),
+				.setRequired(false)
 		)
 		.addNumberOption((option) =>
 			option
 				.setName("height")
 				.setDescription("Height of the screenshot")
-				.setRequired(false),
+				.setRequired(false)
 		)
 		.addStringOption((option) =>
 			option
@@ -51,18 +51,18 @@ import { AttachmentBuilder } from "discord.js";
 				.addChoices(
 					{
 						name: "png",
-						value: "png",
+						value: "png"
 					},
 					{
 						name: "jpeg",
-						value: "jpeg",
-					},
-				),
-		),
+						value: "jpeg"
+					}
+				)
+		)
 )
 export class UserCommand extends Command {
 	public override async chatInputRun(
-		interaction: Command.ChatInputInteraction<"cached">,
+		interaction: Command.ChatInputInteraction<"cached">
 	) {
 		await interaction.deferReply({ fetchReply: true });
 
@@ -81,9 +81,9 @@ export class UserCommand extends Command {
 			return interaction.editReply(
 				await resolveKey(interaction.guild, "commands/util:screenshotBadUrl", {
 					list: cdn(
-						"https://raw.githubusercontent.com/zeyrbot/assets/main/json/websites.json",
-					),
-				}),
+						"https://raw.githubusercontent.com/zeyrbot/assets/main/json/websites.json"
+					)
+				})
 			);
 
 		const requestUrl = new URL(APIS.SCREENSHOT);
@@ -95,7 +95,7 @@ export class UserCommand extends Command {
 		requestUrl.searchParams.append("isFullPage", fullpage.toString());
 		requestUrl.searchParams.append(
 			"url",
-			!url.startsWith("https:") ? `https://${url}` : url,
+			!url.startsWith("https:") ? `https://${url}` : url
 		);
 
 		const imageResult = await fetch(requestUrl, FetchResultTypes.Buffer);
@@ -103,21 +103,21 @@ export class UserCommand extends Command {
 		const file = new AttachmentBuilder(
 			Buffer.from(imageResult as ArrayBuffer),
 			{
-				name: `screenshot.${format}`,
-			},
+				name: `screenshot.${format}`
+			}
 		);
 
 		return interaction.editReply({
 			content: cast<string>(
 				await resolveKey(interaction.guild, "general:stopwatchFinished", {
-					time: stopwatch.stop().toString(),
-				}),
+					time: stopwatch.stop().toString()
+				})
 			),
-			files: [file],
+			files: [file]
 		});
 	}
 
 	private bad = cdn(
-		"https://raw.githubusercontent.com/zeyrbot/assets/main/json/websites.json",
+		"https://raw.githubusercontent.com/zeyrbot/assets/main/json/websites.json"
 	);
 }
