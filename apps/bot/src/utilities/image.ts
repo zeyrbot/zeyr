@@ -9,7 +9,7 @@ import { Utility } from "@sapphire/plugin-utilities-store";
 import Imagescript, { Frame, GIF, Image, decode } from "imagescript";
 import sharp from "sharp";
 import SimplexNoise from "simplex-noise";
-import { inspect } from "util";
+import { inspect as _inspect } from "util";
 import { runInNewContext } from "vm";
 
 @ApplyOptions<Utility.Options>({
@@ -56,17 +56,21 @@ export class ImageUtility extends Utility {
 		code: string,
 		inject?: Record<string, unknown>
 	): Promise<ImagescriptOutput> {
-		const script = `(async() => {
+		const script = `
+		(async () => {
 			${code}
-			const __typeofImage = typeof(image);
-			if(__typeofImage === 'undefined') {
+			const __typeofImage = typeof image;
+			if (__typeofImage === "undefined") {
 				return undefined;
 			} else {
 				return image;
 			}
-		})()`;
-		const _console = {
-			log: (arg: string) => `${arg}\n`
+		})();
+	`;
+
+		const consoleOutput = [];
+		const virtualConsole = {
+			log: (a: string) => consoleOutput.push(a)
 		};
 
 		let result: Uint8Array | undefined;
@@ -81,13 +85,13 @@ export class ImageUtility extends Utility {
 					GIF,
 					decode,
 					SimplexNoise,
-					_inspect: inspect,
-					console: _console,
+					inspect: _inspect,
+					console: virtualConsole,
 					fetch: secureFetch,
 					process: "no",
 					...inject
 				},
-				{ timeout: 60_000 }
+				{ timeout: 60_000, filename: "imagescript" }
 			);
 		} catch (e) {
 			throw new Error((e as Error).message);

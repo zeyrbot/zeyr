@@ -65,7 +65,7 @@ export class UserCommand extends Command {
 			return interaction.reply(content.actions.nsfw.message);
 
 		if (content.actions.files) {
-			for (const file of content.actions.files) {
+			for (const file of cast<string[] | Buffer[]>(content.actions.files)) {
 				const url =
 					file instanceof Buffer
 						? file
