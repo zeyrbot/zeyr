@@ -83,19 +83,6 @@ export class UserCommand extends Command {
 				: [])
 		);
 
-		if (content.actions.deleteMessage) {
-			interaction.reply({
-				content: "🎉 Done",
-				ephemeral: true
-			});
-
-			return interaction.channel?.send({
-				content: content.body!,
-				embeds,
-				files
-			});
-		}
-
 		await this.container.utilities.database.tagUsageIncrement(tag.id);
 
 		return interaction.reply({
