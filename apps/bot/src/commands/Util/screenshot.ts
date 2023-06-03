@@ -1,3 +1,4 @@
+import { Apis } from "../../lib/enums/apis";
 import { cdn } from "../../lib/util";
 import {
 	Command,
@@ -8,7 +9,6 @@ import { resolveKey } from "@sapphire/plugin-i18next";
 import { Stopwatch } from "@sapphire/stopwatch";
 import { cast } from "@sapphire/utilities";
 import { AttachmentBuilder } from "discord.js";
-import { Apis } from "../../lib/enums/apis";
 
 @RegisterSubCommand("util", (builder) =>
 	builder
