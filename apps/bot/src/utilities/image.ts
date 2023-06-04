@@ -6,9 +6,10 @@ import { secureFetch } from "../lib/util/common/misc";
 import { ApplyOptions } from "@sapphire/decorators";
 import { FetchResultTypes, fetch } from "@sapphire/fetch";
 import { Utility } from "@sapphire/plugin-utilities-store";
+import { Result } from "@sapphire/result";
+import { cast } from "@sapphire/utilities";
 import Imagescript, { Frame, GIF, Image, decode } from "imagescript";
 import sharp from "sharp";
-import SimplexNoise from "simplex-noise";
 import { inspect as _inspect } from "util";
 import { runInNewContext } from "vm";
 
@@ -52,10 +53,7 @@ export class ImageUtility extends Utility {
 		return result;
 	}
 
-	public async eval(
-		code: string,
-		inject?: Record<string, unknown>
-	): Promise<ImagescriptOutput> {
+	public async eval(code: string, inject?: Record<string, unknown>) {
 		const script = `
 		(async () => {
 			${code}
@@ -68,54 +66,55 @@ export class ImageUtility extends Utility {
 		})();
 	`;
 
-		const consoleOutput = [];
+		const logs: string[] = [];
 		const virtualConsole = {
-			log: (a: string) => consoleOutput.push(a)
+			log: (a: string) => logs.push(a)
 		};
 
-		let result: Uint8Array | undefined;
+		const imagescript = await Result.fromAsync(
+			async () =>
+				await runInNewContext(
+					script,
+					{
+						Imagescript,
+						Image,
+						Frame,
+						GIF,
+						decode,
+						inspect: _inspect,
+						console: virtualConsole,
+						fetch: secureFetch,
+						process: "no",
+						...inject
+					},
+					{ timeout: 60_000, filename: "imagescript" }
+				)
+		);
 
-		try {
-			result = await runInNewContext(
-				script,
-				{
-					Imagescript,
-					Image,
-					Frame,
-					GIF,
-					decode,
-					SimplexNoise,
-					inspect: _inspect,
-					console: virtualConsole,
-					fetch: secureFetch,
-					process: "no",
-					...inject
-				},
-				{ timeout: 60_000, filename: "imagescript" }
-			);
-		} catch (e) {
-			throw new Error((e as Error).message);
-		}
+		let result: Uint8Array | ArrayBuffer | undefined = imagescript.unwrapOrElse(
+			(e) => {
+				throw new Error(cast<Error>(e).message);
+			}
+		);
 
 		if (result === undefined) throw new Error("Code returned no response");
+		if (result instanceof ArrayBuffer) result = new Uint8Array(result);
 		if (!(result instanceof Uint8Array))
 			throw new Error("Code returned invalid response");
 
-		if (result instanceof ArrayBuffer) result = new Uint8Array(result);
-
 		const output: ImagescriptOutput = {
 			image: undefined,
-			format: result
-				? result instanceof Image
-					? ImagescriptFormat.PNG
-					: ImagescriptFormat.GIF
-				: undefined
+			format:
+				result instanceof GIF ? ImagescriptFormat.GIF : ImagescriptFormat.PNG
 		};
 
 		if (result) {
 			output.image = Buffer.from(result);
 		}
 
-		return output;
+		return {
+			...output,
+			logs: logs.join("\n")
+		};
 	}
 }

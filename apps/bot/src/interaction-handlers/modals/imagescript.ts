@@ -34,27 +34,28 @@ export class ModalHandler extends InteractionHandler {
 
 		const stopwatch = new Stopwatch();
 
-		const { image, format } = await this.container.utilities.image.eval(
-			code,
-			inject ? JSON.parse(inject) : undefined
-		);
+		try {
+			const { image, format } = await this.container.utilities.image.eval(
+				code,
+				inject ? JSON.parse(inject) : undefined
+			);
 
-		if (!image) {
-			throw new Error("Invalid output");
+			const file = new AttachmentBuilder(image!, {
+				name: optimalFileName(format ?? "png")
+			});
+
+			return interaction.editReply({
+				content: cast<string>(
+					await resolveKey(interaction.guild, "general:stopwatchFinished", {
+						time: stopwatch.stop().toString()
+					})
+				),
+				files: [file]
+			});
+		} catch (e) {
+			return interaction.editReply({
+				content: `❎ ${cast<Error>(e).message}`
+			});
 		}
-
-		const buffer = image;
-		const file = new AttachmentBuilder(buffer!, {
-			name: optimalFileName(format ?? "png")
-		});
-
-		return await interaction.editReply({
-			content: cast<string>(
-				await resolveKey(interaction.guild, "general:stopwatchFinished", {
-					time: stopwatch.stop().toString()
-				})
-			),
-			files: [file]
-		});
 	}
 }

@@ -1,6 +1,5 @@
 import { ApplyOptions } from "@sapphire/decorators";
 import { Listener, Piece, type PieceOptions, Store } from "@sapphire/framework";
-import { cast } from "@sapphire/utilities";
 import { Client as Dlist } from "@zeyrbot/dlist";
 import { blue, blueBright, gray, red, yellow } from "colorette";
 
@@ -21,7 +20,7 @@ export class UserEvent extends Listener {
 
 	private dlist = new Dlist({
 		id: "1095425642159407165",
-		token: cast<string>(process.env.DLIST_KEY)
+		token: process.env.DLIST_KEY
 	});
 
 	private printBanner() {

@@ -1,4 +1,5 @@
 import { container } from "@sapphire/pieces";
+import { Result } from "@sapphire/result";
 import { BaseParser, Context, type IParser } from "tagscript";
 
 /**
@@ -17,12 +18,23 @@ export class ImagescriptParser extends BaseParser implements IParser {
 	}
 
 	public async parse(ctx: Context) {
-		const { image } = await container.utilities.image.eval(ctx.tag.payload!);
+		const result = await Result.fromAsync(
+			async () => await container.utilities.image.eval(ctx.tag.payload!)
+		);
 
-		if (!image) throw new Error("image returned nothing");
+		if (result.isErr()) {
+			throw new Error("unexpected exception");
+		}
+
+		const { image, logs } = result.unwrap();
+
+		if (!(image instanceof Buffer))
+			throw new Error(
+				"unexpected result, please double check that you returned the encoded image!"
+			);
 
 		ctx.response.actions.files = [image];
 
-		return "";
+		return logs ?? "";
 	}
 }

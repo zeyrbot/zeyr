@@ -26,7 +26,7 @@ export class UserCommand extends Command {
 
 		const text = interaction.options.getString("text", true);
 
-		const font = await this.container.utilities.image.font(this.IMPACT_URL);
+		const font = await this.container.utilities.image.font(this.FONT_URL);
 
 		const sonic = await this.container.utilities.image.decode(this.SONIC_URL);
 		const sonicText = await Image.renderText(
@@ -64,7 +64,7 @@ export class UserCommand extends Command {
 		"https://raw.githubusercontent.com/zeyrbot/assets/main/images/sonic.jpg"
 	);
 
-	private IMPACT_URL = cdn(
+	private FONT_URL = cdn(
 		"https://raw.githubusercontent.com/zeyrbot/assets/main/fonts/impact.ttf"
 	);
 

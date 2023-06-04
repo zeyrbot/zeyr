@@ -24,4 +24,11 @@ declare module "tagscript" {
 	}
 }
 
+declare module "@skyra/env-utilities" {
+	interface Env {
+		DISCORD_TOKEN: string;
+		DLIST_KEY: string;
+	}
+}
+
 export default undefined;
