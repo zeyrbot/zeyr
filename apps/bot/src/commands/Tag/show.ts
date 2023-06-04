@@ -1,4 +1,5 @@
 import { tagParsers } from "../../lib/util";
+import { LanguageKeys } from "../../lib/util/i18n/keys";
 import {
 	Command,
 	RegisterSubCommand
@@ -49,7 +50,7 @@ export class UserCommand extends Command {
 
 		if (!tag) {
 			return interaction.reply(
-				await resolveKey(interaction.guild!, "commands/tag:tagNotFound")
+				await resolveKey(interaction.guild!, LanguageKeys.Tag.NotFound)
 			);
 		}
 

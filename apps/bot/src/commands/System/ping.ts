@@ -1,3 +1,4 @@
+import { LanguageKeys } from "../../lib/util/i18n/keys";
 import {
 	Command,
 	RegisterSubCommand
@@ -24,7 +25,7 @@ export class UserCommand extends Command {
 		const pingMessage = await interaction.reply({
 			content: (await resolveKey(
 				interaction.guild,
-				"commands/system:pingWait"
+				LanguageKeys.System.PingWait
 			)) as string,
 			fetchReply: true
 		});
@@ -35,7 +36,7 @@ export class UserCommand extends Command {
 
 		const content = await resolveKey(
 			interaction.guild,
-			"commands/system:pingDone",
+			LanguageKeys.System.PingDone,
 			{
 				ws,
 				latency,

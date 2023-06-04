@@ -1,4 +1,5 @@
 import { languages } from "../../lib/util";
+import { LanguageKeys } from "../../lib/util/i18n/keys";
 import {
 	Command,
 	RegisterSubCommand
@@ -38,14 +39,17 @@ export class UserCommand extends Command {
 
 		if (!guild)
 			return interaction.reply(
-				await resolveKey(interaction.guild, "generic:databaseGuildNotFound")
+				await resolveKey(
+					interaction.guild,
+					LanguageKeys.Errors.ErrorNoDatabaseRecord
+				)
 			);
 
 		if (guild.language === language)
 			return interaction.reply(
 				await resolveKey(
 					interaction.guild,
-					"commands/configuration:languageIsEqual"
+					LanguageKeys.Configuration.LanguageIsEqual
 				)
 			);
 
@@ -61,7 +65,7 @@ export class UserCommand extends Command {
 		return interaction.reply(
 			await resolveKey(
 				interaction.guild,
-				"commands/configuration:languageSuccess",
+				LanguageKeys.Configuration.LanguageSuccess,
 				{
 					language
 				}

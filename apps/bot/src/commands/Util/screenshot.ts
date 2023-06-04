@@ -1,5 +1,6 @@
 import { Apis } from "../../lib/enums/apis";
 import { cdn } from "../../lib/util";
+import { LanguageKeys } from "../../lib/util/i18n/keys";
 import {
 	Command,
 	RegisterSubCommand
@@ -7,7 +8,7 @@ import {
 import { FetchResultTypes, fetch } from "@sapphire/fetch";
 import { resolveKey } from "@sapphire/plugin-i18next";
 import { Stopwatch } from "@sapphire/stopwatch";
-import { cast } from "@sapphire/utilities";
+import { cast, tryParseURL } from "@sapphire/utilities";
 import { AttachmentBuilder } from "discord.js";
 
 @RegisterSubCommand("util", (builder) =>
@@ -80,24 +81,34 @@ export class UserCommand extends Command {
 
 		if (badUrls.includes(url))
 			return interaction.editReply(
-				await resolveKey(interaction.guild, "commands/util:screenshotBadUrl", {
-					list: cdn(
-						"https://raw.githubusercontent.com/zeyrbot/assets/main/json/websites.json"
-					)
-				})
+				await resolveKey(
+					interaction.guild,
+					LanguageKeys.Util.ScreenshotBadUrl,
+					{
+						list: cdn(
+							"https://raw.githubusercontent.com/zeyrbot/assets/main/json/websites.json"
+						)
+					}
+				)
 			);
 
 		const requestUrl = new URL(Apis.SCREENSHOT);
+		const queryUrl = tryParseURL(url)?.toString();
+
+		if (!queryUrl)
+			return interaction.editReply(
+				await resolveKey(
+					interaction.guild,
+					LanguageKeys.Util.ScreenshotInvalidUrl
+				)
+			);
 
 		requestUrl.searchParams.append("resX", width.toString());
 		requestUrl.searchParams.append("resY", height.toString());
 		requestUrl.searchParams.append("outFormat", format);
 		requestUrl.searchParams.append("waitTime", wait.toString());
 		requestUrl.searchParams.append("isFullPage", fullpage.toString());
-		requestUrl.searchParams.append(
-			"url",
-			!url.startsWith("https:") ? `https://${url}` : url
-		);
+		requestUrl.searchParams.append("url", queryUrl);
 
 		const imageResult = await fetch(requestUrl, FetchResultTypes.Buffer);
 

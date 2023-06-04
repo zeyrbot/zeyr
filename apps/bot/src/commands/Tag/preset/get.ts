@@ -1,3 +1,4 @@
+import { LanguageKeys } from "../../../lib/util/i18n/keys";
 import {
 	Command,
 	RegisterSubCommandGroup
@@ -29,10 +30,11 @@ export class GroupCommand extends Command {
 				)
 		);
 
-		if (result.isErr())
+		if (result.isErr()) {
 			return interaction.reply(
-				await resolveKey(interaction.guild, "commands/tag:tagPresetNotFound")
+				await resolveKey(interaction.guild, LanguageKeys.Tag.PresetNotFound)
 			);
+		}
 
 		const tag = result.unwrap();
 
@@ -42,18 +44,18 @@ export class GroupCommand extends Command {
 					tag.name,
 					tag.content,
 					interaction.guildId,
-					tag.author
+					tag.author === "" ? interaction.user.id : tag.author
 				)
 		);
 
 		create.unwrapOrElse(async () => {
 			return interaction.editReply(
-				await resolveKey(interaction.guild, "commands/tag:tagAlreadyExists")
+				await resolveKey(interaction.guild, LanguageKeys.Tag.AlreadyExists)
 			);
 		});
 
 		return interaction.reply(
-			await resolveKey(interaction.guild, "commands/tag:tagPresetOk", {
+			await resolveKey(interaction.guild, LanguageKeys.Tag.PresetOk, {
 				preset: inlineCodeBlock(tag.name)
 			})
 		);

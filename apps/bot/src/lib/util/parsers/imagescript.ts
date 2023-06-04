@@ -23,7 +23,9 @@ export class ImagescriptParser extends BaseParser implements IParser {
 		);
 
 		if (result.isErr()) {
-			throw new Error("unexpected exception");
+			// rome-ignore lint/suspicious/noExplicitAny: GOD FORGIVE ME FOR WHAT I AM ABAOUT TO DO.
+			const error = result.unwrapErr() as any;
+			throw new Error(error.message ? error.message : error);
 		}
 
 		const { image, logs } = result.unwrap();

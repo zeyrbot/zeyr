@@ -1,4 +1,5 @@
 import { lastMedia, optimalFileName } from "../../lib/util";
+import { LanguageKeys } from "../../lib/util/i18n/keys";
 import {
 	Command,
 	RegisterSubCommand
@@ -51,7 +52,7 @@ export class UserCommand extends Command {
 
 		if (!image)
 			return interaction.editReply(
-				await resolveKey(interaction.guild, "commands/images:invalidImage")
+				await resolveKey(interaction.guild, LanguageKeys.Images.InvalidImage)
 			);
 
 		const output = await this.container.utilities.image.decode(
@@ -67,9 +68,13 @@ export class UserCommand extends Command {
 
 		return interaction.editReply({
 			content: cast<string>(
-				await resolveKey(interaction.guild, "general:stopwatchFinished", {
-					time: stopwatch.stop().toString()
-				})
+				await resolveKey(
+					interaction.guild,
+					LanguageKeys.General.StopwatchFinished,
+					{
+						time: stopwatch.stop().toString()
+					}
+				)
 			),
 			files: [file]
 		});

@@ -1,3 +1,4 @@
+import { LanguageKeys } from "../../lib/util/i18n/keys";
 import { Colors } from "@discord-factory/colorize";
 import {
 	Command,
@@ -34,7 +35,7 @@ export class UserCommand extends Command {
 
 		if (tags.length <= 0) {
 			return interaction.reply(
-				await resolveKey(interaction.guild, "commands/tag:tagListNoTags")
+				await resolveKey(interaction.guild, LanguageKeys.Tag.ListNoTags)
 			);
 		}
 
@@ -50,12 +51,12 @@ export class UserCommand extends Command {
 			template: new EmbedBuilder()
 				.setColor(Colors.SKY_500)
 				.setTitle(
-					t("commands/tag:tagListTitle", {
+					t(LanguageKeys.Tag.ListTitle, {
 						target: target instanceof Guild ? target.name : target.username
 					})
 				)
 				.setFooter({
-					text: t("commands/tag:tagListFooter", {
+					text: t(LanguageKeys.Tag.ListFooter, {
 						total: tags.length
 					})
 				})
@@ -65,8 +66,7 @@ export class UserCommand extends Command {
 
 		for (const pageTags of pages) {
 			pagination.addPageEmbed((embed) =>
-				embed //
-					.setDescription(pageTags.map((tag) => `- ${tag.name}`).join("\n"))
+				embed.setDescription(pageTags.map((tag) => `- ${tag.name}`).join("\n"))
 			);
 		}
 

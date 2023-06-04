@@ -1,3 +1,4 @@
+import { LanguageKeys } from "../../lib/util/i18n/keys";
 import {
 	Command,
 	RegisterSubCommand
@@ -38,12 +39,12 @@ export class UserCommand extends Command {
 		tag.unwrapOrElse(async (error) => {
 			console.log(error);
 			return interaction.reply(
-				await resolveKey(interaction.guild, "commands/tag:tagNotFound")
+				await resolveKey(interaction.guild, LanguageKeys.Tag.NotFound)
 			);
 		});
 
 		return interaction.reply(
-			await resolveKey(interaction.guild, "commands/tag:tagDeleteOk", {
+			await resolveKey(interaction.guild, LanguageKeys.Tag.DeleteOk, {
 				tag: name
 			})
 		);

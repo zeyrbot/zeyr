@@ -80,7 +80,7 @@ export class ImageUtility extends Utility {
 						Image,
 						Frame,
 						GIF,
-						decode,
+						decode: this.decodeWEBP,
 						inspect: _inspect,
 						console: virtualConsole,
 						fetch: secureFetch,

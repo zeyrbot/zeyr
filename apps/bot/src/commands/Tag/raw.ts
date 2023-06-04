@@ -1,3 +1,4 @@
+import { LanguageKeys } from "../../lib/util/i18n/keys";
 import { Colors } from "@discord-factory/colorize";
 import {
 	Command,
@@ -36,7 +37,7 @@ export class UserCommand extends Command {
 
 		if (!tag) {
 			return interaction.editReply(
-				await resolveKey(interaction.guild, "commands/tag:tagNotFound")
+				await resolveKey(interaction.guild, LanguageKeys.Tag.NotFound)
 			);
 		}
 
@@ -54,20 +55,17 @@ export class UserCommand extends Command {
 			.setDescription(codeBlock(tag.content))
 			.addFields([
 				{
-					name: await resolveKey(interaction.guild!, "commands/tag:tagRawUses"),
+					name: await resolveKey(interaction.guild!, LanguageKeys.Tag.RawUses),
 					value: codeBlock(tag.uses.toString()),
 					inline: true
 				},
 				{
-					name: await resolveKey(
-						interaction.guild,
-						"commands/tag:tagRawAuthor"
-					),
+					name: await resolveKey(interaction.guild, LanguageKeys.Tag.RawAuthor),
 					value: codeBlock(author.tag),
 					inline: true
 				},
 				{
-					name: await resolveKey(interaction.guild, "commands/tag:tagRawDate"),
+					name: await resolveKey(interaction.guild, LanguageKeys.Tag.RawDate),
 					value: `<t:${Math.floor(tag.createdAt.getTime() / 1000)}:R>`
 				}
 			]);

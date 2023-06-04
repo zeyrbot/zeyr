@@ -1,5 +1,6 @@
 import { lastMedia } from "../../lib/util";
 import { formatBytes } from "../../lib/util";
+import { LanguageKeys } from "../../lib/util/i18n/keys";
 import {
 	Command,
 	RegisterSubCommand
@@ -27,7 +28,7 @@ export class UserCommand extends Command {
 
 		if (!image)
 			return interaction.editReply(
-				await resolveKey(interaction.guild, "commands/images:invalidImage")
+				await resolveKey(interaction.guild, LanguageKeys.Images.InvalidImage)
 			);
 
 		const buffer = await this.container.utilities.image.sharp(
@@ -38,7 +39,7 @@ export class UserCommand extends Command {
 
 		return interaction.editReply({
 			content: cast<string>(
-				await resolveKey(interaction.guild, "commands/util:exifOk", {
+				await resolveKey(interaction.guild, LanguageKeys.Util.ExifOk, {
 					mimetype: format,
 					size: formatBytes(size ?? 0, 1),
 					dimensions: `${width}x${height}`
