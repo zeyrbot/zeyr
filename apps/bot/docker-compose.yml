@@ -1,0 +1,36 @@
+version: '2.4'
+
+services:
+  redis:
+    command: 'redis-server --requirepass redis'
+    container_name: redis
+    image: 'redis:alpine'
+    ports:
+      - '6379:6379'
+    restart: always
+    logging:
+      options:
+        max-size: '20m'
+        max-file: '3'
+
+  zeyr:
+    container_name: zeyr
+    depends_on:
+      - redis
+    restart: unless-stopped
+    build: ./
+    environment:
+      PORT: 8000
+      REDIS_PORT: 6379
+      REDIS_HOST: redis
+    env_file:
+      - '.env.development.local'
+    ports:
+      - '8000:8000'
+    logging:
+      options:
+        max-size: '1g'
+        max-file: '3'
+    tty: true
+
+# from https://github.com/sapphiredev/spinel/blob/main/package.json

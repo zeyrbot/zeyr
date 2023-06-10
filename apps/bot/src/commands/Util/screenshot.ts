@@ -112,12 +112,9 @@ export class UserCommand extends Command {
 
 		const imageResult = await fetch(requestUrl, FetchResultTypes.Buffer);
 
-		const file = new AttachmentBuilder(
-			Buffer.from(imageResult as ArrayBuffer),
-			{
-				name: `screenshot.${format}`
-			}
-		);
+		const file = new AttachmentBuilder(Buffer.from(imageResult), {
+			name: `screenshot.${format}`
+		});
 
 		return interaction.editReply({
 			content: cast<string>(
