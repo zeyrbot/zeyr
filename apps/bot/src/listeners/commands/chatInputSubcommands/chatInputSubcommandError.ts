@@ -1,9 +1,9 @@
+import { err } from "../../../lib/util";
 import { Listener, type UserError } from "@sapphire/framework";
 import {
 	type ChatInputSubcommandErrorPayload,
 	SubcommandPluginEvents
 } from "@sapphire/plugin-subcommands";
-import { err } from "../../../lib/util";
 
 export class UserEvent extends Listener<
 	typeof SubcommandPluginEvents.ChatInputSubcommandError

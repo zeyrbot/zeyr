@@ -22,7 +22,6 @@
 		"@skyra/env-utilities": "^1.2.0",
 		"@zeyrbot/dlist": "^1.1.2",
 		"discord.js": "^14.11.0",
-		"exif-reader": "^1.2.0",
 		"fuse.js": "^6.6.2",
 		"imagescript": "^1.2.16",
 		"sharp": "latest",

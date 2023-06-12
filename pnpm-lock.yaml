@@ -102,9 +102,6 @@ importers:
       discord.js:
         specifier: ^14.11.0
         version: 14.11.0
-      exif-reader:
-        specifier: ^1.2.0
-        version: 1.2.0
       fuse.js:
         specifier: ^6.6.2
         version: 6.6.2
@@ -1845,10 +1842,6 @@ packages:
       signal-exit: 3.0.7
       strip-final-newline: 3.0.0
     dev: true
-
-  /exif-reader@1.2.0:
-    resolution: {integrity: sha512-C9jsLWxaUh9/gNwo9Ouf9jxP0vGn/2vkhu89wbPFyFfpfl8WPbwLrvrb7h9Q6oVvkyvA+e4lXgOllW+/bAk0RQ==}
-    dev: false
 
   /expand-template@2.0.3:
     resolution: {integrity: sha512-XYfuKMvj4O35f/pOXLObndIRvyQ+/+6AhODh+OKWj9S9498pHHn/IMszH+gt0fBCRWMNfk1ZSp5x3AifmnI2vg==}
