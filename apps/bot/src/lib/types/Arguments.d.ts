@@ -30,6 +30,7 @@ declare module "@skyra/env-utilities" {
 	interface Env {
 		DISCORD_TOKEN: string;
 		DLIST_KEY: string;
+		BUILD: "development" | "production";
 	}
 }
 

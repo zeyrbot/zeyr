@@ -59,7 +59,7 @@ export class UserCommand extends Command {
 				},
 				{
 					name: "Build",
-					value: codeBlock(`${process.env.NODE_ENV} build`)
+					value: codeBlock(`${process.env.BUILD} build`)
 				}
 			);
 
