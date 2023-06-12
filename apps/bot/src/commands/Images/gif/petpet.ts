@@ -43,20 +43,28 @@ export class GroupCommand extends Command {
 			)
 		);
 
-		/**
-         * const output = await this.container.utilities.image.get(
+		const output = await this.container.utilities.image.get(
 			image.proxyURL ?? image.url
-		);p
-         */
+		);
+
+		const parent = new Image(assets[0].width, assets[0].height);
+
+		output.resize(parent.width - 20, parent.height - 20);
 
 		for (let i = 0; i < this.FRAME_COUNT; i++) {
 			const frame = Frame.from(
-				assets[i],
+				parent.composite(
+					output,
+					parent.width - output.width,
+					parent.height - output.height
+				),
 				62.5,
 				0,
 				0,
 				Frame.DISPOSAL_BACKGROUND
 			);
+
+			frame.composite(assets[i]);
 
 			frames.push(frame);
 		}

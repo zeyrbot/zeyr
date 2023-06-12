@@ -5,7 +5,6 @@ import {
 } from "@kaname-png/plugin-subcommands-advanced";
 import { codeBlock, objectEntries } from "@sapphire/utilities";
 import { formatBytes } from "@zeyr/utils";
-import exifreader from "exif-reader";
 
 @RegisterSubCommand("util", (builder) =>
 	builder
@@ -32,20 +31,12 @@ export class UserCommand extends Command {
 			image.proxyURL ?? image.url
 		);
 
-		const {
-			size,
-			format: mimetype,
-			width,
-			height,
-			exif
-		} = await buffer.metadata();
-		const exifData = exif ? exifreader(exif) : undefined;
+		const { size, format: mimetype, width, height } = await buffer.metadata();
 
 		const data = {
 			mimetype,
 			size: formatBytes(size ?? 0, 2),
-			dimensions: `${width}x${height}`,
-			model: exifData?.image!["Model"]
+			dimensions: `${width}x${height}`
 		};
 
 		return interaction.editReply({
