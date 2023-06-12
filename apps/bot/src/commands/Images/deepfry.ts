@@ -34,18 +34,11 @@ export class UserCommand extends Command {
 			image.proxyURL ?? image.url
 		);
 
-		output
-			.modulate({
-				saturation: 2,
-				brightness: 1.1
-			})
-			.sharpen()
-			.gamma(1.5)
-			.toColourspace("rgb");
+		output.modulate({ saturation: 2 }).gamma(2).sharpen();
 
 		const buffer = await output
 			.jpeg({
-				quality: 1
+				quality: 40
 			})
 			.toBuffer();
 

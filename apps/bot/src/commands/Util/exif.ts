@@ -5,7 +5,7 @@ import {
 } from "@kaname-png/plugin-subcommands-advanced";
 import { codeBlock, objectEntries } from "@sapphire/utilities";
 import exifreader from "exif-reader";
-import { formatBytes } from "zeyr-utils";
+import { formatBytes } from "@zeyr/utils";
 
 @RegisterSubCommand("util", (builder) =>
 	builder

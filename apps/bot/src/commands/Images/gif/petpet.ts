@@ -46,7 +46,7 @@ export class GroupCommand extends Command {
 		/**
          * const output = await this.container.utilities.image.get(
 			image.proxyURL ?? image.url
-		);
+		);p
          */
 
 		for (let i = 0; i < this.FRAME_COUNT; i++) {

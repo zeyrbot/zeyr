@@ -1,21 +1,10 @@
 {
-	"name": "zeyr-utils",
-	"main": "dist/index.js",
-	"types": "dist/index.d.ts",
-	"files": ["dist/**"],
-	"exports": {
-		"./package.json": "./package.json",
-		".": {
-			"import": {
-				"types": "./dist/index.d.ts",
-				"default": "./dist/index.js"
-			},
-			"require": "./dist/index.js"
-		}
-	},
+	"name": "@zeyr/utils",
+	"main": "src/index.ts",
+	"types": "src/index.ts",
 	"dependencies": {
 		"@sapphire/time-utilities": "^1.7.9",
 		"tslib": "^2.5.3",
-		"typescript": "latest"
+		"typescript": "^5.1.3"
 	}
 }
