@@ -1,4 +1,0 @@
-{
-	"languageIsEqual": "{{error}} This language is already set for this guild",
-	"languageSuccess": "{{ok}} I changed the language for this guild to {{language}}"
-}

@@ -2,11 +2,18 @@
   "category": "commands"
 }
 ---
-import { Command, RegisterSubCommandGroup } from '@kaname-png/plugin-subcommands-advanced';
+import {
+	Command,
+	RegisterSubCommandGroup
+} from "@kaname-png/plugin-subcommands-advanced";
 
-@RegisterSubCommandGroup('PARENT', 'GROUP', (builder) => builder.setName('{{name}}').setDescription('DESCRIPTION'))
+@RegisterSubCommandGroup("PARENT", "GROUP", (builder) =>
+	builder.setName("{{name}}").setDescription("DESCRIPTION")
+)
 export class GroupCommand extends Command {
-	public override async chatInputRun(interaction: Command.ChatInputInteraction<'cached'>) {
-		return interaction.reply('uwu');
+	public override async chatInputRun(
+		interaction: Command.ChatInputInteraction<"cached">
+	) {
+		return interaction.reply("uwu");
 	}
 }

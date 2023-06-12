@@ -1,13 +1,9 @@
-import { lastMedia, optimalFileName } from "../../../lib/util";
-import { LanguageKeys } from "../../../lib/util/i18n/keys";
+import { lastMedia, optimalFileName, timedText } from "../../../lib/util";
 import {
 	Command,
 	RegisterSubCommandGroup
 } from "@kaname-png/plugin-subcommands-advanced";
-import { resolveKey } from "@sapphire/plugin-i18next";
 import { Stopwatch } from "@sapphire/stopwatch";
-import { cast } from "@sapphire/utilities";
-import { AttachmentBuilder } from "discord.js";
 import { Frame, GIF } from "imagescript";
 
 @RegisterSubCommandGroup("image", "gif", (builder) =>
@@ -33,13 +29,11 @@ export class GroupCommand extends Command {
 			(await lastMedia(interaction.channel!));
 
 		if (!image)
-			return interaction.editReply(
-				await resolveKey(interaction.guild, LanguageKeys.Images.InvalidImage)
-			);
+			return interaction.editReply("Please provide a valid image or url");
 
 		const frames: Frame[] = [];
 
-		const output = await this.container.utilities.image.decode(
+		const output = await this.container.utilities.image.get(
 			image.proxyURL ?? image.url
 		);
 
@@ -52,7 +46,7 @@ export class GroupCommand extends Command {
 			frames.push(
 				Frame.from(
 					output.clone().rotate(angle, false),
-					110,
+					60,
 					0,
 					0,
 					Frame.DISPOSAL_BACKGROUND
@@ -63,20 +57,13 @@ export class GroupCommand extends Command {
 		frames.pop();
 
 		const gif = await new GIF(frames).encode(100);
-		const file = new AttachmentBuilder(Buffer.from(gif), {
-			name: optimalFileName("gif")
-		});
+		const file = await this.container.utilities.image.attachment(
+			Buffer.from(gif),
+			optimalFileName("gif")
+		);
 
 		return interaction.editReply({
-			content: cast<string>(
-				await resolveKey(
-					interaction.guild,
-					LanguageKeys.General.StopwatchFinished,
-					{
-						time: stopwatch.stop().toString()
-					}
-				)
-			),
+			content: timedText(stopwatch.stop().toString(), "Done,"),
 			files: [file]
 		});
 	}

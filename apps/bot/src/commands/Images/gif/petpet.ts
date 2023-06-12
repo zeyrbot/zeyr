@@ -1,15 +1,16 @@
-import { lastMedia, optimalFileName, timedText } from "../../../lib/util";
+import { cdn, lastMedia, optimalFileName, timedText } from "../../../lib/util";
 import {
 	Command,
 	RegisterSubCommandGroup
 } from "@kaname-png/plugin-subcommands-advanced";
 import { Stopwatch } from "@sapphire/stopwatch";
-import { Frame, GIF } from "imagescript";
+import { range } from "@sapphire/utilities";
+import { Frame, GIF, Image } from "imagescript";
 
 @RegisterSubCommandGroup("image", "gif", (builder) =>
 	builder
-		.setName("invert")
-		.setDescription("Renders a looped GIF inverting the provided image")
+		.setName("petpet")
+		.setDescription("Render a petpet gif")
 		.addAttachmentOption((o) =>
 			o
 				.setName("image")
@@ -32,17 +33,32 @@ export class GroupCommand extends Command {
 			return interaction.editReply("Please provide a valid image or url");
 
 		const frames: Frame[] = [];
-
-		const output = await this.container.utilities.image.get(
-			image.proxyURL ?? image.url
+		const assets: Image[] = await Promise.all(
+			range(0, 9, 1).map((_, i) =>
+				this.container.utilities.image.get(
+					cdn(
+						`https://raw.githubusercontent.com/zeyrbot/assets/main/images/pet/pet${i}.gif`
+					)
+				)
+			)
 		);
 
-		// output.resize(this.OPTIMAL_WIDTH, this.OPTIMAL_HEIGHT);
+		/**
+         * const output = await this.container.utilities.image.get(
+			image.proxyURL ?? image.url
+		);
+         */
 
 		for (let i = 0; i < this.FRAME_COUNT; i++) {
-			frames.push(
-				Frame.from(output.invert(), 1, 0, 0, Frame.DISPOSAL_BACKGROUND)
+			const frame = Frame.from(
+				assets[i],
+				62.5,
+				0,
+				0,
+				Frame.DISPOSAL_BACKGROUND
 			);
+
+			frames.push(frame);
 		}
 
 		frames.pop();
@@ -59,7 +75,7 @@ export class GroupCommand extends Command {
 		});
 	}
 
-	private FRAME_COUNT = 5;
+	private FRAME_COUNT = 10;
 	// private OPTIMAL_WIDTH = 180;
 	// private OPTIMAL_HEIGHT = 180;
 }

@@ -1,13 +1,9 @@
-import { lastMedia, optimalFileName } from "../../lib/util";
-import { LanguageKeys } from "../../lib/util/i18n/keys";
+import { lastMedia, optimalFileName, timedText } from "../../lib/util";
 import {
 	Command,
 	RegisterSubCommand
 } from "@kaname-png/plugin-subcommands-advanced";
-import { resolveKey } from "@sapphire/plugin-i18next";
 import { Stopwatch } from "@sapphire/stopwatch";
-import { cast } from "@sapphire/utilities";
-import { AttachmentBuilder } from "discord.js";
 
 @RegisterSubCommand("image", (builder) =>
 	builder
@@ -32,40 +28,34 @@ export class UserCommand extends Command {
 			(await lastMedia(interaction.channel!));
 
 		if (!image)
-			return interaction.editReply(
-				await resolveKey(interaction.guild, LanguageKeys.Images.InvalidImage)
-			);
+			return interaction.editReply("Please provide a valid image or url");
 
-		const output = await this.container.utilities.image.decode(
+		const output = await this.container.utilities.image.sharp(
 			image.proxyURL ?? image.url
 		);
 
-		const originalWidth = output.width;
-		const originalHeight = output.height;
+		output
+			.modulate({
+				saturation: 2,
+				brightness: 1.1
+			})
+			.sharpen()
+			.gamma(1.5)
+			.toColourspace("rgb");
 
-		output.resize(100, 100);
-		output.red(10);
-		output.saturation(100, true);
-		output.lightness(0.4);
-		output.red(50);
-		output.green(10);
-		output.resize(originalWidth, originalHeight);
+		const buffer = await output
+			.jpeg({
+				quality: 1
+			})
+			.toBuffer();
 
-		const { buffer } = await output.encodeJPEG(1);
-		const file = new AttachmentBuilder(Buffer.from(buffer), {
-			name: optimalFileName("jpg")
-		});
+		const file = await this.container.utilities.image.attachment(
+			Buffer.from(buffer),
+			optimalFileName("jpg")
+		);
 
 		return interaction.editReply({
-			content: cast<string>(
-				await resolveKey(
-					interaction.guild,
-					LanguageKeys.General.StopwatchFinished,
-					{
-						time: stopwatch.stop().toString()
-					}
-				)
-			),
+			content: timedText(stopwatch.stop().toString(), "Done,"),
 			files: [file]
 		});
 	}

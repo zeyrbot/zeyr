@@ -19,3 +19,19 @@ export async function lastMedia(channel: GuildTextBasedChannel, limit = 30) {
 		mediaUrl: attachment.proxyURL ?? attachment.url
 	};
 }
+
+export function ok(...content: readonly (string | number)[]) {
+	return `✅ ${content.join(" ")}`;
+}
+
+export function err(...content: readonly (string | number)[]) {
+	return `❌ ${content.join(" ")}`;
+}
+
+export function danger(...content: readonly (string | number)[]) {
+	return `⚠ ${content.join(" ")}`;
+}
+
+export function info(...content: readonly (string | number)[]) {
+	return `:information_source: ${content.join(" ")}`;
+}

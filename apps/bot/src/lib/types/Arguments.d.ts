@@ -1,6 +1,7 @@
 import type { DatabaseUtility } from "../../utilities/database";
 import type { ImageUtility } from "../../utilities/image";
 import type { PrismaClient } from "@prisma/client";
+import type { TagsUtility } from "../../utilities/tags";
 
 declare module "@sapphire/pieces" {
 	interface Container {
@@ -12,6 +13,7 @@ declare module "@sapphire/plugin-utilities-store" {
 	export interface Utilities {
 		image: ImageUtility;
 		database: DatabaseUtility;
+		tags: TagsUtility;
 	}
 }
 

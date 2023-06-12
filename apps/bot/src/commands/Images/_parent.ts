@@ -14,6 +14,10 @@ export class ParentCommand extends Subcommand {
 				sc.setName("gif").setDescription("GIF commands")
 			);
 
+			ctx.addSubcommandGroup((sc) =>
+				sc.setName("fun").setDescription("Fun commands")
+			);
+
 			this.hooks.subcommands(this, ctx);
 			this.hooks.groups(this, ctx);
 

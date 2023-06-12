@@ -10,12 +10,7 @@ export class ParentCommand extends Subcommand {
 		registry: ApplicationCommandRegistry
 	) {
 		registry.registerChatInputCommand((ctx) => {
-			ctx.addSubcommandGroup((sc) =>
-				sc.setName("docs").setDescription("Docs commands")
-			);
-
 			this.hooks.subcommands(this, ctx);
-			this.hooks.groups(this, ctx);
 
 			return ctx.setName(this.name).setDescription("Util commands");
 		});

@@ -1,12 +1,11 @@
 import { lastMedia } from "../../lib/util";
-import { formatBytes } from "../../lib/util";
-import { LanguageKeys } from "../../lib/util/i18n/keys";
 import {
 	Command,
 	RegisterSubCommand
 } from "@kaname-png/plugin-subcommands-advanced";
-import { resolveKey } from "@sapphire/plugin-i18next";
-import { cast } from "@sapphire/utilities";
+import { codeBlock, objectEntries } from "@sapphire/utilities";
+import { formatBytes } from "zeyr-utils";
+import exifreader from "exif-reader";
 
 @RegisterSubCommand("util", (builder) =>
 	builder
@@ -27,23 +26,33 @@ export class UserCommand extends Command {
 			(await lastMedia(interaction.channel!));
 
 		if (!image)
-			return interaction.editReply(
-				await resolveKey(interaction.guild, LanguageKeys.Images.InvalidImage)
-			);
+			return interaction.editReply("Please provide a valid image or url");
 
 		const buffer = await this.container.utilities.image.sharp(
 			image.proxyURL ?? image.url
 		);
 
-		const { size, format, width, height } = await buffer.metadata();
+		const {
+			size,
+			format: mimetype,
+			width,
+			height,
+			exif
+		} = await buffer.metadata();
+		const exifData = exif ? exifreader(exif) : undefined;
+
+		const data = {
+			mimetype,
+			size: formatBytes(size ?? 0, 2),
+			dimensions: `${width}x${height}`,
+			model: exifData?.image!["Model"]
+		};
 
 		return interaction.editReply({
-			content: cast<string>(
-				await resolveKey(interaction.guild, LanguageKeys.Util.ExifOk, {
-					mimetype: format,
-					size: formatBytes(size ?? 0, 1),
-					dimensions: `${width}x${height}`
-				})
+			content: codeBlock(
+				objectEntries(data)
+					.map(([type, value]) => `${type}: ${value}`)
+					.join("\n")
 			)
 		});
 	}

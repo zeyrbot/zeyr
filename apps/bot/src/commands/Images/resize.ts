@@ -1,13 +1,9 @@
-import { lastMedia, optimalFileName } from "../../lib/util";
-import { LanguageKeys } from "../../lib/util/i18n/keys";
+import { lastMedia, optimalFileName, timedText } from "../../lib/util";
 import {
 	Command,
 	RegisterSubCommand
 } from "@kaname-png/plugin-subcommands-advanced";
-import { resolveKey } from "@sapphire/plugin-i18next";
 import { Stopwatch } from "@sapphire/stopwatch";
-import { cast } from "@sapphire/utilities";
-import { AttachmentBuilder } from "discord.js";
 
 @RegisterSubCommand("image", (builder) =>
 	builder
@@ -51,31 +47,22 @@ export class UserCommand extends Command {
 			(await lastMedia(interaction.channel!));
 
 		if (!image)
-			return interaction.editReply(
-				await resolveKey(interaction.guild, LanguageKeys.Images.InvalidImage)
-			);
+			return interaction.editReply("Please provide a valid image or url");
 
-		const output = await this.container.utilities.image.decode(
+		const output = await this.container.utilities.image.get(
 			image.proxyURL ?? image.url
 		);
 
 		output.resize(w, h);
 
 		const { buffer } = await output.encode();
-		const file = new AttachmentBuilder(Buffer.from(buffer), {
-			name: optimalFileName("png")
-		});
+		const file = await this.container.utilities.image.attachment(
+			Buffer.from(buffer),
+			optimalFileName("png")
+		);
 
 		return interaction.editReply({
-			content: cast<string>(
-				await resolveKey(
-					interaction.guild,
-					LanguageKeys.General.StopwatchFinished,
-					{
-						time: stopwatch.stop().toString()
-					}
-				)
-			),
+			content: timedText(stopwatch.stop().toString(), "Done,"),
 			files: [file]
 		});
 	}

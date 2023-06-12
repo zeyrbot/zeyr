@@ -1,4 +1,0 @@
-{
-	"screenshotBadUrl": "{{error}} Die angegebene URL steht auf der schwarzen Liste\n\n{{list}})",
-	"exifOk": "```md\n{{mimetype}}\nGröße: {{size}}\nMaße: {{dimensions}}```"
-}

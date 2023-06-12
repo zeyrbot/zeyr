@@ -1,14 +1,12 @@
 import { Apis } from "../../lib/enums/apis";
-import { cdn } from "../../lib/util";
-import { LanguageKeys } from "../../lib/util/i18n/keys";
+import { cdn, err, timedText } from "../../lib/util";
 import {
 	Command,
 	RegisterSubCommand
 } from "@kaname-png/plugin-subcommands-advanced";
 import { FetchResultTypes, fetch } from "@sapphire/fetch";
-import { resolveKey } from "@sapphire/plugin-i18next";
 import { Stopwatch } from "@sapphire/stopwatch";
-import { cast, tryParseURL } from "@sapphire/utilities";
+import { tryParseURL } from "@sapphire/utilities";
 import { AttachmentBuilder } from "discord.js";
 
 @RegisterSubCommand("util", (builder) =>
@@ -80,27 +78,14 @@ export class UserCommand extends Command {
 		const badUrls = await fetch<string[]>(this.bad, FetchResultTypes.JSON);
 
 		if (badUrls.includes(url))
-			return interaction.editReply(
-				await resolveKey(
-					interaction.guild,
-					LanguageKeys.Util.ScreenshotBadUrl,
-					{
-						list: cdn(
-							"https://raw.githubusercontent.com/zeyrbot/assets/main/json/websites.json"
-						)
-					}
-				)
-			);
+			return interaction.editReply(err("The URL provided is blacklisted"));
 
 		const requestUrl = new URL(Apis.SCREENSHOT);
 		const queryUrl = tryParseURL(url)?.toString();
 
 		if (!queryUrl)
 			return interaction.editReply(
-				await resolveKey(
-					interaction.guild,
-					LanguageKeys.Util.ScreenshotInvalidUrl
-				)
+				err('Invalid url, please make sure it included "https"')
 			);
 
 		requestUrl.searchParams.append("resX", width.toString());
@@ -117,11 +102,7 @@ export class UserCommand extends Command {
 		});
 
 		return interaction.editReply({
-			content: cast<string>(
-				await resolveKey(interaction.guild, "general:stopwatchFinished", {
-					time: stopwatch.stop().toString()
-				})
-			),
+			content: timedText(stopwatch.stop().toString(), "Done,"),
 			files: [file]
 		});
 	}

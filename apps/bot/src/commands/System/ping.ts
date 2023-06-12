@@ -1,9 +1,8 @@
-import { LanguageKeys } from "../../lib/util/i18n/keys";
 import {
 	Command,
 	RegisterSubCommand
 } from "@kaname-png/plugin-subcommands-advanced";
-import { resolveKey } from "@sapphire/plugin-i18next";
+import { codeBlock, objectEntries, roundNumber } from "@sapphire/utilities";
 
 @RegisterSubCommand("system", (builder) =>
 	builder.setName("ping").setDescription("Zeyr latency statistics")
@@ -23,29 +22,22 @@ export class UserCommand extends Command {
 
 	private async ping(interaction: Command.ChatInputInteraction<"cached">) {
 		const pingMessage = await interaction.reply({
-			content: (await resolveKey(
-				interaction.guild,
-				LanguageKeys.System.PingWait
-			)) as string,
+			content: "Waiting...",
 			fetchReply: true
 		});
 
-		const ws = Math.round(this.container.client.ws.ping);
-		const latency = pingMessage.createdTimestamp - interaction.createdTimestamp;
-		const db = await this.db();
-
-		const content = await resolveKey(
-			interaction.guild,
-			LanguageKeys.System.PingDone,
-			{
-				ws,
-				latency,
-				db
-			}
-		);
+		const pings = {
+			ws: roundNumber(this.container.client.ws.ping),
+			interactions: pingMessage.createdTimestamp - interaction.createdTimestamp,
+			database: await this.db()
+		};
 
 		return interaction.editReply({
-			content
+			content: codeBlock(
+				objectEntries(pings)
+					.map(([key, value]) => `${key}: ${value}ms`)
+					.join("\n")
+			)
 		});
 	}
 }

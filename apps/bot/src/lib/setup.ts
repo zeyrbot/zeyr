@@ -8,7 +8,6 @@ import { setup } from "@skyra/env-utilities";
 import * as colorette from "colorette";
 
 import "@kaname-png/plugin-subcommands-advanced/register";
-import "@sapphire/plugin-i18next/register";
 import "@sapphire/plugin-logger/register";
 import "@sapphire/plugin-utilities-store/register";
 

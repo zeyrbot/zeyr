@@ -7,16 +7,8 @@ import { Stopwatch } from "@sapphire/stopwatch";
 
 @RegisterSubCommand("image", (builder) =>
 	builder
-		.setName("fisheye")
-		.setDescription("Renders the provided image with a fish eye effect")
-		.addIntegerOption((o) =>
-			o
-				.setName("radius")
-				.setDescription("Radius of the effect")
-				.setMinValue(1)
-				.setMaxValue(10)
-				.setRequired(false)
-		)
+		.setName("sepia")
+		.setDescription("Applies a sepia filter to provided image")
 		.addAttachmentOption((o) =>
 			o
 				.setName("image")
@@ -31,7 +23,6 @@ export class UserCommand extends Command {
 		await interaction.deferReply({ fetchReply: true });
 		const stopwatch = new Stopwatch();
 
-		const radius = interaction.options.getInteger("radius") ?? 2;
 		const image =
 			interaction.options.getAttachment("image") ??
 			(await lastMedia(interaction.channel!));
@@ -39,15 +30,18 @@ export class UserCommand extends Command {
 		if (!image)
 			return interaction.editReply("Please provide a valid image or url");
 
-		const output = await this.container.utilities.image.get(
+		const output = await this.container.utilities.image.sharp(
 			image.proxyURL ?? image.url
 		);
 
-		output.resize(250, 250);
-		output.cropCircle();
-		output.fisheye(radius);
+		output.modulate({
+			saturation: 0,
+			hue: -30,
+			brightness: 1
+		});
+		output.tint("#704214");
 
-		const { buffer } = await output.encode();
+		const buffer = await output.png().toBuffer();
 		const file = await this.container.utilities.image.attachment(
 			Buffer.from(buffer),
 			optimalFileName("png")
