@@ -29,7 +29,7 @@
 		"tagscript": "^1.3.0",
 		"tagscript-plugin-discord": "^2.1.0",
 		"tslib": "^2.5.0",
-		"zeyr-utils": "workspace:*"
+		"@zeyr/utils": "workspace:*"
 	},
 	"devDependencies": {
 		"@sapphire/cli": "^1.6.0",
