@@ -1,11 +1,14 @@
+import { FetchParser, NSFWParser } from "../lib/structures/parsers";
 import { ApplyOptions } from "@sapphire/decorators";
 import { Utility } from "@sapphire/plugin-utilities-store";
 import {
 	BreakParser,
 	DefineParser,
 	FiftyFiftyParser,
+	type IParser,
 	IfStatementParser,
 	IncludesParser,
+	Interpreter,
 	JSONVarParser,
 	LooseVarsParser,
 	OrdinalFormatParser,
@@ -13,16 +16,13 @@ import {
 	RangeParser,
 	ReplaceParser,
 	SliceParser,
-	StrictVarsParser,
-	type IParser,
-	Interpreter
+	StrictVarsParser
 } from "tagscript";
 import {
+	DeleteParser,
 	EmbedParser,
-	FilesParser,
-	DeleteParser
+	FilesParser
 } from "tagscript-plugin-discord";
-import { NSFWParser, FetchParser } from "../lib/structures/parsers";
 
 @ApplyOptions<Utility.Options>({
 	name: "tags"

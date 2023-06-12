@@ -1,7 +1,7 @@
 import type { DatabaseUtility } from "../../utilities/database";
 import type { ImageUtility } from "../../utilities/image";
-import type { PrismaClient } from "@prisma/client";
 import type { TagsUtility } from "../../utilities/tags";
+import type { PrismaClient } from "@prisma/client";
 
 declare module "@sapphire/pieces" {
 	interface Container {
