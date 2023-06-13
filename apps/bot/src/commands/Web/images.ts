@@ -1,3 +1,4 @@
+import { err } from "../../lib/util";
 import { Colors } from "@discord-factory/colorize";
 import {
 	Command,
@@ -6,7 +7,6 @@ import {
 import { image_search } from "@mudbill/duckduckgo-images-api";
 import { PaginatedMessage } from "@sapphire/discord.js-utilities";
 import { EmbedBuilder, hyperlink } from "discord.js";
-import { err } from "../../lib/util";
 
 @RegisterSubCommand("web", (builder) =>
 	builder
