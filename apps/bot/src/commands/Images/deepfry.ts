@@ -30,13 +30,13 @@ export class UserCommand extends Command {
 		if (!image)
 			return interaction.editReply("Please provide a valid image or url");
 
-		const output = await this.container.utilities.image.sharp(
+		const canvas = await this.container.utilities.image.sharp(
 			image.proxyURL ?? image.url
 		);
 
-		output.modulate({ saturation: 2 }).gamma(2).sharpen();
+		canvas.modulate({ saturation: 2 }).gamma(2).sharpen();
 
-		const buffer = await output
+		const buffer = await canvas
 			.jpeg({
 				quality: 40
 			})

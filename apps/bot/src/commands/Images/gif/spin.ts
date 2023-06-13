@@ -33,19 +33,19 @@ export class GroupCommand extends Command {
 
 		const frames: Frame[] = [];
 
-		const output = await this.container.utilities.image.get(
+		const canvas = await this.container.utilities.image.get(
 			image.proxyURL ?? image.url
 		);
 
-		output.resize(this.OPTIMAL_WIDTH, this.OPTIMAL_HEIGHT);
-		output.cropCircle();
+		canvas.resize(this.OPTIMAL_WIDTH, this.OPTIMAL_HEIGHT);
+		canvas.cropCircle();
 
 		for (let i = 0; i < this.FRAME_COUNT; i++) {
 			const angle = (i / this.FRAME_COUNT) * 360;
 
 			frames.push(
 				Frame.from(
-					output.clone().rotate(angle, false),
+					canvas.clone().rotate(angle, false),
 					60,
 					0,
 					0,

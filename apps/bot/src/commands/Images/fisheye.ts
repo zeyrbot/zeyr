@@ -39,15 +39,15 @@ export class UserCommand extends Command {
 		if (!image)
 			return interaction.editReply("Please provide a valid image or url");
 
-		const output = await this.container.utilities.image.get(
+		const canvas = await this.container.utilities.image.get(
 			image.proxyURL ?? image.url
 		);
 
-		output.resize(250, 250);
-		output.cropCircle();
-		output.fisheye(radius);
+		canvas.resize(250, 250);
+		canvas.cropCircle();
+		canvas.fisheye(radius);
 
-		const { buffer } = await output.encode();
+		const { buffer } = await canvas.encode();
 		const file = await this.container.utilities.image.attachment(
 			Buffer.from(buffer),
 			optimalFileName("png")

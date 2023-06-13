@@ -7,24 +7,8 @@ import { Stopwatch } from "@sapphire/stopwatch";
 
 @RegisterSubCommand("image", (builder) =>
 	builder
-		.setName("resize")
-		.setDescription("Resizes the provided image")
-		.addNumberOption((s) =>
-			s
-				.setName("width")
-				.setDescription("Width of the image")
-				.setMinValue(1)
-				.setMaxValue(2000)
-				.setRequired(true)
-		)
-		.addNumberOption((s) =>
-			s
-				.setName("height")
-				.setDescription("Height of the image")
-				.setMinValue(1)
-				.setMaxValue(2000)
-				.setRequired(true)
-		)
+		.setName("crop")
+		.setDescription("Crops the provided image and makes it a circle")
 		.addAttachmentOption((o) =>
 			o
 				.setName("image")
@@ -39,9 +23,6 @@ export class UserCommand extends Command {
 		await interaction.deferReply({ fetchReply: true });
 		const stopwatch = new Stopwatch();
 
-		const w = interaction.options.getNumber("width", true);
-		const h = interaction.options.getNumber("height", true);
-
 		const image =
 			interaction.options.getAttachment("image") ??
 			(await lastMedia(interaction.channel!));
@@ -53,7 +34,7 @@ export class UserCommand extends Command {
 			image.proxyURL ?? image.url
 		);
 
-		canvas.resize(w, h);
+		canvas.cropCircle();
 
 		const { buffer } = await canvas.encode();
 		const file = await this.container.utilities.image.attachment(

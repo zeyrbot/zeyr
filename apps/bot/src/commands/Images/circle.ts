@@ -7,23 +7,13 @@ import { Stopwatch } from "@sapphire/stopwatch";
 
 @RegisterSubCommand("image", (builder) =>
 	builder
-		.setName("resize")
-		.setDescription("Resizes the provided image")
-		.addNumberOption((s) =>
-			s
-				.setName("width")
-				.setDescription("Width of the image")
-				.setMinValue(1)
-				.setMaxValue(2000)
-				.setRequired(true)
-		)
-		.addNumberOption((s) =>
-			s
-				.setName("height")
-				.setDescription("Height of the image")
-				.setMinValue(1)
-				.setMaxValue(2000)
-				.setRequired(true)
+		.setName("circle")
+		.setDescription("Applies a radial blur on the provided image")
+		.addNumberOption((o) =>
+			o
+				.setName("iterations")
+				.setDescription("Number of iterations")
+				.setRequired(false)
 		)
 		.addAttachmentOption((o) =>
 			o
@@ -39,8 +29,7 @@ export class UserCommand extends Command {
 		await interaction.deferReply({ fetchReply: true });
 		const stopwatch = new Stopwatch();
 
-		const w = interaction.options.getNumber("width", true);
-		const h = interaction.options.getNumber("height", true);
+		const iterations = interaction.options.getNumber("iterations") ?? 10;
 
 		const image =
 			interaction.options.getAttachment("image") ??
@@ -53,7 +42,9 @@ export class UserCommand extends Command {
 			image.proxyURL ?? image.url
 		);
 
-		canvas.resize(w, h);
+		for (let i = iterations; i >= 0; i--) {
+			canvas.composite(canvas.clone().opacity(0.1).rotate(i, false));
+		}
 
 		const { buffer } = await canvas.encode();
 		const file = await this.container.utilities.image.attachment(

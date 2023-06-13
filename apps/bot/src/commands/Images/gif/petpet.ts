@@ -43,20 +43,20 @@ export class GroupCommand extends Command {
 			)
 		);
 
-		const output = await this.container.utilities.image.get(
+		const canvas = await this.container.utilities.image.get(
 			image.proxyURL ?? image.url
 		);
 
 		const parent = new Image(assets[0].width, assets[0].height);
 
-		output.resize(parent.width - 20, parent.height - 20);
+		canvas.resize(parent.width - 20, parent.height - 20);
 
 		for (let i = 0; i < this.FRAME_COUNT; i++) {
 			const frame = Frame.from(
 				parent.composite(
-					output,
-					parent.width - output.width,
-					parent.height - output.height
+					canvas,
+					parent.width - canvas.width,
+					parent.height - canvas.height
 				),
 				62.5,
 				0,

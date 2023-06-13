@@ -33,15 +33,15 @@ export class GroupCommand extends Command {
 
 		const frames: Frame[] = [];
 
-		const output = await this.container.utilities.image.get(
+		const canvas = await this.container.utilities.image.get(
 			image.proxyURL ?? image.url
 		);
 
-		// output.resize(this.OPTIMAL_WIDTH, this.OPTIMAL_HEIGHT);
+		// canvas.resize(this.OPTIMAL_WIDTH, this.OPTIMAL_HEIGHT);
 
 		for (let i = 0; i < this.FRAME_COUNT; i++) {
 			frames.push(
-				Frame.from(output.invert(), 1, 0, 0, Frame.DISPOSAL_BACKGROUND)
+				Frame.from(canvas.invert(), 1, 0, 0, Frame.DISPOSAL_BACKGROUND)
 			);
 		}
 

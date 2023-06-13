@@ -1,21 +1,8 @@
 {
     "extends": "../../tsconfig.base.json",
     "compilerOptions": {
-        "allowJs": true,
-        "outDir": "dist",
-        "rootDir": "src",
-        "tsBuildInfoFile": "dist/.tsbuildinfo",
-        "composite": true,
-        "experimentalDecorators": true,
-        "emitDecoratorMetadata": true,
-        "resolveJsonModule": true,
-        "esModuleInterop": true
-    },
-    "include": [
-        "src",
-        "src/**/*.json"
-    ],
-    "exclude": [
-        "./tsconfig.json"
-    ]
+		"noEmit": true,
+		"tsBuildInfoFile": "./dist/.tsbuildinfo"
+	},
+	"include": ["src"]
 }

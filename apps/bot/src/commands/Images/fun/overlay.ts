@@ -53,13 +53,13 @@ export class UserCommand extends Command {
 			return interaction.editReply("Please provide a valid image or overlay");
 
 		const overlay = await this.container.utilities.image.get(overlayURL);
-		const output = await this.container.utilities.image.get(
+		const canvas = await this.container.utilities.image.get(
 			image.proxyURL ?? image.url
 		);
 
-		output.composite(overlay.resize(output.width, output.height), 0, 0);
+		canvas.composite(overlay.resize(canvas.width, canvas.height), 0, 0);
 
-		const { buffer } = await output.encode();
+		const { buffer } = await canvas.encode();
 		const file = await this.container.utilities.image.attachment(
 			Buffer.from(buffer),
 			optimalFileName("png")
