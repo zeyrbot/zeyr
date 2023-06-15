@@ -14,6 +14,8 @@ import { Stopwatch } from "@sapphire/stopwatch";
 				.setName("iterations")
 				.setDescription("Number of iterations")
 				.setRequired(false)
+				.setMinValue(10)
+				.setMaxValue(25)
 		)
 		.addAttachmentOption((o) =>
 			o
