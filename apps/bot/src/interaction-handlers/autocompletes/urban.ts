@@ -3,8 +3,8 @@ import {
 	InteractionHandler,
 	InteractionHandlerTypes
 } from "@sapphire/framework";
-import type { AutocompleteInteraction } from "discord.js";
 import { Client as Urban } from "@zeyrbot/urbandictionary";
+import type { AutocompleteInteraction } from "discord.js";
 
 @ApplyOptions<InteractionHandler.Options>({
 	interactionHandlerType: InteractionHandlerTypes.Autocomplete

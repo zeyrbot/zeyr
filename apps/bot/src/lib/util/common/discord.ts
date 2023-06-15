@@ -1,6 +1,6 @@
-import type { Attachment, GuildTextBasedChannel } from "discord.js";
 import { format } from "./misc";
 import { cast } from "@sapphire/utilities";
+import type { Attachment, GuildTextBasedChannel } from "discord.js";
 
 export async function getLastAttachment(
 	channel: GuildTextBasedChannel,

@@ -1,3 +1,4 @@
+import { info } from "../../lib/util";
 import {
 	Command,
 	RegisterSubCommand
@@ -5,8 +6,7 @@ import {
 import { UserError } from "@sapphire/framework";
 import { Result } from "@sapphire/result";
 import { cast, roundNumber } from "@sapphire/utilities";
-import { Client as Dlist, type Bot } from "@zeyrbot/dlist";
-import { info } from "../../lib/util";
+import { type Bot, Client as Dlist } from "@zeyrbot/dlist";
 
 @RegisterSubCommand("system", (builder) =>
 	builder.setName("vote").setDescription("Vote fot Zeyr")

@@ -1,14 +1,14 @@
+import { Apis } from "../../lib/enums/apis";
+import type { MDNResponse } from "../../lib/types/mdn";
 import {
 	Command,
 	RegisterSubCommand
 } from "@kaname-png/plugin-subcommands-advanced";
 import { FetchResultTypes, fetch } from "@sapphire/fetch";
-import { Result } from "@sapphire/result";
-import { Apis } from "../../lib/enums/apis";
-import type { MDNResponse } from "../../lib/types/mdn";
-import { type ColorResolvable, EmbedBuilder } from "discord.js";
 import { UserError } from "@sapphire/framework";
+import { Result } from "@sapphire/result";
 import { cast } from "@sapphire/utilities";
+import { type ColorResolvable, EmbedBuilder } from "discord.js";
 
 @RegisterSubCommand("web", (builder) =>
 	builder

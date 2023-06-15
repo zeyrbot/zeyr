@@ -1,13 +1,13 @@
+import { Colors } from "@discord-factory/colorize";
 import {
 	Command,
 	RegisterSubCommand
 } from "@kaname-png/plugin-subcommands-advanced";
-import { Result } from "@sapphire/result";
-import { EmbedBuilder } from "discord.js";
-import { UserError } from "@sapphire/framework";
-import { Client as Urban } from "@zeyrbot/urbandictionary";
-import { Colors } from "@discord-factory/colorize";
 import { PaginatedMessage } from "@sapphire/discord.js-utilities";
+import { UserError } from "@sapphire/framework";
+import { Result } from "@sapphire/result";
+import { Client as Urban } from "@zeyrbot/urbandictionary";
+import { EmbedBuilder } from "discord.js";
 
 @RegisterSubCommand("web", (builder) =>
 	builder

@@ -23,7 +23,10 @@ export class UserCommand extends Command {
 		await interaction.deferReply({ fetchReply: true });
 		const stopwatch = new Stopwatch();
 
-		const image = await this.container.utilities.image.getMedia(interaction, "image");
+		const image = await this.container.utilities.image.getMedia(
+			interaction,
+			"image"
+		);
 
 		if (!image)
 			return interaction.editReply("Please provide a valid image or url");

@@ -1,3 +1,4 @@
+import { getLastAttachment } from "../lib/util";
 import type { Command } from "@kaname-png/plugin-subcommands-advanced";
 import { ApplyOptions } from "@sapphire/decorators";
 import { Utility } from "@sapphire/plugin-utilities-store";
@@ -5,7 +6,6 @@ import { cast } from "@sapphire/utilities";
 import { AttachmentBuilder } from "discord.js";
 import { Image, decode } from "imagescript";
 import sharp from "sharp";
-import { getLastAttachment } from "../lib/util";
 
 @ApplyOptions<Utility.Options>({
 	name: "image"

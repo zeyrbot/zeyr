@@ -1,8 +1,8 @@
+import { info } from "../../lib/util";
 import {
 	Command,
 	RegisterSubCommand
 } from "@kaname-png/plugin-subcommands-advanced";
-import { info } from "../../lib/util";
 
 @RegisterSubCommand("system", (builder) =>
 	builder.setName("invite").setDescription("Invite zeyr")
