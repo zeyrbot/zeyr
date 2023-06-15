@@ -35,6 +35,9 @@ export class UserCommand extends Command {
 					"https://raw.githubusercontent.com/zeyrbot/assets/main/images/banner.png"
 				)
 			)
+			.setFooter({
+				text: `${this.container.client.guilds.cache.size} guilds`
+			})
 			.addFields(
 				{
 					name: "Versions",
@@ -59,7 +62,9 @@ export class UserCommand extends Command {
 				},
 				{
 					name: "Build",
-					value: codeBlock(`${process.env.BUILD} build`)
+					value: codeBlock(
+						`${process.env.NODE_ENV === "development" ? "dev" : "prod"} build`
+					)
 				}
 			);
 

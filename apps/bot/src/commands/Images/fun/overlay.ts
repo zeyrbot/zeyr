@@ -1,4 +1,4 @@
-import { lastMedia, optimalFileName, timedText } from "../../../lib/util";
+import { optimalFileName, timedText } from "../../../lib/util";
 import {
 	Command,
 	RegisterSubCommandGroup
@@ -45,9 +45,10 @@ export class UserCommand extends Command {
 			interaction.options.getString("preset") ??
 			interaction.options.getAttachment("overlay")?.proxyURL;
 
-		const image =
-			interaction.options.getAttachment("image") ??
-			(await lastMedia(interaction.channel!));
+		const image = await this.container.utilities.image.getMedia(
+			interaction,
+			"image"
+		);
 
 		if (!image || !overlayURL)
 			return interaction.editReply("Please provide a valid image or overlay");

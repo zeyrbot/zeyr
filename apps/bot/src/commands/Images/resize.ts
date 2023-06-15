@@ -1,4 +1,4 @@
-import { lastMedia, optimalFileName, timedText } from "../../lib/util";
+import { optimalFileName, timedText } from "../../lib/util";
 import {
 	Command,
 	RegisterSubCommand
@@ -42,9 +42,10 @@ export class UserCommand extends Command {
 		const w = interaction.options.getNumber("width", true);
 		const h = interaction.options.getNumber("height", true);
 
-		const image =
-			interaction.options.getAttachment("image") ??
-			(await lastMedia(interaction.channel!));
+		const image = await this.container.utilities.image.getMedia(
+			interaction,
+			"image"
+		);
 
 		if (!image)
 			return interaction.editReply("Please provide a valid image or url");

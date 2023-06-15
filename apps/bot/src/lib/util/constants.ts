@@ -1,8 +1,5 @@
 import { LogLevel } from "@sapphire/framework";
-import {
-	type ClientOptions,
-	GatewayIntentBits,
-} from "discord.js";
+import { type ClientOptions, GatewayIntentBits } from "discord.js";
 import { join } from "path";
 
 export const rootDir = join(__dirname, "..", "..");
@@ -11,7 +8,8 @@ export const srcDir = join(rootDir, "src");
 export const CLIENT_OPTIONS: ClientOptions = {
 	caseInsensitiveCommands: true,
 	logger: {
-		level: LogLevel.Debug
+		level:
+			process.env.NODE_ENV === "development" ? LogLevel.Debug : LogLevel.Info
 	},
 	intents: [
 		GatewayIntentBits.GuildMessages,

@@ -1,12 +1,12 @@
-import { lastMedia } from "../../lib/util";
 import {
 	Command,
 	RegisterSubCommand
 } from "@kaname-png/plugin-subcommands-advanced";
+import { UserError } from "@sapphire/framework";
 import { codeBlock, objectEntries } from "@sapphire/utilities";
-import { formatBytes } from "@zeyr/utils";
+import { formatBytes } from "@shared/format-utilities";
 
-@RegisterSubCommand("util", (builder) =>
+@RegisterSubCommand("image", (builder) =>
 	builder
 		.setName("exif")
 		.setDescription("Visualize in a human readable way image metadata")
@@ -18,14 +18,16 @@ export class UserCommand extends Command {
 	public override async chatInputRun(
 		interaction: Command.ChatInputInteraction<"cached">
 	) {
-		await interaction.deferReply({ fetchReply: true });
-
-		const image =
-			interaction.options.getAttachment("image") ??
-			(await lastMedia(interaction.channel!));
+		const image = await this.container.utilities.image.getMedia(
+			interaction,
+			"image"
+		);
 
 		if (!image)
-			return interaction.editReply("Please provide a valid image or url");
+			throw new UserError({
+				identifier: "ImageInvalid",
+				message: "Please provide a valid image or url"
+			});
 
 		const buffer = await this.container.utilities.image.sharp(
 			image.proxyURL ?? image.url
@@ -39,7 +41,7 @@ export class UserCommand extends Command {
 			dimensions: `${width}x${height}`
 		};
 
-		return interaction.editReply({
+		return await interaction.reply({
 			content: codeBlock(
 				objectEntries(data)
 					.map(([type, value]) => `${type}: ${value}`)

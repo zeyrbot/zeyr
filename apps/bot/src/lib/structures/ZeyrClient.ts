@@ -12,12 +12,12 @@ export class ZeyrClient extends SapphireClient {
 
 	public async start() {
 		await super.login(process.env.DISCORD_TOKEN);
-		container.logger.info(`${greenBright("")} Connected`);
+		container.logger.info(`${greenBright("󱘖")} Connected`);
 		await container.prisma
 			.$connect()
-			.then(() => container.logger.info(`${greenBright("")} Prisma online`))
+			.then(() => container.logger.info(`${greenBright("󰆼")} Prisma online`))
 			.catch(() =>
-				container.logger.fatal(`${redBright("")} Prisma connection failed`)
+				container.logger.fatal(`${redBright("")} Prisma connection failed`)
 			);
 	}
 

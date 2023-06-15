@@ -1,7 +1,7 @@
 import { ApplyOptions } from "@sapphire/decorators";
 import { Listener, Piece, type PieceOptions, Store } from "@sapphire/framework";
 import { Client as Dlist } from "@zeyrbot/dlist";
-import { blue, blueBright, gray, red, yellow } from "colorette";
+import { blue, blueBright, gray, yellow } from "colorette";
 import { ActivityType } from "discord.js";
 
 const dev = process.env.NODE_ENV !== "production";
@@ -12,12 +12,11 @@ export class UserEvent extends Listener {
 
 	public async run() {
 		this.printStoreDebugInformation();
-		this.printBanner();
 
 		this.container.client.user?.setActivity({
 			name: `${this.container.client.guilds.cache.size} guilds so far`,
 			type: ActivityType.Listening
-		})
+		});
 
 		if (!dev) {
 			await this.postGuildCount();
@@ -28,27 +27,6 @@ export class UserEvent extends Listener {
 		id: "1095425642159407165",
 		token: process.env.DLIST_KEY
 	});
-
-	private printBanner() {
-		this.container.logger.info(this.logo.join("\n"));
-	}
-
-	private logo = [
-		red(String.raw`⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⡴⠞⢳⠀⠀⠀⠀⠀`),
-		red(String.raw`⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡔⠋⠀⢰⠎⠀⠀⠀⠀⠀`),
-		red(String.raw`⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣼⢆⣤⡞⠃⠀⠀⠀⠀⠀⠀`),
-		red(String.raw`⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣼⢠⠋⠁⠀⠀⠀⠀⠀⠀⠀⠀`),
-		red(String.raw`⠀⠀⠀⠀⢀⣀⣾⢳⠀⠀⠀⠀⢸⢠⠃⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀`),
-		red(String.raw`⣀⡤⠴⠊⠉⠀⠀⠈⠳⡀⠀⠀⠘⢎⠢⣀⣀⣀⠀⠀⠀⠀⠀⠀⠀`),
-		red(String.raw`⠳⣄⠀⠀⡠⡤⡀⠀⠘⣇⡀⠀⠀⠀⠉⠓⠒⠺⠭⢵⣦⡀⠀⠀⠀`),
-		red(String.raw`⠀⢹⡆⠀⢷⡇⠁⠀⠀⣸⠇⠀⠀⠀⠀⠀⢠⢤⠀⠀⠘⢷⣆⡀⠀`),
-		red(String.raw`⠀⠀⠘⠒⢤⡄⠖⢾⣭⣤⣄⠀⡔⢢⠀⡀⠎⣸⠀⠀⠀⠀⠹⣿⡀`),
-		red(String.raw`⠀⠀⢀⡤⠜⠃⠀⠀⠘⠛⣿⢸⠀⡼⢠⠃⣤⡟⠀⠀⠀⠀⠀⣿⡇`),
-		red(String.raw`⠀⠀⠸⠶⠖⢏⠀⠀⢀⡤⠤⠇⣴⠏⡾⢱⡏⠁⠀⠀⠀⠀⢠⣿⠃`),
-		red(String.raw`⠀⠀⠀⠀⠀⠈⣇⡀⠿⠀⠀⠀⡽⣰⢶⡼⠇⠀⠀⠀⠀⣠⣿⠟⠀`),
-		red(String.raw`⠀⠀⠀⠀⠀⠀⠈⠳⢤⣀⡶⠤⣷⣅⡀⠀⠀⠀⣀⡠⢔⠕⠁⠀⠀`),
-		red(String.raw`⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠙⠫⠿⠿⠿⠛⠋⠁⠀⠀⠀⠀`)
-	];
 
 	private async postGuildCount() {
 		this.dlist

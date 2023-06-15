@@ -1,4 +1,3 @@
-import { err } from "../../lib/util";
 import { Colors } from "@discord-factory/colorize";
 import {
 	Command,
@@ -6,6 +5,7 @@ import {
 } from "@kaname-png/plugin-subcommands-advanced";
 import { image_search } from "@mudbill/duckduckgo-images-api";
 import { PaginatedMessage } from "@sapphire/discord.js-utilities";
+import { UserError } from "@sapphire/framework";
 import { EmbedBuilder, hyperlink } from "discord.js";
 
 @RegisterSubCommand("web", (builder) =>
@@ -32,7 +32,10 @@ export class UserCommand extends Command {
 		});
 
 		if (results.length === 0)
-			return interaction.reply(err("No results found by that query"));
+			throw new UserError({
+				message: "I didn't find any results for that query",
+				identifier: "ImagesNoResults"
+			});
 
 		for (const result of results.slice(0, 24)) {
 			display.addPageEmbed((embed) =>

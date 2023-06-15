@@ -93,15 +93,24 @@ importers:
       '@sapphire/utilities':
         specifier: ^3.12.0
         version: 3.12.0
+      '@shared/format-utilities':
+        specifier: workspace:*
+        version: link:../../packages/format
+      '@shared/time-utilities':
+        specifier: workspace:*
+        version: link:../../packages/time
+      '@shared/types':
+        specifier: workspace:*
+        version: link:../../packages/types
       '@skyra/env-utilities':
         specifier: ^1.2.0
         version: 1.2.0
-      '@zeyr/utils':
-        specifier: workspace:*
-        version: link:../../packages/utils
       '@zeyrbot/dlist':
         specifier: ^1.1.2
         version: 1.1.2
+      '@zeyrbot/urbandictionary':
+        specifier: ^1.0.3
+        version: 1.0.3
       discord.js:
         specifier: ^14.11.0
         version: 14.11.0
@@ -173,14 +182,24 @@ importers:
         specifier: ^4.3.9
         version: 4.3.9
 
-  packages/utils:
+  packages/format:
+    devDependencies:
+      typescript:
+        specifier: ^5.1.3
+        version: 5.1.3
+
+  packages/time:
     dependencies:
       '@sapphire/time-utilities':
         specifier: ^1.7.9
         version: 1.7.9
-      tslib:
-        specifier: ^2.5.3
-        version: 2.5.3
+    devDependencies:
+      typescript:
+        specifier: ^5.1.3
+        version: 5.1.3
+
+  packages/types:
+    devDependencies:
       typescript:
         specifier: ^5.1.3
         version: 5.1.3
@@ -1197,6 +1216,15 @@ packages:
 
   /@zeyrbot/dlist@1.1.2:
     resolution: {integrity: sha512-2S1WIDlYNDXpYDD/ox7yZcQFSJ8qEe+dF+G8g79v+6htJSoh+JBkvX4E51BrBPhwmTQtMYBhfh38jQUSum9T+g==}
+    dependencies:
+      '@sapphire/fetch': 2.4.1
+      tslib: 2.5.3
+    transitivePeerDependencies:
+      - encoding
+    dev: false
+
+  /@zeyrbot/urbandictionary@1.0.3:
+    resolution: {integrity: sha512-w4Nc88ikL4DakWTXwvKfCztDVmKNhcP3tLwmGWH7BwJcyDpvL5eJp+duumVyh6wrqhbRzlE7fLuDJPnl7jHkBw==}
     dependencies:
       '@sapphire/fetch': 2.4.1
       tslib: 2.5.3
@@ -3642,6 +3670,7 @@ packages:
     resolution: {integrity: sha512-XH627E9vkeqhlZFQuL+UsyAXEnibT0kWR2FWONlr4sTjvxyJYnyefgrkyECLzM5NenmKzRAy2rR/OlYLA1HkZw==}
     engines: {node: '>=14.17'}
     hasBin: true
+    dev: true
 
   /undici@5.22.0:
     resolution: {integrity: sha512-fR9RXCc+6Dxav4P9VV/sp5w3eFiSdOjJYsbtWfd4s5L5C4ogyuVpdKIVHeW0vV1MloM65/f7W45nR9ZxwVdyiA==}

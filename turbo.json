@@ -4,7 +4,9 @@
 	"pipeline": {
 		"build": {
 			"dependsOn": ["^build"],
-			"outputs": ["dist/**"]
+			"inputs": ["src/**/*.ts"],
+			"outputs": ["dist/**", "build/**"],
+			"cache": true
 		},
 		"lint": {
 			"outputs": []
@@ -12,5 +14,6 @@
 		"dev": {
 			"cache": false
 		}
-	}
+	},
+	"globalEnv": ["NODE_ENV"]
 }

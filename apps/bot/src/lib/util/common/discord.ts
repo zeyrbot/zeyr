@@ -1,18 +1,22 @@
-import type { Attachment, GuildTextBasedChannel, Message } from "discord.js";
+import type { Attachment, GuildTextBasedChannel } from "discord.js";
+import { format } from "./misc";
+import { cast } from "@sapphire/utilities";
 
-export async function lastMedia(channel: GuildTextBasedChannel, limit = 30) {
+export async function getLastAttachment(
+	channel: GuildTextBasedChannel,
+	limit = 30
+) {
 	const messages = await channel.messages.fetch({ limit });
 
 	const lastMessage = messages.find(
-		(message: Message) =>
-			message.attachments.size > 0 || message.embeds[0]?.data.url
+		({ attachments, embeds }) => attachments.size > 0 || embeds[0]?.data.url
 	);
 
 	if (!lastMessage) return undefined;
 
 	const attachment =
 		lastMessage.attachments.first() ||
-		(lastMessage.embeds[0].data as Attachment);
+		(lastMessage.embeds[0]?.data as Attachment);
 
 	return {
 		...attachment,
@@ -20,18 +24,18 @@ export async function lastMedia(channel: GuildTextBasedChannel, limit = 30) {
 	};
 }
 
-export function ok(...content: readonly (string | number)[]) {
-	return `✅ ${content.join(" ")}`;
+export function ok(text: string, ...content: readonly unknown[]) {
+	return format(`✅ ${text}`, cast<string>(content));
 }
 
-export function err(...content: readonly (string | number)[]) {
-	return `❌ ${content.join(" ")}`;
+export function err(text: string, ...content: readonly unknown[]) {
+	return format(`❌ ${text}`, cast<string>(content));
 }
 
-export function danger(...content: readonly (string | number)[]) {
-	return `⚠ ${content.join(" ")}`;
+export function danger(text: string, ...content: readonly unknown[]) {
+	return format(`⚠ ${text}`, cast<string>(content));
 }
 
-export function info(...content: readonly (string | number)[]) {
-	return `:information_source: ${content.join(" ")}`;
+export function info(text: string, ...content: readonly unknown[]) {
+	return format(`:information_source: ${text}`, cast<string>(content));
 }
