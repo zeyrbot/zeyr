@@ -7,6 +7,10 @@ export function cdn(url: string) {
 	return optimisedUrl.toString();
 }
 
+export function randomID() {
+	return (Math.random() + 1).toString(36).substring(2);
+}
+
 export function optimalFileName(format: string) {
-	return `${(Math.random() + 1).toString(36).substring(2)}.${format}`;
+	return `${randomID()}.${format}`;
 }

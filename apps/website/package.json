@@ -21,5 +21,8 @@
 		"typescript": "^5.1.3",
 		"vite": "^4.3.9"
 	},
-	"type": "module"
+	"type": "module",
+	"dependencies": {
+		"lucide-svelte": "^0.244.0"
+	}
 }

@@ -1,37 +1,31 @@
 import {
 	Events,
+	Listener,
 	type InteractionHandlerError,
-	Listener
+	type UserError
 } from "@sapphire/framework";
-import type { Interaction } from "discord.js";
+import { err } from "../../lib/util";
 
-export class UserListener extends Listener<
-	typeof Events.InteractionHandlerError
-> {
-	public run(error: Error, payload: InteractionHandlerError) {
-		const { name, location } = payload.handler;
-		const errorMessage = `❎ ${error.message}`;
+export class UserEvent extends Listener<typeof Events.InteractionHandlerError> {
+	public async run(
+		{ context, message: content }: UserError,
+		{ interaction }: InteractionHandlerError
+	) {
+		if (Reflect.get(Object(context), "silent")) return;
 
-		this.container.logger.error(
-			`Encountered error on chat input command "${name}" at path "${location.full}"`,
-			error
-		);
+		this.container.logger.fatal(context, content);
 
-		return this.respond(payload.interaction, errorMessage);
-	}
+		if (interaction.isAutocomplete()) return;
 
-	private respond(interaction: Interaction, content: string) {
-		if (!interaction.isStringSelectMenu() && !interaction.isButton()) return;
-
-		if (interaction.replied || interaction.deferred) {
+		if (interaction.deferred || interaction.replied) {
 			return interaction.editReply({
-				content,
+				content: err(content),
 				allowedMentions: { users: [interaction.user.id], roles: [] }
 			});
 		}
 
 		return interaction.reply({
-			content,
+			content: err(content),
 			allowedMentions: { users: [interaction.user.id], roles: [] },
 			ephemeral: true
 		});

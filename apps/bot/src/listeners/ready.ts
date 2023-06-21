@@ -13,12 +13,14 @@ export class UserEvent extends Listener {
 	public async run() {
 		this.printStoreDebugInformation();
 
+		await this.loadTagParsers();
+
 		this.container.client.user?.setActivity({
 			name: `${this.container.client.guilds.cache.size} guilds so far`,
 			type: ActivityType.Listening
 		});
 
-		if (!dev) {
+		if (this.container.client.user?.username !== "Zeyr Beta") {
 			await this.postGuildCount();
 		}
 	}
@@ -29,10 +31,20 @@ export class UserEvent extends Listener {
 	});
 
 	private async postGuildCount() {
-		this.dlist
+		return this.dlist
 			.postGuildCount(this.container.client.guilds.cache.size)
 			.then(() =>
 				this.container.logger.info(`${blueBright("")} Posted guild count`)
+			);
+	}
+
+	private async loadTagParsers() {
+		await this.container.utilities.parsers
+			.loadParsers()
+			.then((p) =>
+				this.container.logger.info(
+					`${blueBright("")} Loaded ${p.length} parsers`
+				)
 			);
 	}
 

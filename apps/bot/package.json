@@ -2,7 +2,7 @@
 	"name": "zeyr",
 	"version": "1.5.7",
 	"main": "dist/index.js",
-	"author": "@ruunao",
+	"author": "@simxnet",
 	"license": "MIT",
 	"type": "commonjs",
 	"dependencies": {
@@ -21,36 +21,37 @@
 		"@sapphire/stopwatch": "^1.5.0",
 		"@sapphire/utilities": "^3.12.0",
 		"@skyra/env-utilities": "^1.2.0",
-		"@shared/types": "workspace:*",
-		"@shared/time-utilities": "workspace:*",
-		"@shared/format-utilities": "workspace:*",
+		"@zeyr/redis": "workspace:*",
+		"@zeyr/utils": "workspace:*",
 		"@zeyrbot/dlist": "^1.1.2",
 		"@zeyrbot/urbandictionary": "^1.0.3",
 		"discord.js": "^14.11.0",
-		"fuse.js": "^6.6.2",
+		"discordjs-docs-parser": "^1.3.2",
 		"imagescript": "^1.2.16",
 		"sharp": "latest",
 		"tagscript": "^1.3.2",
 		"tagscript-plugin-discord": "^2.1.2",
-		"tslib": "^2.5.3"
+		"tslib": "^2.5.3",
+		"ytdl-core": "^4.11.4"
 	},
 	"devDependencies": {
 		"@sapphire/cli": "^1.6.1",
-		"@types/exif-reader": "^1.0.0",
 		"@types/sharp": "^0.32.0",
 		"tsc-watch": "^6.0.4",
+		"tsup": "^7.0.0",
 		"typescript": "^5.1.3"
 	},
 	"scripts": {
 		"sapphire": "sapphire",
 		"generate": "sapphire generate",
-		"build": "tsc -b src",
-		"watch": "tsc -b src -w",
+		"build": "tsup",
+		"check": "tsc",
+		"watch": "tsup -b src -w",
 		"start": "node dist/index.js",
-		"init": "npm run build && npm run start",
-		"dev": "tsc-watch -b src --onSuccess \"pnpm start\"",
+		"start:production": "npm run build && npm run start",
+		"dev": "tsup --watch --onSuccess \"pnpm start\"",
 		"format": "rome format src --write",
-		"check": "rome check src --apply-unsafe",
+		"fix": "rome check src --apply-unsafe",
 		"prisma:generate": "prisma generate --schema=../../prisma/schema.prisma"
 	}
 }

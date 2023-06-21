@@ -107,7 +107,7 @@ export class UserCommand extends Command {
 		});
 
 		return interaction.editReply({
-			content: timedText(stopwatch.stop().toString(), "Done,"),
+			content: timedText(stopwatch.stop().toString()),
 			files: [file]
 		});
 	}

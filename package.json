@@ -5,7 +5,6 @@
 	"workspaces": ["apps/*", "packages/*"],
 	"scripts": {
 		"build": "turbo run build",
-		"build:packages": "pnpm --filter @shared/format-utilities build && pnpm --filter @shared/time-utilities build",
 		"dev": "turbo run dev",
 		"postinstall": "husky install .github/husky && pnpm bot prisma:generate",
 		"bot": "pnpm --filter zeyr",
