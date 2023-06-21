@@ -1,6 +1,6 @@
+import { developers } from "../lib/util";
 import { Precondition } from "@sapphire/framework";
 import type { ChatInputCommandInteraction } from "discord.js";
-import { developers } from "../lib/util";
 
 export class UserPrecondition extends Precondition {
 	public readonly message =
