@@ -1,31 +1,32 @@
+import { err } from "../../../lib/util";
 import { Listener, type UserError } from "@sapphire/framework";
 import {
-	SubcommandPluginEvents,
 	type ChatInputSubcommandErrorPayload,
+	SubcommandPluginEvents
 } from "@sapphire/plugin-subcommands";
 
 export class UserEvent extends Listener<
 	typeof SubcommandPluginEvents.ChatInputSubcommandError
 > {
-	public async run(error: UserError, context: ChatInputSubcommandErrorPayload) {
-		const { name, location } = context.command;
-		let errorMessage = "❎ ";
+	public async run(
+		{ context, message: content }: UserError,
+		{ interaction }: ChatInputSubcommandErrorPayload
+	) {
+		if (Reflect.get(Object(context), "silent")) return;
 
-		switch (error.identifier) {
-			default:
-				errorMessage += error.message;
-				break;
+		this.container.logger.fatal(context, content);
+
+		if (interaction.deferred || interaction.replied) {
+			return interaction.editReply({
+				content: err(content),
+				allowedMentions: { users: [interaction.user.id], roles: [] }
+			});
 		}
 
-		this.container.logger.error(
-			`Encountered error on chat input command "${name}" at path "${location.full}"`,
-			error,
-		);
-		return context.interaction[
-			context.interaction.deferred ? "editReply" : "reply"
-		]({
-			content: errorMessage,
-			ephemeral: true,
+		return interaction.reply({
+			content: err(content),
+			allowedMentions: { users: [interaction.user.id], roles: [] },
+			ephemeral: true
 		});
 	}
 }

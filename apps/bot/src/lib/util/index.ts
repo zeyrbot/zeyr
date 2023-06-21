@@ -1,2 +1,2 @@
 export * from "./constants";
-export * from "./parsers/ocr";
+export * from "./common";

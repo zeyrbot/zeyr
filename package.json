@@ -11,21 +11,21 @@
 		"www": "pnpm --filter website",
 		"lint": "pnpm rome check . --apply-unsafe",
 		"format": "pnpm rome format . --write",
-		"update:i": "pnpm --recursive update -i"
+		"update:i": "pnpm --recursive update -i",
+		"migrate:dev": "prisma migrate dev"
 	},
 	"devDependencies": {
-		"@commitlint/cli": "^17.4.4",
-		"@commitlint/config-conventional": "^17.4.4",
+		"@commitlint/cli": "^17.6.5",
+		"@commitlint/config-conventional": "^17.6.5",
 		"@sapphire/ts-config": "^4.0.0",
-		"@types/node": "^18.16.2",
-		"@types/ws": "^8.5.4",
-		"colorette": "^2.0.20",
+		"@types/node": "^18.16.17",
+		"@types/ws": "^8.5.5",
 		"husky": "^8.0.3",
-		"prisma": "^4.13.0",
-		"rome": "12.0.0",
-		"tsc-watch": "^6.0.0",
+		"prisma": "^4.15.0",
+		"rome": "12.1.2",
+		"tsc-watch": "^6.0.4",
 		"turbo": "latest",
-		"typescript": "^5.0.4"
+		"typescript": "^5.1.3"
 	},
 	"engines": {
 		"node": ">=16.0.0"
@@ -36,6 +36,7 @@
 	},
 	"packageManager": "pnpm@7.28.0",
 	"dependencies": {
-		"@prisma/client": "^4.13.0"
+		"@prisma/client": "^4.15.0",
+		"colorette": "^2.0.20"
 	}
 }

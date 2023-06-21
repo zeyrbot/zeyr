@@ -1,10 +1,10 @@
+import { config } from "./lib/config";
 import "./lib/setup";
+import { ZeyrClient } from "./lib/structures/extended/client";
 
-import { CLIENT_OPTIONS } from "./lib/util";
-import { ZeyrClient } from "./lib/structures/ZeyrClient";
 import { Result } from "@sapphire/framework";
 
-const client = new ZeyrClient(CLIENT_OPTIONS);
+const client = new ZeyrClient(config.client);
 
 async function init() {
 	const resultClient = await Result.fromAsync(async () => await client.start());

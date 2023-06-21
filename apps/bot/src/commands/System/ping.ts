@@ -1,17 +1,15 @@
-import { Command } from "@kaname-png/plugin-subcommands-advanced";
-import { ApplyOptions } from "@sapphire/decorators";
-import { resolveKey } from "@sapphire/plugin-i18next";
+import {
+	Command,
+	RegisterSubCommand
+} from "@kaname-png/plugin-subcommands-advanced";
+import { codeBlock, objectEntries, roundNumber } from "@sapphire/utilities";
 
-@ApplyOptions<Command.Options>({
-  registerSubCommand: {
-    parentCommandName: "system",
-    slashSubcommand: (builder) =>
-      builder.setName("ping").setDescription("Display Zeyr's latency"),
-  },
-})
+@RegisterSubCommand("system", (builder) =>
+	builder.setName("ping").setDescription("Zeyr latency statistics")
+)
 export class UserCommand extends Command {
 	public override async chatInputRun(
-		interaction: Command.ChatInputInteraction<"cached">,
+		interaction: Command.ChatInputInteraction<"cached">
 	) {
 		return await this.ping(interaction);
 	}
@@ -24,29 +22,22 @@ export class UserCommand extends Command {
 
 	private async ping(interaction: Command.ChatInputInteraction<"cached">) {
 		const pingMessage = await interaction.reply({
-			content: (await resolveKey(
-				interaction.guild,
-				"commands/system:pingWait",
-			)) as string,
-			fetchReply: true,
+			content: "Waiting...",
+			fetchReply: true
 		});
 
-		const ws = Math.round(this.container.client.ws.ping);
-		const latency = pingMessage.createdTimestamp - interaction.createdTimestamp;
-		const db = await this.db();
-
-		const content = await resolveKey(
-			interaction.guild,
-			"commands/system:pingDone",
-			{
-				ws,
-				latency,
-				db,
-			},
-		);
+		const pings = {
+			ws: roundNumber(this.container.client.ws.ping),
+			interactions: pingMessage.createdTimestamp - interaction.createdTimestamp,
+			database: await this.db()
+		};
 
 		return interaction.editReply({
-			content,
+			content: codeBlock(
+				objectEntries(pings)
+					.map(([key, value]) => `${key}: ${value}ms`)
+					.join("\n")
+			)
 		});
 	}
 }

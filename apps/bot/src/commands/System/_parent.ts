@@ -3,11 +3,11 @@ import { ApplyOptions } from "@sapphire/decorators";
 import { ApplicationCommandRegistry } from "@sapphire/framework";
 
 @ApplyOptions<Subcommand.Options>({
-  name: "system",
+	name: "system"
 })
 export class ParentCommand extends Subcommand {
 	public override registerApplicationCommands(
-		registry: ApplicationCommandRegistry,
+		registry: ApplicationCommandRegistry
 	) {
 		registry.registerChatInputCommand((ctx) => {
 			this.hooks.subcommands(this, ctx);

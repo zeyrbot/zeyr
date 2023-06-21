@@ -2,17 +2,18 @@
   "category": "commands"
 }
 ---
-import { Command } from '@kaname-png/plugin-subcommands-advanced';
-import { ApplyOptions } from '@sapphire/decorators';
+import {
+	Command,
+	RegisterSubCommand
+} from "@kaname-png/plugin-subcommands-advanced";
 
-@ApplyOptions<Command.Options>({
-    registerSubCommand: {
-        parentCommandName: 'PARENT_HERE',
-        slashSubcommand: (builder) => builder.setName('{{name}}').setDescription('Subcommand description')
-    }
-})
+@RegisterSubCommand("PARENT", (builder) =>
+	builder.setName("{{name}}").setDescription("DESCRIPTION")
+)
 export class UserCommand extends Command {
 	public override async chatInputRun(
-		interaction: Command.ChatInputInteraction<"cached">,
-	) {}
+		interaction: Command.ChatInputInteraction<"cached">
+	) {
+		return interaction.reply("uwu");
+	}
 }

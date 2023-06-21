@@ -1,7 +1,8 @@
 import { ApplyOptions } from "@sapphire/decorators";
 import { Listener, Piece, type PieceOptions, Store } from "@sapphire/framework";
+import { Client as Dlist } from "@zeyrbot/dlist";
 import { blue, blueBright, gray, yellow } from "colorette";
-import { Dlist } from "../lib/api/dlist";
+import { ActivityType } from "discord.js";
 
 const dev = process.env.NODE_ENV !== "production";
 
@@ -12,21 +13,38 @@ export class UserEvent extends Listener {
 	public async run() {
 		this.printStoreDebugInformation();
 
-		if (!dev) {
+		await this.loadTagParsers();
+
+		this.container.client.user?.setActivity({
+			name: `${this.container.client.guilds.cache.size} guilds so far`,
+			type: ActivityType.Listening
+		});
+
+		if (this.container.client.user?.username !== "Zeyr Beta") {
 			await this.postGuildCount();
 		}
 	}
 
 	private dlist = new Dlist({
 		id: "1095425642159407165",
-		token: process.env.DLIST_KEY as string,
+		token: process.env.DLIST_KEY
 	});
 
 	private async postGuildCount() {
-		this.dlist
+		return this.dlist
 			.postGuildCount(this.container.client.guilds.cache.size)
 			.then(() =>
-				this.container.logger.info(`${blueBright("")} Posted guild count`),
+				this.container.logger.info(`${blueBright("")} Posted guild count`)
+			);
+	}
+
+	private async loadTagParsers() {
+		await this.container.utilities.parsers
+			.loadParsers()
+			.then((p) =>
+				this.container.logger.info(
+					`${blueBright("")} Loaded ${p.length} parsers`
+				)
 			);
 	}
 
@@ -42,8 +60,8 @@ export class UserEvent extends Listener {
 	private styleStore(store: Store<Piece<PieceOptions>>, last: boolean) {
 		return gray(
 			`${last ? "└─" : "├─"} Loaded ${this.style(
-				store.size.toString().padEnd(3, " "),
-			)} ${store.name}.`,
+				store.size.toString().padEnd(3, " ")
+			)} ${store.name}.`
 		);
 	}
 }

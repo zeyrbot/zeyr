@@ -8,8 +8,8 @@ datasource db {
 }
 
 model User {
-    id        String    @id
-    bio       String    @default("I like cats with boots")
+    id String @id
+
     createdAt DateTime  @default(now()) @map("created_at")
     updatedAt DateTime? @updatedAt @map("updated_at")
 
@@ -20,6 +20,9 @@ model Member {
     id      String @id
     guildId String @map("guild_id")
 
+    createdAt DateTime  @default(now()) @map("created_at")
+    updatedAt DateTime? @updatedAt @map("updated_at")
+
     guild Guild @relation(fields: [guildId], references: [id])
     tags  Tag[]
 
@@ -27,8 +30,8 @@ model Member {
 }
 
 model Guild {
-    id        String    @unique
-    language  String    @default("en-US")
+    id String @unique
+
     createdAt DateTime  @default(now()) @map("created_at")
     updatedAt DateTime? @updatedAt @map("updated_at")
 
@@ -39,12 +42,13 @@ model Guild {
 }
 
 model Tag {
-    id        Int       @id @default(autoincrement())
-    name      String
-    content   String
-    uses      Int       @default(0)
-    guildId   String    @map("guild_id")
-    memberId  String    @map("member_id")
+    id       Int    @id @default(autoincrement())
+    name     String
+    content  String
+    uses     Int    @default(0)
+    guildId  String @map("guild_id")
+    memberId String @map("member_id")
+
     createdAt DateTime  @default(now()) @map("created_at")
     updatedAt DateTime? @updatedAt @map("updated_at")
 

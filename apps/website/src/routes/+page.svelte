@@ -1,19 +1,31 @@
 <script>
-    const features = [
-        'Image manipulation',
-        'Fun commands',
-        "Stuff"
-    ]
+    import { fade } from 'svelte/transition';
+    import Button from '../components/ui/Button.svelte';
+
+    const texts = [
+        "dev",
+        "general",
+        "weeb"
+    ];
+
+    $: text = texts[Math.floor(Math.random() * texts.length)];
+
+    setInterval(() => {
+        text = texts[Math.floor(Math.random() * texts.length)];
+    }, 3000);
 </script>
 
-<div class="flex flex-col items-center justify-center h-screen gap-4">
-    <img src="/favicon.png" alt="logo" class="h-28 w-28" />
-    <h1 class="text-5xl font-bold">
-        Descentralising bots industry.
-    </h1>
-    <div class="flex divide-foreground divide-x-2">
-        {#each features as feature}
-        <p class="px-2">{feature}</p>
-        {/each}
+<div class="p-12 text-left flex flex-col gap-3 max-w-3xl">
+    <div class="flex flex-row gap-3 items-center">
+        <img src="/favicon.png" alt="logo" class="h-16 w-16" />
+        <h1 class="text-5xl font-extrabold">
+            A bot for {text} communities
+        </h1>
+    </div>
+    <p class="text-gray-300 text-lg">
+        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Et expedita recusandae alias excepturi iure vero deserunt odit voluptates quo nam sint, obcaecati consectetur quibusdam sunt! Corrupti, aliquid. Aspernatur, maiores nemo!
+    </p>
+    <div class="flex gap-3">
+        <Button>Get</Button>
     </div>
 </div>
