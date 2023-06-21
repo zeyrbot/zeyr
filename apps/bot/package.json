@@ -48,7 +48,7 @@
 		"check": "tsc",
 		"watch": "tsup -b src -w",
 		"start": "node dist/index.js",
-		"start:production": "npm run build && npm run start",
+		"start:production": "pnpm build && pnpm start",
 		"dev": "tsup --watch --onSuccess \"pnpm start\"",
 		"format": "rome format src --write",
 		"fix": "rome check src --apply-unsafe",
