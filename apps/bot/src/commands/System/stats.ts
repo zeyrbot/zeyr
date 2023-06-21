@@ -4,12 +4,12 @@ import {
 	Command,
 	RegisterSubCommand
 } from "@kaname-png/plugin-subcommands-advanced";
-import { codeBlock, objectEntries } from "@sapphire/utilities";
-import { version as discordjs_version, EmbedBuilder } from "discord.js";
 import { version as sapphire_version } from "@sapphire/framework";
-import { version as ts_version } from "typescript";
-import sharp from "sharp";
+import { codeBlock, objectEntries } from "@sapphire/utilities";
+import { EmbedBuilder, version as discordjs_version } from "discord.js";
 import os from "node:os";
+import sharp from "sharp";
+import { version as ts_version } from "typescript";
 
 @RegisterSubCommand("system", (builder) =>
 	builder
