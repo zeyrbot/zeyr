@@ -20,7 +20,8 @@ export class UserCommand extends Command {
 				"Total guilds: {}\n{}",
 				guildCount.toString(),
 				codeBlock(guilds.join("\n"))
-			)
+			),
+			ephemeral: true
 		});
 	}
 }

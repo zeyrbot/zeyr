@@ -49,8 +49,8 @@ export class ImageUtility extends Utility {
 		name?: string
 	) {
 		return (
-			(await getLastAttachment(interaction.channel!)) ??
-			interaction.options.getAttachment(name ?? "image")
+			interaction.options.getAttachment(name ?? "image") ??
+			(await getLastAttachment(interaction.channel!))
 		);
 	}
 
