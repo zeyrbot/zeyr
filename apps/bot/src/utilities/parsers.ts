@@ -1,12 +1,14 @@
-import type { Command } from "@kaname-png/plugin-subcommands-advanced";
 import { FetchParser, NSFWParser } from "../lib/structures/parsers";
+import type { Command } from "@kaname-png/plugin-subcommands-advanced";
 import { ApplyOptions } from "@sapphire/decorators";
 import { Utility } from "@sapphire/plugin-utilities-store";
+import { AttachmentBuilder, EmbedBuilder } from "discord.js";
 import {
 	BreakParser,
 	DefineParser,
 	FiftyFiftyParser,
 	type IParser,
+	type ITransformer,
 	IfStatementParser,
 	IncludesParser,
 	Interpreter,
@@ -16,10 +18,9 @@ import {
 	RandomParser,
 	RangeParser,
 	ReplaceParser,
+	Response,
 	SliceParser,
-	StrictVarsParser,
-	type ITransformer,
-	Response
+	StrictVarsParser
 } from "tagscript";
 import {
 	ChannelTransformer,
@@ -31,7 +32,6 @@ import {
 	MemberTransformer,
 	UserTransformer
 } from "tagscript-plugin-discord";
-import { AttachmentBuilder, EmbedBuilder } from "discord.js";
 
 @ApplyOptions<Utility.Options>({
 	name: "parsers"

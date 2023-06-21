@@ -1,10 +1,10 @@
+import { err } from "../../lib/util";
 import {
 	Events,
-	Listener,
 	type InteractionHandlerError,
+	Listener,
 	type UserError
 } from "@sapphire/framework";
-import { err } from "../../lib/util";
 
 export class UserEvent extends Listener<typeof Events.InteractionHandlerError> {
 	public async run(

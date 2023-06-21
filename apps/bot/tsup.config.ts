@@ -1,5 +1,5 @@
-import { defineConfig } from "tsup";
 import { relative } from "node:path";
+import { defineConfig } from "tsup";
 
 export default defineConfig({
 	clean: true,

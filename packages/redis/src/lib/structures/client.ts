@@ -1,9 +1,9 @@
+import type { Key } from "../types/redis";
 /**
  * original source: https://github.com/KBot-discord/KBot/blob/main/packages/redis
  * i AM NOT the original creator of this code nor a contributor
  */
 import { Redis, type RedisKey } from "ioredis";
-import type { Key } from "../types/redis";
 
 /**
  * Wrapper for the `ioredis` Redis class

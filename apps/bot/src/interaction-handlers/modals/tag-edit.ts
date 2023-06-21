@@ -1,3 +1,4 @@
+import { ok } from "../../lib/util";
 import { ApplyOptions } from "@sapphire/decorators";
 import {
 	InteractionHandler,
@@ -6,7 +7,6 @@ import {
 	UserError
 } from "@sapphire/framework";
 import { ComponentType, type ModalSubmitInteraction } from "discord.js";
-import { ok } from "../../lib/util";
 
 @ApplyOptions<InteractionHandler.Options>({
 	name: "edit",

@@ -21,6 +21,12 @@ declare module "@sapphire/plugin-utilities-store" {
 	}
 }
 
+declare module "@sapphire/framework" {
+	interface Preconditions {
+		Developer: never;
+	}
+}
+
 declare module "tagscript" {
 	interface IActions {
 		nsfw?: {

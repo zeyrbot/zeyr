@@ -1,8 +1,8 @@
+import { format } from "../../lib/util";
 import {
 	Command,
 	RegisterSubCommand
 } from "@kaname-png/plugin-subcommands-advanced";
-import { format } from "../../lib/util";
 import { codeBlock } from "@sapphire/utilities";
 
 @RegisterSubCommand("dev", (builder) =>

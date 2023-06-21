@@ -1,11 +1,11 @@
+import { getLastAttachment, ok, optimalFileName } from "../../lib/util";
 import {
 	Command,
 	RegisterSubCommand
 } from "@kaname-png/plugin-subcommands-advanced";
 import { UserError } from "@sapphire/framework";
-import { getLastAttachment, ok, optimalFileName } from "../../lib/util";
-import ytdl from "ytdl-core";
 import { AttachmentBuilder } from "discord.js";
+import ytdl from "ytdl-core";
 
 @RegisterSubCommand("tools", (builder) =>
 	builder

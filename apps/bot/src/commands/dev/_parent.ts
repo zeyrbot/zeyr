@@ -3,7 +3,8 @@ import { ApplyOptions } from "@sapphire/decorators";
 import { ApplicationCommandRegistry } from "@sapphire/framework";
 
 @ApplyOptions<Subcommand.Options>({
-	name: "dev"
+	name: "dev",
+	preconditions: ["Developer"]
 })
 export class ParentCommand extends Subcommand {
 	public override registerApplicationCommands(
